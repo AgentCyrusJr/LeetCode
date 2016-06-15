@@ -2,6 +2,6 @@
 
 exercise for leetcode turn 1
 
-code writen in Java
+code written in Java
 
 IDE: eclipse
