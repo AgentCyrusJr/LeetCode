@@ -6,7 +6,7 @@
 #Note:
 #Each element in the result must be unique.
 #The result can be in any order.
-=====================================================code start from here==============================================================
+=====================================================codes start from here==============================================================
 public class Solution {
     public int[] intersection(int[] nums1, int[] nums2) {
         
