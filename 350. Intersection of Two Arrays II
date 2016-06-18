@@ -1,0 +1,52 @@
+#Given two arrays, write a function to compute their intersection.
+
+#Example:
+#Given nums1 = [1, 2, 2, 1], nums2 = [2, 2], return [2, 2].
+
+#Note:
+#Each element in the result should appear as many times as it shows in both arrays.
+#The result can be in any order.
+
+=============================================codes start from here=======================================================================
+import java.util.ArrayList;
+import java.util.Arrays;
+
+
+public class Solution {
+	
+    public int[] intersect(int[] nums1, int[] nums2) {
+    	Arrays.sort(nums1);
+    	Arrays.sort(nums2);
+        ArrayList<Integer> resultList =  new ArrayList<Integer>();
+        int i=0,j=0;
+        while(i<nums1.length && j<nums2.length){
+  
+        	if(nums1[i] == nums2[j]){
+        		resultList.add(nums1[i]);
+        		i++;
+        		j++;
+        	}
+        	else if(nums1[i]<nums2[j]){
+        		i++;
+        	}
+        	else
+        		j++;
+        }
+        int [] intersection = new int[resultList.size()];
+        for(int k=0; k<resultList.size(); k++){
+    		intersection[k]=resultList.get(k);
+    	}
+        return intersection;
+    }
+    
+    
+    public static void main(String[] args){
+    	Solution s = new Solution();
+    	int[] nums1 = {1,2,2,3,4,5,1,2,3};
+    	int[] nums2 = {2,1,2,3,4,5,6,7,8,9};
+    	int[] result  = s.intersect(nums1, nums2);
+    	for(int k=0; k<result.length;k++){
+    		System.out.print(result[k]+", ");
+    	}
+    }
+}
