@@ -1,0 +1,17 @@
+#Write a function that takes a string as input and returns the string reversed.
+
+#Example:
+#Given s = "hello", return "olleh".
+
+===================================================codes start from here=================================================================
+public class Solution {
+	public String reverseString(String s) {
+        StringBuilder str = new StringBuilder("");
+        int num;
+        num = s.length();
+        for(int i = num; i > 0  ; i--){
+        	str.append(s.charAt(i-1));
+        }
+		return str.toString();
+    }
+}
