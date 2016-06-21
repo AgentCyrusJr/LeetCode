@@ -1,0 +1,20 @@
+#Given an integer (signed 32 bits), write a function to check whether it is a power of 4.
+
+#Example:
+#Given num = 16, return true. Given num = 5, return false.
+
+#Follow up: Could you solve it without loops/recursion?
+===================================================codes start from here=================================================================
+public class Solution {
+    public boolean isPowerOfFour(int num) {
+        double e = 0.0001;
+        boolean flag = false;
+        double val = Math.log(num)/Math.log(4);
+        if(Math.abs((int)(val)-val)<e){
+            flag = true;
+        }
+        else
+            flag = false;
+        return flag;
+    }
+}
