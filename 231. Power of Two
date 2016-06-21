@@ -1,0 +1,15 @@
+#Given an integer, write a function to determine if it is a power of two.
+
+====================================================codes start from here================================================================
+public class Solution {
+    public boolean isPowerOfTwo(int n) {
+    	boolean flag = false;
+    	double dmin = 1E-12;
+    	double result = (Math.log(n)/Math.log(2));
+    	double result2 = Math.abs((int)result-result);
+    	if(result2<dmin){
+    		flag = true;
+    	}
+    	return flag;
+    }
+}
