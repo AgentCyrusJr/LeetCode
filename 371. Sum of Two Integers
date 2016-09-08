@@ -1,0 +1,24 @@
+Calculate the sum of two integers a and b, but you are not allowed to use the operator + and -.
+
+Example:
+Given a = 1 and b = 2, return 3.
+
+===========codes start from here============
+public class Solution {
+    public int getSum(int a, int b) {
+        if(b == 0){
+        	return a;
+        }
+        int cxor = a^b;
+        int cand = a&b;
+        return this.getSum(cxor, cand<<1);
+    }
+    
+    public static void main(String[] args){
+
+    	Solution solution = new Solution();
+    	int a = 20, b = 19;
+    	int result = solution.getSum(a, b);
+    	System.out.println(result);
+    }
+}
