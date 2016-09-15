@@ -1,0 +1,63 @@
+Merge two sorted linked lists and return it as a new list. The new list should be made by splicing together the nodes of the first two lists.
+
+=============codes start from here==================
+public ListNode mergeTwoLists(ListNode l1, ListNode l2) {
+		ListNode headNode = null;
+		ListNode currentNode,nextNode; 
+		LinkedList<Integer> ll = new LinkedList<Integer>();
+		while(l1 == null && l2 == null){
+        	return headNode;
+        }
+        while(l1 != null && l2 != null){
+        	if(l1.val <= l2.val){
+        		ll.add(l1.val);
+        		l1 = l1.next;
+        	}
+        	else if(l1.val > l2.val){
+        		ll.add(l2.val);
+        		l2 = l2.next;
+        	}
+        }
+        while(l1 == null && l2 != null){
+        	ll.add(l2.val);
+        	l2 = l2.next;
+        }
+        while(l2 == null && l1 != null){
+        	ll.add(l1.val);
+        	l1 = l1.next;
+        } 
+        
+        headNode = new ListNode(ll.get(0));
+        currentNode = headNode;
+        for(int i = 1 ; i<ll.size(); i++){
+        	nextNode = new ListNode(ll.get(i));
+        	currentNode.next = nextNode;
+        	currentNode = nextNode;
+        }
+        return headNode;
+    }
+  }
+  
+  //This one is much easier
+  //by lokeshpuppalagmail.com
+  
+  public ListNode mergeTwoLists(ListNode l1, ListNode l2) {
+    ListNode ans = new ListNode(0);
+    ListNode prev = ans;
+    while(l1 != null && l2 != null){
+        if(l1.val > l2.val){
+            prev.next = l2;
+            l2 = l2.next;
+        } else{
+            prev.next = l1;
+            l1 = l1.next;
+        }
+        prev = prev.next;
+    }
+    if(l2 == null){
+        prev.next = l1;
+    } else {
+        prev.next = l2;
+    }
+    return ans.next;
+}
