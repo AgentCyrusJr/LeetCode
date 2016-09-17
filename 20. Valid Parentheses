@@ -1,0 +1,57 @@
+Given a string containing just the characters '(', ')', '{', '}', '[' and ']', determine if the input string is valid.
+
+The brackets must close in the correct order, "()" and "()[]{}" are all valid but "(]" and "([)]" are not.
+
+===========codes start from here===========
+public class Solution {
+    public boolean isValid(String s) {
+        boolean flag = false;
+        char[] ch = new char[6];
+        int size;
+        char cc;
+        int index = 0;
+        ch[0] = '('; ch[1] = ')'; ch[2] = '['; ch[3] = ']'; ch[4] = '{'; ch[5] = '}';
+//        LinkedList<Character> ll = new LinkedList<Character>();
+        LinkedList<Character> fll = new LinkedList<Character>();
+        if(s.length()%2 != 0){
+        	return flag;
+        }
+        else{
+        	for(int i = 0 ; i < s.length(); i++){
+        		cc = s.charAt(i);
+        		
+    			if(cc == ch[0]) index = 0;
+    			if(cc == ch[2]) index = 2;
+    			if(cc == ch[4]) index = 4;
+    			if(cc == ch[1]) index = 1;
+    			if(cc == ch[3]) index = 3;
+    			if(cc == ch[5]) index = 5;
+    			
+    			if(fll.isEmpty()){
+    				if(cc == ch[1] || cc == ch[3] || cc == ch[5]){
+    					return flag;
+    				}
+    			}
+    			
+        		if(cc == ch[0] || cc == ch[2] || cc == ch[4]){
+        			fll.add(cc);
+        		}
+        		else{
+        			int a = (int)ch[index-1];
+        			int b = (int)fll.getLast();
+        			if(a == b){
+        				fll.remove(fll.size()-1);
+        			}
+        			else
+        				return flag;
+        		}
+        	}
+        	if(fll.isEmpty()){
+        		flag = true;
+        	}
+        }
+        return flag;
+    }
+}
+
+//
