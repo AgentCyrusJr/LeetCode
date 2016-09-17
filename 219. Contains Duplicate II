@@ -1,0 +1,70 @@
+Given an array of integers and an integer k, find out whether there are two distinct indices i and j in the array such that nums[i] = nums[j] and the difference between i and j is at most k.
+
+===============codes start from here==================
+public boolean containsNearbyDuplicate(int[] nums, int k) {
+        boolean flag = false;
+        Map<Integer, LinkedList> numMap = new HashMap<Integer, LinkedList>();
+        LinkedList<Integer> indexList;
+        for(int i = 0; i<nums.length ; i++){
+        	if(!numMap.containsKey(nums[i])){
+        		indexList = new LinkedList<Integer>();
+        		indexList.add(i);
+        		numMap.put(nums[i], indexList);
+        	}
+        	else{
+//        		indexList = new LinkedList<Integer>();
+        		indexList = numMap.get(nums[i]);
+        		indexList.add(i);
+        		numMap.put(nums[i], indexList);
+        	}
+        }
+        
+        for(LinkedList ll : numMap.values()){
+        	if(ll.size() == 1){
+        		continue;
+        	}
+        	else{
+        		int min_distance = Integer.MAX_VALUE;
+        		int distance;
+        		int previous_index, current_index;
+        		for(int i = 1; i < ll.size() ; i++){
+        			previous_index = (int) ll.get(i-1);
+        			current_index  = (int) ll.get(i);
+        			distance = current_index - previous_index;
+//        			System.out.println(distance + " ");
+        			if(distance < min_distance){
+        				min_distance = distance;
+        				if(min_distance <= k){
+        					flag = true;
+        					break;
+        				}
+        			}
+        			
+        		}
+        	}
+        }
+        return flag;
+       
+    }
+  
+	public static void main(String[] args) {
+		Solution1 s1 = new Solution1();
+		int[] num = {};
+		System.out.println(s1.containsNearbyDuplicate(num, 0));
+		
+	}
+}
+
+
+//This one is much better and easier
+//by journey0408
+public class Solution {
+    public boolean containsNearbyDuplicate(int[] nums, int k) {
+        Map<Integer,Integer> map = new HashMap<Integer,Integer>();
+        for(int i = 0; i < nums.length; i++){
+            if(map.containsKey(nums[i]) && (i - map.get(nums[i])<= k)) return true;
+            map.put(nums[i],i);
+        }
+        return false;
+    }
+}
