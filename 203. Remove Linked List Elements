@@ -1,0 +1,48 @@
+Remove all elements from a linked list of integers that have value val.
+
+Example
+Given: 1 --> 2 --> 6 --> 3 --> 4 --> 5 --> 6, val = 6
+Return: 1 --> 2 --> 3 --> 4 --> 5
+
+================codes===================
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode(int x) { val = x; }
+ * }
+ */
+public class Solution {
+    public ListNode removeElements(ListNode head, int val) {
+          if(head != null){
+        	ListNode p1 = head;
+            ListNode p2 = p1.next;
+            ListNode prevNode = new ListNode(2);
+            prevNode.next = p1;
+        	while(p1 != null){
+        		if(p1.val == val){
+        			if(p1 != head){
+        				prevNode.next = p2;
+        				p1 = p2;
+        			}
+        			else{
+        				head = p2;
+        				p1 = head;
+        				prevNode.next = p1;
+        			}
+        		}
+        		else{
+        			prevNode = p1;
+        			p1 = p1.next;
+        		}
+        		if(p2!= null && p2.next != null){
+        			p2 = p2.next;
+        		}
+        		else
+        			p2 = null;
+        	}
+        }
+        	return head;
+        }
+}
