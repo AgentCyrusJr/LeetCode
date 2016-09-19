@@ -4,6 +4,7 @@ Follow up:
 Could you do it in O(n) time and O(1) space?
 
 =====================codes======================
+//ArrayList instead of LinkedList
 /**
  * Definition for singly-linked list.
  * public class ListNode {
