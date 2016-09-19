@@ -3,6 +3,37 @@ Given a singly linked list, determine if it is a palindrome.
 Follow up:
 Could you do it in O(n) time and O(1) space?
 
+=====================codes======================
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode(int x) { val = x; }
+ * }
+ */
+public class Solution {
+    public boolean isPalindrome(ListNode head) {
+    	boolean flag = false;
+        ArrayList<Integer> ll = new ArrayList<Integer>();
+        if(head == null) flag = true;
+    	while(head != null){
+        	ll.add(head.val);
+        	head = head.next;
+        }
+    	for(int i = 0; i < ll.size() ; i++){
+    		if((int)ll.get(i) == (int)ll.get(ll.size()-1-i)){
+    			if(i == (ll.size()-1)/2){
+    				flag = true;
+    			}
+    		}
+    		else break;
+    	}
+    	return flag;
+    }
+}
+
+==================Others===================
 //Two solutions 
 
 //by zwangbo
