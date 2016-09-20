@@ -10,7 +10,6 @@ Given n will always be valid.
 Try to do this in one pass.
 
 =======================codes======================
-//first solution
 /**
  * Definition for singly-linked list.
  * public class ListNode {
@@ -47,3 +46,27 @@ public class Solution {
         return target; 
     }
 }
+
+===========================
+//With only one pass
+//by MrZenz 
+
+//还是走的快的点(fastNode)与走得慢的点(slowNode)路程差的问题
+	public static ListNode removeNthFromEnd(ListNode head, int n) {
+        ListNode headNode = new ListNode(9527);
+        headNode.next = head;
+        ListNode fastNode = headNode;
+        ListNode slowNode = headNode;
+        while(fastNode.next != null){
+        	if(n <= 0)
+        		slowNode = slowNode.next;
+        	fastNode = fastNode.next;
+        	n--;
+        }
+        if(slowNode.next != null)
+        	slowNode.next = slowNode.next.next;
+        return headNode.next;
+    }
+
+
+
