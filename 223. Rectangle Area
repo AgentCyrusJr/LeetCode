@@ -1,0 +1,62 @@
+Find the total area covered by two rectilinear rectangles in a 2D plane.
+
+Each rectangle is defined by its bottom left corner and top right corner as shown in the figure.
+
+Assume that the total area is never beyond the maximum possible value of int.
+
+=====================codes=======================
+public class Solution {
+    public int computeArea(int A, int B, int C, int D, int E, int F, int G, int H) {
+        int area = 0;
+        int max_x_1, min_x_1, max_y_1, min_y_1, max_x_2, min_x_2, max_y_2, min_y_2;
+        if(A>C){ max_x_1 = A; min_x_1 = C; }
+        else   { max_x_1 = C; min_x_1 = A; }
+        if(E>G){ max_x_2 = E; min_x_2 = G; }
+        else   { max_x_2 = G; min_x_2 = E; }
+        if(B>D){ max_y_1 = B; min_y_1 = D; }
+        else   { max_y_1 = D; min_y_1 = B; }
+        if(F>H){ max_y_2 = F; min_y_2 = H; }
+        else   { max_y_2 = H; min_y_2 = F; }
+        if(max_x_1 <= min_x_2 || min_x_1 >= max_x_2 || max_y_1 <= min_y_2 || min_y_1 >= max_y_2){
+        	//two recs don't overlap
+        	area = Math.abs(A-C)*Math.abs(B-D)+Math.abs(E-G)*Math.abs(F-H);
+        }
+        else if(max_x_1 >= max_x_2 && min_x_1 <= min_x_2 && max_y_1 >= max_y_2 && min_y_1 <= min_y_2){
+        	//ABCD totally overlaps EFGH
+        	area = Math.abs(A-C)*Math.abs(B-D);
+        }
+        else if(max_x_1 <= max_x_2 && min_x_1 >= min_x_2 && max_y_1 <= max_y_2 && min_y_1 >= min_y_2){
+        	//EFGH totally overlaps ABCD
+        	area = Math.abs(E-G)*Math.abs(F-H);
+        }
+        else{
+        	int[] length_array = new int[4];
+        	int[] width_array  = new int[4];
+        	length_array[0] = A; length_array[1] = C; length_array[2] = E; length_array[3] = G;
+        	width_array[0]  = B; width_array[1]  = D; width_array[2]  = F; width_array[3]  = H;
+        	Arrays.sort(length_array); Arrays.sort(width_array);
+        	area = Math.abs(A-C)*Math.abs(B-D)+ Math.abs(E-G)*Math.abs(F-H)-
+        			Math.abs(length_array[1]-length_array[2])*Math.abs(width_array[1]-width_array[2]);
+        }
+        
+        return area;
+    }
+}
+
+=======================================
+//by billyu
+public class Solution {
+    public int computeArea(int A, int B, int C, int D, int E, int F, int G, int H) {
+        int areaA = (D - B) * (C - A);
+        int areaB = (H - F) * (G - E);
+        int lowerTop = Math.min(D, H);
+        int upperBot = Math.max(B, F);
+        int lefterRight = Math.min(C, G);
+        int righterLeft = Math.max(A, E);
+        int overlap = 0;
+        if (lowerTop > upperBot && lefterRight > righterLeft) {
+            overlap = (lowerTop - upperBot) * (lefterRight - righterLeft);
+        }
+        return areaA + areaB - overlap;
+    }
+}
