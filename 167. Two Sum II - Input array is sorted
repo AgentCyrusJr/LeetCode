@@ -36,7 +36,7 @@ public class Solution {
 }
 
 =========================================
-//Two pointers solution
+//Two pointers solution(much faster)
 //by titanduan3
 public int[] twoSum(int[] num, int target) {
     int[] indice = new int[2];
