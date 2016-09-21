@@ -1,0 +1,89 @@
+Write a program to find the node at which the intersection of two singly linked lists begins.
+
+
+For example, the following two linked lists:
+
+A:          a1 → a2
+                   ↘
+                     c1 → c2 → c3
+                   ↗            
+B:     b1 → b2 → b3
+begin to intersect at node c1.
+
+Notes:
+
+If the two linked lists have no intersection at all, return null.
+The linked lists must retain their original structure after the function returns.
+You may assume there are no cycles anywhere in the entire linked structure.
+Your code should preferably run in O(n) time and use only O(1) memory.
+
+====================codes==================
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode(int x) {
+ *         val = x;
+ *         next = null;
+ *     }
+ * }
+ */
+public class Solution {
+    public ListNode getIntersectionNode(ListNode headA, ListNode headB) {
+		ListNode target=null; 
+		int len1=0, len2=0;  
+		ListNode la = headA;
+		ListNode lb = headB;
+        if(headA==null||headB==null) return target; 
+        while(la!=null){  
+            len1++;  
+            la = la.next;  
+        }  
+        while(lb!=null){  
+            len2++;  
+            lb = lb.next;  
+        }
+        if(len1>=len2){  
+            for(int i=0;i<len1-len2;i++){  
+                headA=headA.next;  
+            }  
+        }else{  
+            for(int i=0;i<len2-len1;i++){  
+                headB=headB.next;  
+            }  
+        }  
+        while(headA!=null && headB!=null){  
+            if(headA==headB){  
+                target=headA;  
+                break;  
+            }  
+            else{  
+                headA = headA.next;  
+                headB = headB.next;  
+            }  
+        }  
+        return target; 	
+    }
+}
+
+
+=======================
+//by hpplayer 
+//star for the most, but not understandable to me
+public ListNode getIntersectionNode(ListNode headA, ListNode headB) {
+    //boundary check
+    if(headA == null || headB == null) return null;
+    
+    ListNode a = headA;
+    ListNode b = headB;
+    
+    //if a & b have different len, then we will stop the loop after second iteration
+    while( a != b){
+    	//for the end of first iteration, we just reset the pointer to the head of another linkedlist
+        a = a == null? headB : a.next;
+        b = b == null? headA : b.next;    
+    }
+    
+    return a;
+}
