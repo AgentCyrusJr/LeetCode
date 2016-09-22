@@ -66,3 +66,45 @@ public class Solution {
 }
 
 ===========================
+//by SmartBoyIn3716
+public class Solution {
+    public String addBinary(String a, String b) {
+        char[] sa, sb;
+        if (a.length() < b.length()) {
+            String temp = a;
+            a = b;
+            b = temp;
+        }
+        sa = a.toCharArray();
+        sb = b.toCharArray();
+        int indexA = sa.length-1, indexB = sb.length-1, prev = 0, curA, curB, cur;
+        while (indexA >= 0) {
+            curA = sa[indexA]-'0';
+            if (indexB >= 0) {
+                curB = sb[indexB]-'0';
+            } else {
+                curB = 0;
+            }
+            cur = curA+curB+prev;
+            if (cur == 0) {
+                prev = 0;
+            } else if (cur == 1) {
+                prev = 0;
+                sa[indexA] = '1';
+            } else if (cur == 2) {
+                prev = 1;
+                sa[indexA] = '0';
+            } else {
+                prev = 1;
+                sa[indexA] = '1';
+            }
+            indexA--;
+            indexB--;
+        }
+        if (prev == 0) {
+            return new String(sa);
+        } else {
+            return "1"+new String(sa);
+        }
+    }
+}
