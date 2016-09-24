@@ -1,0 +1,47 @@
+Given two strings s and t, write a function to determine if t is an anagram of s.
+
+For example,
+s = "anagram", t = "nagaram", return true.
+s = "rat", t = "car", return false.
+
+Note:
+You may assume the string contains only lowercase alphabets.
+
+======================codes========================
+
+public class Solution {
+    public boolean isAnagram(String s, String t) {
+        boolean flag = true;
+		HashMap<Character, Integer> letterMap = new HashMap<Character, Integer>();
+        for(char ch : s.toCharArray()){
+        	int count = letterMap.getOrDefault(ch, 0)+1;
+        	letterMap.put(ch, count);
+        }
+        for(char ch : t.toCharArray()){
+        	int num = letterMap.getOrDefault(ch, 0) - 1;
+        	letterMap.put(ch, num);
+        }
+        for(char ch : letterMap.keySet()){
+        	if(letterMap.get(ch) != 0){
+        		flag = false;
+        		break;
+        	}
+        }
+        return flag;
+    }
+}
+
+=======================================
+//by boarderjw
+public class Solution {
+public boolean isAnagram(String s, String t) 
+{
+    char[] sChar = s.toCharArray();
+    char[] tChar = t.toCharArray();
+    
+    Arrays.sort(sChar);
+    Arrays.sort(tChar);
+    
+    return Arrays.equals(sChar, tChar);   
+}
+}
