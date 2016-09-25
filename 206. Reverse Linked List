@@ -1,0 +1,32 @@
+Reverse a singly linked list.
+Hint:
+A linked list can be reversed either iteratively or recursively. Could you implement both?
+====================codes====================
+//iterative solution:
+public class Solution {
+    public ListNode reverseList(ListNode head){  
+        if(head==null||head.next==null) return head;  
+        ListNode previous = null; 
+        ListNode current  = head;
+        ListNode next     = null;  
+        while(current != null){  
+            next 		 = current.next;  
+            current.next = previous;  
+            previous 	 = current;  
+            current 	 = next;  
+        }  
+        return previous;  
+    }
+}
+
+//recursive solution:
+public class Solution {
+    public ListNode reverseList(ListNode head){  
+        if(head==null||head.next==null) return head;  
+        ListNode reverseHead = reverseList(head.next); 
+        System.out.println(reverseHead.val + " " + head.val);
+        head.next.next=head;  //17.next -> 16  16.next -> 15 ...
+        head.next=null;  
+        return reverseHead; 
+    }
+}
