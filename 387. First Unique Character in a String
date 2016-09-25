@@ -28,3 +28,17 @@ public int firstUniqChar(String s) {
     }
     
 ====================================
+//by Fuhito
+//by using an array to recording the number of each letter in String s
+public class Solution {
+    public int firstUniqChar(String s) {
+        char[] arr = s.toCharArray();
+        int[] temp = new int[26];
+        
+        for(int i : arr) temp[i - 'a']++;
+        for(int i = 0; i < arr.length; i++){
+            if(temp[arr[i] - 'a'] == 1) return   i;
+        }
+        return -1;
+    }
+}
