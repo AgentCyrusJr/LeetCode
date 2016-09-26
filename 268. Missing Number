@@ -8,6 +8,7 @@ Your algorithm should run in linear runtime complexity. Could you implement it u
 
 
 ======================codes==========================
+//One solution by substracting sum of nums array from sum of 0 to k 
 public class Solution {
     public int missingNumber(int[] nums) {
         Arrays.sort(nums);
@@ -25,5 +26,19 @@ public class Solution {
         }
         else
         	return sum1 - sum2;
+    }
+}
+
+//Another solution by checking every elements iteratively
+public class Solution {
+    public int missingNumber(int[] nums) {
+        Arrays.sort(nums);
+		int k = nums[nums.length-1];
+        for(int i = 0 ; i < nums.length ; i++){
+        	if((nums[i]^i) != 0){
+        		return i;
+        	}
+        }
+        return k+1;
     }
 }
