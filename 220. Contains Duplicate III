@@ -1,0 +1,45 @@
+Given an array of integers, find out whether there are two distinct indices i and j in the array such that the difference between nums[i] and nums[j] is at most t and the difference between i and j is at most k.
+
+=========================codes====================
+//The solution has time limit exceeded problem
+public class Solution {
+    public boolean containsNearbyAlmostDuplicate(int[] nums, int k, int t) {
+        if(nums.length == 0 || nums.length == 1 || k==0){
+        	return false;
+        }
+        
+		
+		if(k >= nums.length){
+			int[] array = nums;
+			Arrays.sort(array);
+			for(int n = 1; n < array.length; n++){
+				int prev = array[n-1];
+				int curr = array[n];
+				if(curr - prev <= t && curr - prev >=0){
+					return true;
+				}
+			}
+		}
+		else{
+			int[] window = new int[k+1];
+			for(int i = 0 ; i < nums.length - k ; i++){
+				for(int j = 0 ; j < k+1; j++){
+					window[j] = nums[i+j];
+				}
+				Arrays.sort(window);
+				for(int m = 1; m < window.length; m++){
+					int prev = window[m-1];
+					int curr = window[m];
+					if(curr - prev <= t && curr - prev >=0){
+						return true;
+					}
+				}
+			}
+		}
+		
+		return false;
+        
+    }
+        
+    
+}
