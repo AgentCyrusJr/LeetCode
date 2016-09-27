@@ -1,0 +1,74 @@
+Given a roman numeral, convert it to an integer.
+
+Input is guaranteed to be within the range from 1 to 3999.
+
+=======================CODES=========================
+public class Solution {
+    public int romanToInt(String s) {
+        int sum = 0;
+        int prev_num = 10000, curr_num = 0;
+        HashMap<String, Integer> roman = new HashMap<String, Integer>();
+        roman.put("I", 1); roman.put("V", 5); roman.put("X", 10); roman.put("L", 50); roman.put("C", 100); 
+        roman.put("D", 500); roman.put("M", 1000);
+		char[] ch = s.toCharArray();
+		for(char cc : ch){
+			curr_num = roman.get(""+cc);
+			if(prev_num >= curr_num){
+				if(prev_num < 4000){
+					sum = sum + prev_num;
+				}
+			}
+			else{
+				sum = sum + curr_num - prev_num; 
+				prev_num = 10000;
+				continue;
+			}
+			prev_num = curr_num;
+		}
+		if(prev_num!=10000){
+			sum = sum + curr_num;
+		}
+		return sum;
+    }
+}
+
+=====================================
+//MORE INSTINCT
+//BY yangneu2015
+
+public int romanToInt(String s) {
+    int nums[]=new int[s.length()];
+    for(int i=0;i<s.length();i++){
+        switch (s.charAt(i)){
+            case 'M':
+                nums[i]=1000;
+                break;
+            case 'D':
+                nums[i]=500;
+                break;
+            case 'C':
+                nums[i]=100;
+                break;
+            case 'L':
+                nums[i]=50;
+                break;
+            case 'X' :
+                nums[i]=10;
+                break;
+            case 'V':
+                nums[i]=5;
+                break;
+            case 'I':
+                nums[i]=1;
+                break;
+        }
+    }
+    int sum=0;
+    for(int i=0;i<nums.length-1;i++){
+        if(nums[i]<nums[i+1])
+            sum-=nums[i];
+        else
+            sum+=nums[i];
+    }
+    return sum+nums[nums.length-1];
+}
