@@ -1,0 +1,41 @@
+Given an integer, write a function to determine if it is a power of three.
+Follow up:
+Could you do it without using any loop / recursion?
+
+====================codes==================
+public class Solution {
+    public boolean isPowerOfThree(int n) {
+	    boolean flag = false;
+    	double dmin =  1E-12;
+     	double result = (Math.log(n)/Math.log(3));
+    	double result2 = Math.abs((int)(result+0.5)-result);
+    	if(result2<dmin){
+	    	flag = true;
+    	}
+    	return flag;
+    }
+}
+
+==================
+//with loops
+//by Batch-xx
+
+public class Solution {
+    public boolean isPowerOfThree(int n) {
+       double n_d = (double)n;
+       while(n_d >= 3){
+           n_d = n_d/3.0;
+       } 
+       return n_d == 1.0;
+    }
+}
+
+//without loops
+//by Nkeys 
+
+public class Solution {
+  public boolean isPowerOfThree(int n) {
+    // 1162261467 is 3^19,  3^20 is bigger than int  
+    return ( n>0 &&  1162261467%n==0);
+  }
+}
