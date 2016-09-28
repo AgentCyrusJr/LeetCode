@@ -2,6 +2,13 @@ You are climbing a stair case. It takes n steps to reach to the top.
 
 Each time you can either climb 1 or 2 steps. In how many distinct ways can you climb to the top?
 
+===========================codes==================
+//This is a Fibonacci sequence
+public int climbStairs(int n) {
+        return (int)(1/Math.sqrt(5)*(Math.pow((1+Math.sqrt(5))/2,n+1)-Math.pow((1-Math.sqrt(5))/2,n+1)));
+    }
+    
+=======================================
 //by tony.mu101999
 public class Solution {
     public int climb(int[] results, int n) {
