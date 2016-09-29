@@ -1,0 +1,69 @@
+Given an array of integers, return indices of the two numbers such that they add up to a specific target.
+
+You may assume that each input would have exactly one solution.
+
+Example:
+Given nums = [2, 7, 11, 15], target = 9,
+
+Because nums[0] + nums[1] = 2 + 7 = 9,
+return [0, 1].
+
+==========================codes=========================
+public class Solution {
+    public int[] twoSum(int[] nums, int target) {
+        int[] copy = nums.clone();
+        int[] res = new int[2];
+        int iVal = 0 , jVal = 0;
+        Arrays.sort(copy);
+        int i=0,j = copy.length -1;
+        while(i!=j){
+        	if(copy[i] + copy[j] == target){
+        		iVal = copy[i];
+        		jVal = copy[j];
+        		break;
+        	}
+        	else if(copy[i] + copy[j] >= target){
+        		j--;
+        	}
+        	else
+        		i++;		
+        }
+        boolean flag = true;
+        for(int k = 0 ; k < nums.length ; k++){
+        	if(nums[k] == iVal && flag){
+        		res[0] = k;
+        		flag = false;
+        		continue;
+        	}
+        	else if(nums[k] == jVal){
+        		res[1] = k;
+        	}
+        }
+        Arrays.sort(res);
+        return res;
+    }
+}
+
+==============================
+//1 ms faster
+//by plover
+
+import java.util.HashMap;
+
+public class Solution {
+    public static int[] twoSum(int[] nums, int target) {
+    	HashMap<Integer, Integer> pair=new HashMap<>();
+    	int result[] = new int[2];
+    	for(int i=0;i<nums.length;i++){
+    		if(pair.containsKey(nums[i])){
+    			result[0]=pair.get(nums[i]);
+    			result[1]=i;
+    			return result;
+    		}
+    		else{
+    			pair.put(target-nums[i], i);
+    		}
+    	}
+	return result;
+    }
+}
