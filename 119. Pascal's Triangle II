@@ -1,0 +1,50 @@
+Given an index k, return the kth row of the Pascal's triangle.
+
+For example, given k = 3,
+Return [1,3,3,1].
+
+===============================
+//My codes somehow have TLE problem
+public List<Integer> getRow(int rowIndex) {
+        List<Integer> list = new ArrayList<Integer>();
+        list.add(1);
+        if(rowIndex == 0){
+        	return list;
+        }
+        for(int i = 1; i < rowIndex ; i++){
+        	int val = c(i,rowIndex);
+        	list.add(val);
+        }
+        list.add(1);
+        for(int i : list){
+        	System.out.print(i + ",");
+        }
+        return list;
+    }
+	
+	public int c(int m, int n){
+		if(m == 0 || m == n){
+			return 1;
+		}
+		else{
+			return c(m-1,n-1)+c(m, n-1);
+		}
+	}
+  
+  
+  ===================
+  //by lekzeey 
+  //This solution also uses recursive method just like I did, why this one is accepted when I am not
+  public class Solution {
+    public List<Integer> getRow(int rowIndex) {
+        if (rowIndex == 0) return Arrays.asList(1);
+        List<Integer> previousList = getRow(rowIndex - 1);
+        List<Integer> thisList = new ArrayList<>();
+        for (int i =0; i < previousList.size(); i++) {
+            if (i == 0) thisList.add(1);
+            if (i > 0) thisList.add(previousList.get(i) + previousList.get(i-1));
+            if (i == previousList.size() -1) thisList.add(1);
+        }
+        return thisList;
+    }
+}
