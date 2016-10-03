@@ -13,3 +13,25 @@ public class Solution {
     	return flag;
     }
 }
+
+============================
+//one line solution
+//powerful bit manipulation
+public class Solution {
+    public boolean isPowerOfTwo(int n) {
+	    return (n>0) && ((n & (n-1)) == 0);
+	}
+}
+
+//another feasible solution
+public boolean isPowerOfTwo(int n) {
+	    if(n<=0) return false;
+		int bitCount = 0;
+	    for(int i = 0 ; i < 32 ; i++){
+	    	if((n&1) ==1){
+	    		bitCount++;
+	    	}
+	    	n = n>>1;
+	    }
+	    return bitCount==1;
+	}
