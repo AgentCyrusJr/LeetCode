@@ -1,0 +1,23 @@
+Given an integer n, return the number of trailing zeroes in n!.
+
+Note: Your solution should be in logarithmic time complexity.
+
+========================codes==========================
+public int trailingZeroes(int n) {
+        if(n <= 0) return 0;
+		int k = 0, numOfZero = 0;
+        while(Math.pow(5, k)<=n){
+        	k++;
+        }
+		for(int i = 1; i<k ; i++){
+			numOfZero += n/(int)Math.pow(5, i);
+		}
+		return numOfZero;
+	}
+  
+=====================================
+//Again one line solution
+//by xcv58 
+public int trailingZeroes(int n) {
+    return n == 0 ? 0 : n / 5 + trailingZeroes(n / 5);
+}
