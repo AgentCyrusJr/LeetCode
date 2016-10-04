@@ -6,6 +6,8 @@ exercises for leetcode turn 1, without checking on discussion for a better solut
 
 2nd update to current version on 2016/9/8, with 17 problems accepted.(in Los Angeles)
 
+3rd update to current version on 2016/10/4, with 68 problems accepted, tough time coding in LA.
+
 code written in Java
 
 IDE: eclipse
