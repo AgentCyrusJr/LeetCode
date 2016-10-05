@@ -1,0 +1,61 @@
+We are playing the Guess Game. The game is as follows:
+
+I pick a number from 1 to n. You have to guess which number I picked.
+
+Every time you guess wrong, I'll tell you whether the number is higher or lower.
+
+You call a pre-defined API guess(int num) which returns 3 possible results (-1, 1, or 0):
+
+-1 : My number is lower
+ 1 : My number is higher
+ 0 : Congrats! You got it!
+Example:
+n = 10, I pick 6.
+
+Return 6.
+======================codes====================
+//However, my codes have TLE problem
+/* The guess API is defined in the parent class GuessGame.
+   @param num, your guess
+   @return -1 if my number is lower, 1 if my number is higher, otherwise return 0
+      int guess(int num); */
+
+public class Solution extends GuessGame {
+    public int guessNumber(int n) {
+        int guess = n/2;
+        int g1 = 0, g2 = n+1;
+        int res = this.guess(guess);
+        while(res != 0){
+        	if(res == -1){
+        		g1 = guess;
+        		guess = (guess+g2)/2;
+        		res = guess(guess);	
+        	}else{
+        		g2 = guess;
+        		guess = (guess+g1)/2;
+        		res = guess(guess);
+        	}
+        }
+        return guess;
+    }
+}
+
+===================
+//hillol 
+public class Solution extends GuessGame {
+    public int guessNumber(int n) {
+        int low = 1, high = n;
+        int g = -1;
+        while (low <= high) {
+            g = low + (high-low)/2;
+            if(guess(g) == 0) {
+                break;
+            } else if (guess(g) == 1) {
+                low = g+1;
+            } else {
+                high = g;
+            }
+        }
+        return g;
+    }
+}
