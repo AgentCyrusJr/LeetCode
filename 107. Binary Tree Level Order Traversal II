@@ -13,6 +13,7 @@ return its bottom-up level order traversal as:
   [9,20],
   [3]
 ]
+==========================codes=========================
 //by SOY 
 //BFS
 public class Solution {
@@ -55,3 +56,29 @@ public class Solution {
         return wrapList;
     }
 }
+
+=====================================================
+//Another solution which is more understandable
+public class Solution {
+    public List<List<Integer>> levelOrder(TreeNode root) {
+        List<List<Integer>> result = new ArrayList<>();
+		traversalTree(root, 0, result);
+        Collections.reverse(result);
+		return result;
+	}
+	
+	private void traversalTree(TreeNode node, int level, List<List<Integer>> list){
+		if(node == null){
+			return;
+		}
+		if(list.size() <= level){
+			list.add(new ArrayList<Integer>());
+		}
+		list.get(level).add(node.val);
+		
+		traversalTree(node.left, level+1, list);
+		traversalTree(node.right, level+1, list);
+    }
+}
+
+
