@@ -1,0 +1,41 @@
+Implement atoi to convert a string to an integer.
+
+Hint: Carefully consider all possible input cases. If you want a challenge, please do not see below and ask yourself what are the possible input cases.
+
+Notes: It is intended for this problem to be specified vaguely (ie, no given input specs). You are responsible to gather all the input requirements up front.
+
+
+========================codes====================
+//by frankpeter 
+public class Solution {
+    public int myAtoi(String str) {
+        double result = 0;
+        int POrN = 1;
+        int count = 0;
+        char[] charArr = str.toCharArray();
+        for(char c:charArr){
+            count ++;
+            if( c >='0' && c <='9' ){
+                result *= 10;
+                result += ( c - '0');
+            }else if( c == '-' && count == 1){
+                POrN = -1;
+            }else if( c == '+' && count == 1){
+                POrN =  1;
+            }else if( c == ' ' && count == 1){
+                count --;
+            }else{
+                break;
+            }
+            
+        }
+        if( result > Integer.MAX_VALUE ){
+            if(POrN == 1)
+                return Integer.MAX_VALUE;
+            else
+                return Integer.MIN_VALUE;
+        }else{
+            return (int)(result * POrN);
+        }
+    }
+}
