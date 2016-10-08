@@ -1,0 +1,59 @@
+Given a positive integer, return its corresponding column title as appear in an Excel sheet.
+
+For example:
+
+    1 -> A
+    2 -> B
+    3 -> C
+    ...
+    26 -> Z
+    27 -> AA
+    28 -> AB 
+    
+=======================codes=====================
+public class Solution {
+    public String convertToTitle(int n) {
+    	  String ss = "";  
+        //firstly, I compute the residual of n, 
+        //since, in this case, the problem is 1-based, so, (n+25)%26 makes sense
+        //but be careful of the bound issue
+    	  int residual;
+    	  if(n <= 0) return ss;
+    	  if(n > Integer.MAX_VALUE-25){
+    	      residual = (n-1)%26;
+    	  }else
+    	      residual = (n+25)%26;
+    	  //last char in the string first.
+        ss = ""+(char)('A'+residual);
+        //then I check the num of 26s is n, also be careful of 1-based case  
+    	  while((n-1)/26!=0){
+             //q is the num of 26s n has
+             //in this case, for example, 52 has only one 26, because there is a residual of 26(which to be precise 26-1) at the beginning
+    		     int q = (n-1)/26;
+             //if q greater than or equal to 26, which means n has more than two digits
+             //I iteratively get its last digit value by int rq = (q+25)%26;
+    		     if(q>=26){
+    			      int rq = (q+25)%26;
+    		        ss = "" + (char)('A'+rq)+ss;
+    		     }else
+    			      ss = "" + (char)('A'+q-1)+ss;
+    		     n = (n-1)/26;
+         }
+    	   return ss;
+    }
+}
+
+==================================
+//It is always more excited than sad when seeing other's codes much easier and faster
+//by Michael_Facebooker
+public class Solution {
+public String convertToTitle(int n) {
+    String res = "";
+    while(n != 0) {
+        char ch = (char)((n - 1) % 26 + 65);
+        n = (n - 1) / 26;
+        res = ch + res;
+    }
+    return res;
+}
+}
