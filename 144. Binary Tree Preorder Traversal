@@ -1,0 +1,68 @@
+Given a binary tree, return the preorder traversal of its nodes' values.
+
+For example:
+Given binary tree {1,#,2,3},
+   1
+    \
+     2
+    /
+   3
+return [1,2,3].
+
+Note: Recursive solution is trivial, could you do it iteratively?
+=========================code=======================
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+ //This is a recursive solution
+public class Solution {
+    List<Integer> list = new ArrayList<Integer>();
+	public List<Integer> preorderTraversal(TreeNode root) {
+        if(root == null) return list;
+        else{
+        	list.add(root.val);
+        	this.preorderTraversal(root.left);
+        	this.preorderTraversal(root.right);
+        }
+        return list;
+    }
+}
+
+=======================
+//by thalaivva
+public class Solution {
+    public List<Integer> preorderTraversal(TreeNode root) {
+        
+        /* Morris preorder traversal O(n) time & O(1) space */
+        List<Integer> list = new ArrayList<>();
+        TreeNode curr = root;
+        while(curr!=null){
+            if(curr.left == null){
+                list.add(curr.val);
+                curr = curr.right;
+            }else{
+                TreeNode predecessor = curr.left;
+                while(predecessor.right!=null && predecessor.right!=curr){
+                    predecessor = predecessor.right;
+                }
+                if(predecessor.right == null){
+                    predecessor.right = curr;
+                    list.add(curr.val);
+                    curr = curr.left;
+                    
+                }else{
+                    predecessor.right = null;
+                    
+                    curr = curr.right;
+                }
+            }
+        }
+        return list;
+    }
+}
