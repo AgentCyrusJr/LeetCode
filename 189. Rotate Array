@@ -1,0 +1,36 @@
+Rotate an array of n elements to the right by k steps.
+
+For example, with n = 7 and k = 3, the array [1,2,3,4,5,6,7] is rotated to [5,6,7,1,2,3,4].
+
+Note:
+Try to come up as many solutions as you can, there are at least 3 different ways to solve this problem.
+
+=======================codes=======================
+public class Solution {
+    public void rotate(int[] nums, int k) {
+		k = k%nums.length;
+		int[] A = new int[k];
+		int[] B = new int[nums.length-k];
+		for(int i = 0 ; i < nums.length-k ; i++){
+			B[i] = nums[i];
+		}
+		for(int j = nums.length-k; j < nums.length ; j++){
+			A[j+k-nums.length] = nums[j];
+		}
+		System.arraycopy(A, 0, nums, 0, A.length);
+		System.arraycopy(B, 0, nums, A.length, B.length);
+//		for(int i : nums){
+//			System.out.println(i);
+//		}
+}
+}
+
+==============================
+//by wtsanshou 
+public void rotate(int[] nums, int k) {
+        int n = nums.length;
+        k = k%n;
+        int[] temp = Arrays.copyOfRange(nums, 0, n-k);
+        System.arraycopy(nums, n-k, nums, 0, k);
+        System.arraycopy(temp, 0, nums, k, n-k);
+    }
