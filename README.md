@@ -8,6 +8,8 @@ exercises for leetcode turn 1, without checking on discussion for a better solut
 
 3rd update to current version on 2016/10/4, with 68 problems accepted, tough time coding in LA.
 
+4th update to current version on 2016/10/9, hit 100 accepted. Smash it! 
+
 code written in Java
 
 IDE: eclipse
