@@ -1,0 +1,54 @@
+Given two non-negative numbers num1 and num2 represented as string, return the sum of num1 and num2.
+
+Note:
+
+The length of both num1 and num2 is < 5100.
+Both num1 and num2 contains only digits 0-9.
+Both num1 and num2 does not contain any leading zero.
+You must not use any built-in BigInteger library or convert the inputs to integer directly.
+==========================code==========================
+public class Solution {
+    public String addStrings(String num1, String num2) {
+		if(num1.length()>=num2.length()){
+			String temp = num1;
+			num1 = num2;
+			num2 = temp;
+		}
+		String res = "";
+		int add = 0;
+		int digit = 0;
+		int i = 1;
+		while(num1.length()!=0 && num2.length()!=0){
+			add = Integer.parseInt(""+num1.charAt(num1.length()-1))+Integer.parseInt(""+num2.charAt(num2.length()-1))+digit;
+			if(add>=10){
+				digit = 1;
+				add = add%10;
+			}else
+				digit = 0;
+			res = add + res +"";
+			if(num1.length()==1 || num2.length() == 1){
+				break;
+			}
+			num1 = num1.substring(0, num1.length()-i);
+			num2 = num2.substring(0, num2.length()-i);
+		}
+		if(num1.length()==1 && num2.length()>1){
+			num2 = num2.substring(0, num2.length()-1);
+			while(num2.length()!=0){
+				int num = Integer.parseInt(""+num2.charAt(num2.length()-1))+digit;
+				if(num==10){
+					digit = 1;
+					res = 0 + res;
+				}else{
+					digit = 0;
+					res = num + res;
+				}
+				num2 = num2.substring(0, num2.length()-1);	
+			}
+		}
+		if(digit == 1){
+			res = 1 + res;
+		}
+		return res;	
+	}
+}
