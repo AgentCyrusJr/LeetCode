@@ -1,4 +1,4 @@
-# leetcodeR1
+# Leetcode Turn One
 
 exercises for leetcode turn 1, without checking on discussion for a better solution at most of cases.
 
