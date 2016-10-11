@@ -1,0 +1,75 @@
+You are playing the following Bulls and Cows game with your friend: You write down a number and ask your friend to guess what the number is. Each time your friend makes a guess, you provide a hint that indicates how many digits in said guess match your secret number exactly in both digit and position (called "bulls") and how many digits match the secret number but locate in the wrong position (called "cows"). Your friend will use successive guesses and hints to eventually derive the secret number.
+
+For example:
+
+Secret number:  "1807"
+Friend's guess: "7810"
+Hint: 1 bull and 3 cows. (The bull is 8, the cows are 0, 1 and 7.)
+Write a function to return a hint according to the secret number and friend's guess, use A to indicate the bulls and B to indicate the cows. In the above example, your function should return "1A3B".
+
+Please note that both secret number and friend's guess may contain duplicate digits, for example:
+
+Secret number:  "1123"
+Friend's guess: "0111"
+In this case, the 1st 1 in friend's guess is a bull, the 2nd or 3rd 1 is a cow, and your function should return "1A1B".
+======================code=====================
+public class Solution {
+    public String getHint(String secret, String guess) {
+        HashMap<Character, Integer> map = new HashMap<Character, Integer>();
+		for(char ch : secret.toCharArray()){
+        	map.put(ch, map.getOrDefault(ch, 0)+1);
+        }
+		int count = 0;
+		for(char ch : guess.toCharArray()){
+			int num = map.getOrDefault(ch,0)-1;
+			map.put(ch, num);
+			if(num>=0){
+				count++;
+			}
+		}
+		int ca = 0, cb = count;
+		for(int i = 0 ; i < secret.length(); i++){
+			if(secret.charAt(i)==guess.charAt(i)){
+				ca++; cb--;
+			}
+		}
+		return ca+"A"+cb+"B";
+    }
+}
+
+================================
+//Using a mask array to determine cows count
+//Eg.  secret = "2134", guess = "1111", then the mask array should be [[0][0][1][1][1][0][0][0][0][0]
+                                                                       [0][3][0][0][0][0][0][0][0][0]], where the bull will not count in                                                                                                         this array  
+//by tony.mu101999                                                                        
+public class Solution {
+    public String getHint(String secret, String guess) {
+        if (secret.length() == 0 || guess.length() == 0) {
+            return "0A0B";
+        }
+        int bulls = 0, cows = 0;
+        char[] secretChars = secret.toCharArray();
+        char[] guessChars = guess.toCharArray();
+        int[][] mask = new int[2][10];
+        for (int i = 0; i < secretChars.length; i += 1) {
+            // check if it's a bull
+            if (secretChars[i] == guessChars[i]) {
+                bulls += 1;
+            } else {
+                int s = secretChars[i] - 48;
+                int g = guessChars[i] - 48;
+                mask[0][s] += 1;
+                mask[1][g] += 1;
+            }
+        }
+        for (int i = 0; i < mask[0].length; i += 1) {
+            cows += Math.min(mask[0][i], mask[1][i]);
+        }
+        StringBuilder sb = new StringBuilder();
+        sb.append(bulls);
+        sb.append("A");
+        sb.append(cows);
+        sb.append("B");
+        return sb.toString();
+    }
+}
