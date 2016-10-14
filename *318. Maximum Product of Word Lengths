@@ -15,6 +15,7 @@ Given ["a", "aa", "aaa", "aaaa"]
 Return 0
 No such pair of words.
 =====================codes===================
+//by HelloWorld123456 
 //explanation:
 int has 32bits,but lower case letters only has 26 .we can use the lowest 26 bit of int indicates that the word has how many kinds of lower case letters .If the lowest bit of int is 1,it indicates the word has lower case letter 'a'.......the order of lower case letter is from right to left,like zyx.....cba.so value[i] indicates the condition of the word i having how many kinds of lower case letters .
 
