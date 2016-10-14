@@ -1,0 +1,45 @@
+The string "PAYPALISHIRING" is written in a zigzag pattern on a given number of rows like this: (you may want to display this pattern in a fixed font for better legibility)
+
+P   A   H   N
+A P L S I I G
+Y   I   R
+And then read line by line: "PAHNAPLSIIGYIR"
+Write the code that will take a string and make this conversion given a number of rows:
+
+string convert(string text, int nRows);
+convert("PAYPALISHIRING", 3) should return "PAHNAPLSIIGYIR".
+=================codes===================
+public class Solution {
+    public String convert(String s, int numRows) {
+        if(numRows == 1) return s;
+        char[][] string = new char[numRows][s.length()];
+        int index_i=0, index_j=0;
+        int count = 0;
+        for(int i = 0; i < s.length(); i= i +numRows-1){
+        	for(int j = 0 ; j < numRows; j ++){
+        		if(count != s.length()){
+        			string[j][i] = s.charAt(count); 
+            		count++;
+            		index_j = j; index_i = i;
+        		}
+        	}
+        	for(int k = 1 ; k < numRows-1; k++){
+        		if(count != s.length()){
+        			string[index_j-k][index_i+k] = s.charAt(count);
+            		count++;
+        		}
+        		
+        	}
+        	
+        }
+        String result="";
+        for(int i = 0; i< numRows; i++){
+        	for(int j = 0; j<s.length(); j++){
+        		if(string[i][j]!=0){
+        			result = result + string[i][j];
+        		}
+        	}
+        }
+        return result;
+    }
+}
