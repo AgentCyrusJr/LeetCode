@@ -1,0 +1,21 @@
+Given an array of integers, return the 3rd Maximum Number in this array, if it doesn't exist, return the Maximum Number. The time complexity must be O(n) or less.
+=========================codes======================
+public class Solution {
+    public int thirdMax(int[] nums) {
+        Arrays.sort(nums);
+        ArrayList<Integer> al = new ArrayList<Integer>();
+        al.add(nums[nums.length-1]);
+        for(int i = nums.length-2 ; i >= 0 ; i--){
+        	
+        	if(al.contains(nums[i])){
+        		continue;
+        	}else{
+        		al.add(nums[i]);
+        	}
+        }
+        if(al.size()<3){
+        	return al.get(0);
+        }else
+        	return al.get(2);
+    }
+}
