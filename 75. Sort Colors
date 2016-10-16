@@ -13,6 +13,7 @@ First, iterate the array counting number of 0's, 1's, and 2's, then overwrite ar
 
 Could you come up with an one-pass algorithm using only constant space?
 ===================codes==================
+//by beijingyangbo 
 //rather straight forward solution with two-pass algo
 public class Solution {
     public void sortColors(int[] nums) {
@@ -38,4 +39,26 @@ public class Solution {
         	nums[z] = 2;
         }
     }
+}
+====================
+//one pass solution using swap
+public void sortColors(int[] nums) {
+    if(nums == null) return ;
+    int zero = 0, second = nums.length - 1;
+    int cur = 0;
+    while(cur <= second) {
+        if(nums[cur] == 0) {
+            swap(nums, cur++, zero++);
+        } else if(nums[cur] == 1) {
+            cur++;
+        } else if(nums[cur] == 2) {
+            swap(nums, cur, second--);
+        }
+    }
+}
+
+private void swap(int []nums, int i, int j) {
+    int t = nums[i];
+    nums[i] = nums[j];
+    nums[j] = t;
 }
