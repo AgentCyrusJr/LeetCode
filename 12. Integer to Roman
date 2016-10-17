@@ -1,0 +1,63 @@
+Given an integer, convert it to a roman numeral.
+
+Input is guaranteed to be within the range from 1 to 3999.
+====================codes=====================
+public class Solution {
+    HashMap<Integer, String> roman = new HashMap<Integer, String>();
+    public Solution(){
+        roman.put(1, "I");
+		roman.put(5, "V");
+		roman.put(9, "IX");
+		roman.put(10, "X");
+		roman.put(50, "L");
+		roman.put(90, "XC");
+		roman.put(100, "C");
+		roman.put(500, "D");
+		roman.put(900, "CM");
+		roman.put(1000, "M");
+    }
+	public String intToRoman(int num) {
+		
+		String s = "";
+		int count = 0;
+		while(num != 0){
+			int r = num%10;
+			num = num/10;
+			count++;
+			if(r==0) continue;
+			r = r*(int)Math.pow(10, count-1);
+			s = this.convert(r)+s;	
+		}
+		return s;
+    }
+	 
+	public String convert(int i){
+		String res = "";
+		if(roman.containsKey(i)){
+			return roman.get(i);
+		}else{
+			int ic=i, count=0;
+			while(ic/10!=0){
+				ic = ic/10;
+				count++;
+			}
+			if(ic-5>0){
+				res = this.convert(5*(int)Math.pow(10, count))+this.convert(i-5*(int)Math.pow(10, count));
+			}else if(ic-5 <0 && ic!=4)
+				res = this.convert((int)Math.pow(10, count))+this.convert(i-(int)Math.pow(10, count));
+			else
+				res = this.convert((int)Math.pow(10, count))+this.convert(5*(int)Math.pow(10, count));
+		}
+		return res;
+	}
+}
+
+=======================
+//by fabrizio3 
+public static String intToRoman(int num) {
+    String M[] = {"", "M", "MM", "MMM"};
+    String C[] = {"", "C", "CC", "CCC", "CD", "D", "DC", "DCC", "DCCC", "CM"};
+    String X[] = {"", "X", "XX", "XXX", "XL", "L", "LX", "LXX", "LXXX", "XC"};
+    String I[] = {"", "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX"};
+    return M[num/1000] + C[(num%1000)/100] + X[(num%100)/10] + I[num%10];
+}
