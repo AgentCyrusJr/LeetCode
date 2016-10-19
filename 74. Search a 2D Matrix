@@ -13,14 +13,20 @@ Consider the following matrix:
 ]
 Given target = 3, return true.
 =================codes==================
-public class Solution {
-    public boolean searchMatrix(int[][] matrix, int target) {
-        int length = matrix.length;
+public boolean searchMatrix(int[][] matrix, int target) {
+		int low = 0, high = matrix.length-1;
 		boolean flag = false;
-		for(int i = 0 ; i < length;i++){
-			flag = Arrays.binarySearch(matrix[i], target)>=0?true:false;
-			if(flag) return flag;
+		while(low <= high){
+			int mid = (low + high)/2;
+			System.out.println(mid);
+			if(target < matrix[mid][0]){
+				high = mid-1;
+			}else if(target > matrix[mid][matrix[mid].length-1]){
+				low = mid+1;
+			}else{
+				flag = Arrays.binarySearch(matrix[mid], target)>=0?true:false;
+				break;
+			}
 		}
-		return flag;
+		return flag;	
     }
-}
