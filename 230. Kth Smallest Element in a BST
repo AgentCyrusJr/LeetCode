@@ -1,0 +1,56 @@
+230. Kth Smallest Element in a BST   QuestionEditorial Solution  My Submissions
+Total Accepted: 69967
+Total Submissions: 171014
+Difficulty: Medium
+Contributors: Admin
+Given a binary search tree, write a function kthSmallest to find the kth smallest element in it.
+
+Note: 
+You may assume k is always valid, 1 ≤ k ≤ BST's total elements.
+
+Follow up:
+What if the BST is modified (insert/delete operations) often and you need to find the kth smallest frequently? How would you optimize the kthSmallest routine?
+
+Hint:
+
+Try to utilize the property of a BST.
+What if you could modify the BST node's structure?
+The optimal runtime complexity is O(height of BST).
+=====================codes====================
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+public class Solution {
+    private ArrayList<Integer> al = new ArrayList<Integer>();
+	public int kthSmallest(TreeNode root, int k) {
+        this.inorder(root);
+        return al.get(k-1);
+    }
+
+	public void inorder(TreeNode root){
+		if(root == null) return;
+		else{
+			this.inorder(root.left);
+			al.add(root.val);
+			this.inorder(root.right);
+		}
+	}
+}
+====================
+//by bbccyy1 
+public class Solution {
+    int ct = 0; 
+    public int kthSmallest(TreeNode root, int k) {
+        if(root == null) return 0;            
+        int res = kthSmallest(root.left, k);  
+        if(ct == k) return res;               
+        else if(++ct == k) return root.val;  
+        return kthSmallest(root.right, k);  
+    }
+}
