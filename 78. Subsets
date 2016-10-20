@@ -48,7 +48,7 @@ public List<List<Integer>> subsets(int[] nums) {
         return list;
     }
 ===============
-Idea in explanation
+Idea in explanation by leet_nik 
 
  Number of subsets for {1 , 2 , 3 } = 2^3 .
  why ? 
