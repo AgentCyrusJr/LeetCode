@@ -1,0 +1,52 @@
+Given a triangle, find the minimum path sum from top to bottom. Each step you may move to adjacent numbers on the row below.
+
+For example, given the following triangle
+[
+     [2],
+    [3,4],
+   [6,5,7],
+  [4,1,8,3]
+]
+The minimum path sum from top to bottom is 11 (i.e., 2 + 3 + 5 + 1 = 11).
+==================codes================
+Note:
+Bonus point if you are able to do this using only O(n) extra space, where n is the total number of rows in the triangle.
+
+public class Solution {
+    public int minimumTotal(List<List<Integer>> triangle) {
+		if(triangle.isEmpty()) return 0;
+		int min = Integer.MAX_VALUE;
+		for(int i = 1; i< triangle.size(); i++){
+			for(int j = 0 ; j < triangle.get(i).size(); j++){
+				if(j == 0){
+					triangle.get(i).set(j, triangle.get(i).get(j)+triangle.get(i-1).get(j));
+				}else if(j == triangle.get(i).size()-1)
+					triangle.get(i).set(j, triangle.get(i).get(j)+triangle.get(i-1).get(j-1));
+				else
+					triangle.get(i).set(j, triangle.get(i).get(j)+Math.min(triangle.get(i-1).get(j-1), triangle.get(i-1).get(j)));
+			}
+		}
+		for(int i : triangle.get(triangle.size()-1)){
+			if(min>i){
+				min = i;
+			}
+		}
+		return min;
+    }
+}
+
+==========================
+//by peng4
+public int minimumTotal(List<List<Integer>> trgl) {
+    int sz = trgl.size();
+    int[] results = new int[sz+1];
+    
+    for(int i=sz-1; i>=0; i--) {
+        List<Integer> tmp = trgl.get(i);
+        
+        for(int j=0; j<tmp.size(); j++) {
+            results[j] = Math.min(results[j], results[j+1]) + tmp.get(j);
+        }
+    }
+    return results[0];
+}
