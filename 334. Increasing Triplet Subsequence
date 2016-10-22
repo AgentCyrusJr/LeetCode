@@ -1,0 +1,57 @@
+Given an unsorted array return whether an increasing subsequence of length 3 exists or not in the array.
+
+Formally the function should:
+Return true if there exists i, j, k 
+such that arr[i] < arr[j] < arr[k] given 0 ≤ i < j < k ≤ n-1 else return false.
+Your algorithm should run in O(n) time complexity and O(1) space complexity.
+
+Examples:
+Given [1, 2, 3, 4, 5],
+return true.
+
+Given [5, 4, 3, 2, 1],
+return false.
+=================codes===================
+public class Solution {
+    public boolean increasingTriplet(int[] nums) {
+        if(nums.length<3) return false;
+//		boolean flag = false;
+		List<Integer> list = new ArrayList<Integer>();
+        for(int i = 0 ; i < nums.length; i++){
+        	if(list.size()==0){
+        		list.add(nums[i]);
+        	}else{
+        		
+        		int count = 0;
+        		if(nums[i]<=list.get(list.size()-1-count)){
+        			while((list.size()-1-count >= 0) && (nums[i]<=list.get(list.size()-1-count))){
+            			count++;
+            		}
+            		if(list.size()-1-count < 0){
+            			list.set(0, nums[i]);
+            		}else{
+            			list.set(list.size()-count, nums[i]);
+            		}
+            		count = 0;
+        		}else{
+        			list.add(nums[i]);
+        		}
+        		
+        		if(list.size()==3) return true;
+        	}
+        }
+        return false;
+    }
+}
+========================
+//by sim5
+public boolean increasingTriplet(int[] nums) {
+        // start with two largest values, as soon as we find a number bigger than both, while both have been updated, return true.
+        int small = Integer.MAX_VALUE, big = Integer.MAX_VALUE;
+        for (int n : nums) {
+            if (n <= small) { small = n; } // update small if n is smaller than both
+            else if (n <= big) { big = n; } // update big only if greater than small but smaller than big
+            else return true; // return if you find a number bigger than both
+        }
+        return false;
+    }
