@@ -60,3 +60,32 @@ public class Solution {
         return list;
     }
 }
+===============
+//by star1993 
+public class Solution {
+    public List<Integer> findAnagrams(String s, String p) {
+        List<Integer> res = new ArrayList<>();
+        if(p.length() > s.length())
+            return res;
+        char[] sStr = s.toCharArray();
+        int[]map = new int[26];
+        for(char ch:p.toCharArray())
+            map[ch - 'a']++;
+        int n = s.length(), m = p.length();;
+        int j = 0;
+        for(j=0; j<m-1; j++)
+            map[sStr[j] - 'a']--;
+        for(int i=0; j<n; i++, j++){
+            map[sStr[j] - 'a']--;
+            if(check(map))
+                res.add(i);
+            map[sStr[i] - 'a']++;
+        }
+        return res;
+    }
+    public boolean check(int[]map){
+        for(int n:map)
+            if(n > 0)   return false;
+        return true;
+    }
+}
