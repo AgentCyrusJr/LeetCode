@@ -10,6 +10,8 @@ exercises for leetcode turn 1, without checking on discussion for a better solut
 
 4th update to current version on 2016/10/9, hit 100 accepted. Smash it! 
 
+5th update to current version on 2016/10/23, 155 AC, 35 for this week. It is hard to reach 40 per week.
+
 code written in Java
 
 IDE: eclipse
