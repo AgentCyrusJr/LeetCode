@@ -1,0 +1,70 @@
+Write a program to find the n-th ugly number.
+
+Ugly numbers are positive numbers whose prime factors only include 2, 3, 5. For example, 1, 2, 3, 4, 5, 6, 8, 9, 10, 12 is the sequence of the first 10 ugly numbers.
+
+Note that 1 is typically treated as an ugly number.
+===============codes===============
+//TLE too slow
+public class Solution {
+    public int nthUglyNumber(int n) {
+        int count = 1, res = 1;
+		while(count< n){
+			res++;
+        	if(this.isPartPrime(res)){
+        		count++;	
+        	}
+        }
+		return res;
+    } 
+	
+	public boolean isPartPrime(int num){
+		boolean flag = false;
+		if(num == 1){
+			flag = true;
+		}else if(num%2 == 0){
+			flag = isPartPrime(num/2);
+		}else if(num%3 == 0){
+			flag = isPartPrime(num/3);
+		}else if(num%5 == 0){
+			flag = isPartPrime(num/5);
+		}else{
+			flag = false;
+		}
+		return flag;
+			
+	}
+}
+
+============================
+//by akash8
+if( n == 0 || n == 1) {
+        return n;
+    }
+    
+    int pointer2 = 0;
+    int pointer3 = 0;
+    int pointer5 = 0;
+    
+    int[] result = new int[n];
+    result[0] = 1;
+
+    int i = 1, min =0;
+    while ( i < n ) {
+        min = Math.min(result[pointer2]*2,Math.min(result[pointer3]*3,result[pointer5]*5));
+        
+        if(min == result[pointer2]*2) {
+            pointer2++;
+        }
+        if(min == result[pointer3]*3) {
+            pointer3++;
+        }
+        if(min == result[pointer5]*5) {
+            pointer5++;
+        }
+        result[i] = min;
+     
+        i++;
+        
+    }
+    return result[n-1];
+}
