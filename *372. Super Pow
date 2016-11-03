@@ -1,0 +1,48 @@
+Your task is to calculate ab mod 1337 where a is a positive integer and b is an extremely large positive integer given in the form of an array.
+
+Example1:
+
+a = 2
+b = [3]
+
+Result: 8
+Example2:
+
+a = 2
+b = [1,0]
+
+Result: 1024
+
+Explanation by example:
+
+a5347
+= a5000 * a300 * a40 * a7
+= (a1000)5 * (a100)3 * (a10)4 * a7
+= (((a10)10)10)5 * ((a10)10)3 * (a10)4 * a7
+
+Computing that from back to front is straightforward (or straightbackward?).
+===========codes=========
+//by readman
+public class Solution {
+    public int superPow(int a, int[] b) {
+        int res = 1;
+        int p = a;
+        for(int i = b.length - 1; i >=0; i--){
+            res = res * pow(p,b[i],1337)%1337;
+            p = pow(p, 10,1337);
+        }
+        return res;
+    }
+    public int pow(int a, int b, int c) {
+        long res = 1;
+        long p = a;
+        while (b > 0) {
+            if ((b & 1) == 1) { 
+                res = (res * p) % c;
+            }
+            p = (p * p) % c;
+            b >>= 1;
+        }
+        return (int)(res % c);
+    }
+}
