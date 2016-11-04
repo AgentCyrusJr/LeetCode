@@ -1,0 +1,24 @@
+Given an array where elements are sorted in ascending order, convert it to a height balanced BST.
+
+==============codes=============
+//by medi
+public TreeNode sortedArrayToBST(int[] nums) {
+        return sortedArrayToBST_M(nums, 0, nums.length);
+    }
+    
+    public TreeNode sortedArrayToBST_M(int[] nums, int s, int e) {
+    	
+    	if(s>=e)
+    		return null;
+      	
+    	
+    	
+    	int mid_index = (s+e)/2;
+    	
+    	TreeNode tn= new TreeNode(nums[mid_index]);
+    	
+    	tn.right=sortedArrayToBST_M(nums, mid_index+1, e);
+    	tn.left = sortedArrayToBST_M(nums, s, mid_index);
+    	 	
+		return tn;
+	}
