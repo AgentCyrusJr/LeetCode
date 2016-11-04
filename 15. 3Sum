@@ -42,7 +42,7 @@ public class Solution {
 }
 
 ================
-//by shpolsky 
+//by StevenCooks  
 public List<List<Integer>> threeSum(int[] num) {
     Arrays.sort(num);
     List<List<Integer>> res = new LinkedList<>(); 
@@ -55,9 +55,16 @@ public List<List<Integer>> threeSum(int[] num) {
                     while (lo < hi && num[lo] == num[lo+1]) lo++;
                     while (lo < hi && num[hi] == num[hi-1]) hi--;
                     lo++; hi--;
-                } else if (num[lo] + num[hi] < sum) lo++;
-                else hi--;
-           }
+                } else if (num[lo] + num[hi] < sum) {
+                    // improve: skip duplicates
+                    while (lo < hi && num[lo] == num[lo+1]) lo++;
+                    lo++;
+                } else {
+                    // improve: skip duplicates
+                    while (lo < hi && num[hi] == num[hi-1]) hi--;
+                    hi--;
+                }
+            }
         }
     }
     return res;
