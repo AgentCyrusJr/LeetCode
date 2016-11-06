@@ -40,12 +40,25 @@ public class Solution {
 	}
 }
 ==========================
-// by StefanPochmann
-public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
-    if (root == null || root == p || root == q) return root;
-    TreeNode left = lowestCommonAncestor(root.left, p, q);
-    TreeNode right = lowestCommonAncestor(root.right, p, q);
-    return left == null ? right : right == null ? left : root;
+// by IlievskiV 
+public static TreeNode lowestCommonAncestor(TreeNode root, TreeNode node1, TreeNode node2) {
+
+	if (root == null || root == node1 || root == node2)
+		return root;
+
+	TreeNode leftSearch = lowestCommonAncestor(root.left, node1, node2);
+	TreeNode rightSearch = lowestCommonAncestor(root.right, node1, node2);
+
+	if (leftSearch != null && rightSearch != null) {
+		return root;
+	} else if (leftSearch != null && rightSearch == null) {
+		return leftSearch;
+	} else if (leftSearch == null && rightSearch != null) {
+		return rightSearch;
+	} else {
+		return null;
+	}
+
 }
 
 // by lotuseater 
