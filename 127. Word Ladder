@@ -11,6 +11,7 @@ wordList = ["hot","dot","dog","lot","log"]
 As one shortest transformation is "hit" -> "hot" -> "dot" -> "dog" -> "cog",
 return its length 5.
 ===============codes=================
+// This problem is basically the same as 433. Minimum Genetic Mutation 
 public int ladderLength(String beginWord, String endWord, Set<String> wordList) {
     wordList.add(endWord);
     Queue<String> queue = new LinkedList<String>();
