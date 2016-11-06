@@ -11,6 +11,35 @@ According to the definition of LCA on Wikipedia: “The lowest common ancestor i
          7   4
 For example, the lowest common ancestor (LCA) of nodes 5 and 1 is 3. Another example is LCA of nodes 5 and 4 is 5, since a node can be a descendant of itself according to the LCA definition.
 ==============codes=============
+public class Solution {
+    public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
+		if(root==null || p==null || q==null) return null; 
+		List<TreeNode> path1 = new ArrayList<TreeNode>();
+	    List<TreeNode> path2 = new ArrayList<TreeNode>();
+	    TreeNode n1 = root, n2 = root;
+	    findPath(n1, p, path1);
+	    findPath(n2, q, path2);
+	    int i = path1.size()-1;
+	    int j = path2.size()-1;
+	    while(i>=0 && j>=0 && path1.get(i).val == path2.get(j).val){
+	    	i--;j--;
+	    }
+	    return path1.get(i+1);
+    }
+	
+	public boolean findPath(TreeNode root, TreeNode n, List<TreeNode> list) {
+	    if (root == null) {
+	        return false;
+	    }
+	    
+	    if (root == n || findPath(root.left, n, list) || findPath(root.right, n, list)) {
+	        list.add(root);
+	        return true;
+	    }
+	    return false;
+	}
+}
+==========================
 // by StefanPochmann
 public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
     if (root == null || root == p || root == q) return root;
