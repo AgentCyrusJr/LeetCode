@@ -1,0 +1,94 @@
+Given n points in the plane that are all pairwise distinct, a "boomerang" is a tuple of points (i, j, k) such that the distance between i and j equals the distance between i and k (the order of the tuple matters).
+
+Find the number of boomerangs. You may assume that n will be at most 500 and coordinates of points are all in the range [-10000, 10000] (inclusive).
+
+Example:
+Input:
+[[0,0],[1,0],[2,0]]
+
+Output:
+2
+
+Explanation:
+The two boomerangs are [[1,0],[0,0],[2,0]] and [[1,0],[2,0],[0,0]]
+===================codes===================
+public class Solution {
+    public int numberOfBoomerangs(int[][] points) {
+        HashMap<int[], List<Integer>> map = new HashMap<int[], List<Integer>>();
+        ArrayList<Integer> list;
+        for(int i = 0 ; i<points.length; i++){
+        	list = new ArrayList<Integer>();
+        	for(int j = 0 ; j < points.length ; j ++ ){
+        		if(j == i) continue;
+        		list.add(this.distance(points[i], points[j]));
+        	}
+        	map.put(points[i], list);
+        }
+//        for(List<Integer> ll : map.values()){
+//        	System.out.println();
+//        	for(int i : ll){
+//        		System.out.print(i+",");
+//        	}
+//        	System.out.println();
+//        }
+        
+        int count = 0;
+        for(List<Integer> ll : map.values()){
+        	HashMap<Integer, Integer> m = new HashMap<Integer, Integer>();
+        	for(int i : ll){
+        		if(m.containsKey(i)){
+        			m.put(i, m.get(i)+1);
+        		}else
+        			m.put(i, 1);
+        	}
+        	for(int i : m.values()){
+        		if(i>=2){
+        			count = count + 2*c(i);
+        		}
+        	}
+//        	for(int i : m.values()){
+//        		System.out.println(i);
+//        	}
+
+        }
+        return count;
+    }
+	
+	public int distance(int[] p1, int[] p2){
+		return (p1[0]-p2[0])*(p1[0]-p2[0])+(p1[1]-p2[1])*(p1[1]-p2[1]);
+	}
+	
+	public int c(int n){
+		int res = 1;
+		for(int i = n ; i >= n-1; i--){
+		    res = res*i;
+		}
+		return res/2;
+	}
+}
+
+
+=========================
+//by Shevchenko_7 
+//The main principal is the same
+public int numberOfBoomerangs(int[][] points) {
+        if (points == null || points.length < 3) return 0;
+        int res = 0;
+        
+        for (int i = 0; i < points.length; i++) {
+            Map<Integer, Integer> map = new HashMap<>(); // 每个点计算一次
+            for (int j = 0; j < points.length; j++) {
+                if (i == j) continue;
+                int dis = getDis(points[i], points[j]);
+                if (map.containsKey(dis)) res += 2 * map.get(dis);
+                //update
+                map.put(dis, map.containsKey(dis) ? map.get(dis) + 1 : 1);
+            }
+        }
+        return res;
+    }
+    private int getDis(int[] a, int[] b) {
+        int dx = a[0] - b[0];
+        int dy = a[1] - b[1];
+        return dx * dx + dy * dy;
+    }
