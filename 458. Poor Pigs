@@ -1,0 +1,30 @@
+There are 1000 buckets, one and only one of them contains poison, the rest are filled with water. They all look the same. If a pig drinks that poison it will die within 15 minutes. What is the minimum amount of pigs you need to figure out which bucket contains the poison within one hour.
+
+Answer this question, and write an algorithm for the follow-up general case.
+
+Follow-up:
+
+If there are n buckets and a pig drinking poison will die within m minutes, how many pigs (x) you need to figure out the "poison" bucket within p minutes? There is exact one bucket with poison.
+=====================codes=================
+public int poorPigs(int buckets, int minutesToDie, int minutesToTest) {
+        int status = minutesToTest/minutesToDie + 1;
+        int num_of_pig = 0;
+        while(Math.pow(status, num_of_pig) < buckets) {num_of_pig++;}
+        return num_of_pig;
+    }
+    
+    
+==================
+This is a Math problem.
+The table below shows how it works, n denotes the pig, and s is associated with each status of the pig. 
+for each pig, there is t+1 status, which is death in 1st, 2nd, 3rd, 4th time slot and live eventually. 
+Therefore the question is asking for how many pigs can denote 1000 in 5-nary number system.
+======================
+    n1  n2  n3  n4  n5
+s1  1   0   0   1   0
+s2  0   0   0   0   1   
+s3  0   1   0   0   0
+s4  0   0   0   0   0
+s5  0   0   1   0   0
+======================
+In this case, the number is 13012 in 5-nary number system. 
