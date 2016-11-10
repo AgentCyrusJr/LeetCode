@@ -1,0 +1,48 @@
+Suppose you have a random list of people standing in a queue. Each person is described by a pair of integers (h, k), where h is the height of the person and k is the number of people in front of this person who have a height greater than or equal to h. Write an algorithm to reconstruct the queue.
+
+Note:
+The number of people is less than 1,100.
+
+Example
+
+Input:
+[[7,0], [4,4], [7,1], [5,0], [6,1], [5,2]]
+
+Output:
+[[5,0], [7,0], [5,2], [6,1], [4,4], [7,1]]
+==================codes===================
+public class Solution {
+    public int[][] reconstructQueue(int[][] people) {
+    	if(people.length == 0) return people;
+        ArrayList<int[]> list = new ArrayList<int[]>();
+        LinkedList<int[]> llist = new LinkedList<int[]>();
+        for(int[] arr : people){
+        	list.add(arr);
+        }
+        while(!list.isEmpty()){
+        	int max_val = Integer.MIN_VALUE;
+        	int min_key = Integer.MAX_VALUE;
+        	int max_id  = 0;
+        	for(int i = 0; i< list.size(); i++){
+            	if(max_val < list.get(i)[0]){
+            		max_val = list.get(i)[0];
+            		min_key = list.get(i)[1];
+            		max_id  = i;
+            	}else if(max_val == list.get(i)[0]){
+            		if(min_key > list.get(i)[1]){
+            			min_key = list.get(i)[1];
+            			max_id = i;
+            		}
+            	}
+            }
+            llist.add(list.get(max_id)[1], list.get(max_id));
+        	
+        	list.remove(max_id);
+        }
+        int[][] res = new int[people.length][];
+        for(int i = 0 ; i < people.length; i++){
+        	res[i] = llist.get(i);
+        }
+        return res;
+    }
+}
