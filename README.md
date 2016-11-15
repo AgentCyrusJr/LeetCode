@@ -12,6 +12,8 @@ exercises for leetcode turn 1, without checking on discussion for a better solut
 
 5th update to current version on 2016/10/23, 155 AC, 35 for this week. It is hard to reach 40 per week.
 
+6th update to current version on 2016/11/14, 187 AC. You can't tell the feelings.
+
 code written in Java
 
 IDE: eclipse
