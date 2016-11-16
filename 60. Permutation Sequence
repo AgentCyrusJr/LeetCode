@@ -1,0 +1,93 @@
+The set [1,2,3,…,n] contains a total of n! unique permutations.
+
+By listing and labeling all of the permutations in order,
+We get the following sequence (ie, for n = 3):
+
+"123"
+"132"
+"213"
+"231"
+"312"
+"321"
+Given n and k, return the kth permutation sequence.
+
+Note: Given n will be between 1 and 9 inclusive.
+================codes===============
+//TLE problem
+public class Solution {
+    StringBuilder res = new StringBuilder();
+	int count = 0;
+	public String getPermutation(int n, int k) {
+		if(n == 1) return n+"";
+		int ss = 1;
+		int k_valid = 1;
+		int k_copy = k;
+		while(ss<k){
+			k_valid++;
+			ss = ss*k_valid;
+		}
+		int[] nums = new int[k_valid];
+		for(int i = 0 ; i <k_valid; i++ ){
+			nums[i] = n - k_valid+1+i;
+		}
+		List<Integer> integer = new ArrayList<Integer>();
+		boolean[] isVisit = new boolean[n];
+		for(int i = 1 ; i <= n; i++ ){
+			isVisit[i-1] = false;
+		}
+        this.bt(nums, integer, isVisit, k_copy, false);
+        String s = "";
+        for(int i = 1 ; i< n-k_valid+1; i++){
+        	s+=""+i;
+        }
+        return s+res.toString();
+    }
+	
+	public void bt(int[] nums, List<Integer> integer, boolean[] isVisit, int k, boolean flag){
+		if(!flag){
+			if(integer.size() == nums.length){
+				count++;
+				if(count == k){
+					for(int i : integer){
+						res.append(i);
+					}
+					flag = true;
+				}
+				return;
+			}
+			
+			for(int i = 0 ; i < nums.length; i++){
+				if(isVisit[i]==false){
+					isVisit[i]=true;
+					integer.add(nums[i]);
+					this.bt(nums, integer, isVisit, k, flag);
+					isVisit[i]=false;
+					integer.remove(integer.size()-1);
+				}	
+			}
+		}
+		return;
+		
+	}
+}
+
+================
+//BY EdickCoding 
+public class Solution {
+    public String getPermutation(int n, int k) {
+        StringBuilder sb = new StringBuilder();
+        ArrayList<Integer> num = new ArrayList<Integer>();
+        int fact = 1;
+        for (int i = 1; i <= n; i++) {
+            fact *= i;
+            num.add(i);
+        }
+        for (int i = 0, l = k - 1; i < n; i++) {
+            fact /= (n - i);
+            int index = (l / fact);
+            sb.append(num.remove(index));
+            l -= index * fact;
+        }
+        return sb.toString();
+    }
+}
