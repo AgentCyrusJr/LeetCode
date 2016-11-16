@@ -1,0 +1,53 @@
+Implement next permutation, which rearranges numbers into the lexicographically next greater permutation of numbers.
+
+If such arrangement is not possible, it must rearrange it as the lowest possible order (ie, sorted in ascending order).
+
+The replacement must be in-place, do not allocate extra memory.
+
+Here are some examples. Inputs are in the left-hand column and its corresponding outputs are in the right-hand column.
+1,2,3 → 1,3,2
+3,2,1 → 1,2,3
+1,1,5 → 1,5,1
+====================codes==================
+//this solution can not meet the condition, which in my case extra memory has been allocated
+public class Solution {
+    public void nextPermutation(int[] nums) {
+        int last_index = 0; 
+        int last_greater_index = 0;
+    	for(int i = 0 ; i< nums.length-1; i++){
+        	if(nums[i]< nums[i+1]){
+        		last_index = i;
+        	}
+        	if(nums[i+1]>nums[last_index]){
+        		last_greater_index = i+1;
+        	}
+        }
+    	if(last_index == 0 && last_greater_index == 0){
+    		Arrays.sort(nums);
+//    		for(int  i : nums){
+//        		System.out.print(i+",");
+//        	}
+    		return;
+    	}
+//    	System.out.println(last_index+","+last_greater_index);
+    	int temp = nums[last_index];
+    	nums[last_index] = nums[last_greater_index];
+    	nums[last_greater_index] = temp;
+    	
+//    	for(int  i : nums){
+//    		System.out.print(i+",");
+//    	}
+//    	System.out.println();
+    	int[] replace = new int[nums.length-last_index-1];
+    	for(int j = last_index+1; j< nums.length; j++){
+    		replace[j-last_index-1] = nums[j];
+    	}
+    	Arrays.sort(replace);
+    	for(int j = last_index+1; j< nums.length; j++){
+    		nums[j] = replace[j - last_index-1];
+    	}
+//    	for(int  i : nums){
+//    		System.out.print(i+",");
+//    	}
+    }
+}
