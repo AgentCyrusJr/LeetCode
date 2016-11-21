@@ -1,0 +1,59 @@
+Given an array of n positive integers and a positive integer s, find the minimal length of a subarray of which the sum ≥ s. If there isn't one, return 0 instead.
+
+For example, given the array [2,3,1,2,4,3] and s = 7,
+the subarray [4,3] has the minimal length under the problem constraint.
+================codes================
+//TLE problem
+public class Solution {
+    public int minSubArrayLen(int s, int[] nums) {
+        int low  = 0;
+    	int high = nums.length;
+    	int len  = nums.length;
+    	boolean canFind = false;
+        while(low<= high){
+        	int window = (low+high)/2;
+        	int max = Integer.MIN_VALUE;
+        	for(int start = 0; start+window<= len ; start++ ){
+        		int sum = 0;
+        		for(int i = start; i < start+window; i++){
+            		sum+= nums[i];
+            	}
+        		if(sum > max){
+        			max =sum;
+        			if(max >=s ) break;
+        		}
+        	}
+        	if(max >= s){
+    			high = window-1;
+    			canFind = true;
+    		}else{
+    			low = window+1;
+    		}
+        }
+        if(canFind){
+        	return low;
+        }else{
+        	return 0;
+        }
+    }
+}
+
+//O(n)
+//by jeantimex 
+public int minSubArrayLen(int s, int[] a) {
+  if (a == null || a.length == 0)
+    return 0;
+  
+  int i = 0, j = 0, sum = 0, min = Integer.MAX_VALUE;
+  
+  while (j < a.length) {
+    sum += a[j++];
+    
+    while (sum >= s) {
+      min = Math.min(min, j - i);
+      sum -= a[i++];
+    }
+  }
+  
+  return min == Integer.MAX_VALUE ? 0 : min;
+}
