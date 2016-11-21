@@ -36,3 +36,31 @@ public class Solution {
     
     }
 }
+
+// A concise modification
+public ListNode sortList(ListNode head) {
+    	if(head == null) return head;
+    	int len = 0;
+        ListNode ln1 = head, ln2= head;
+        while(ln1!=null){
+        	len++;
+        	ln1 = ln1.next;
+        }
+        System.out.println(len);
+        int[] arr = new int[len];
+        for(int i = 0 ; i < len; i++){
+        	arr[i]= ln2.val;
+        	ln2 = ln2.next;
+        }
+        Arrays.sort(arr);
+        ListNode resu 	= new ListNode(arr[0]);
+        ListNode curr 	= resu;
+        ListNode next	= curr.next;
+        
+        for(int i = 1; i < len; i++){
+        	next = new ListNode(arr[i]);
+        	curr.next = next;
+        	curr = next;
+        }
+        return resu;
+    }
