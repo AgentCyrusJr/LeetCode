@@ -1,0 +1,57 @@
+Sort a linked list using insertion sort.
+============codes===========
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode(int x) { val = x; }
+ * }
+ */
+public class Solution {
+    public ListNode insertionSortList(ListNode head) {
+    	boolean isHead = true;
+    	
+        ListNode ln = head, res = null, curr_min = null, prev = null, curr = null;
+        while(ln != null){
+        	int min = Integer.MAX_VALUE;
+        	while(ln != null){
+            	if(ln.val <= min){
+            		min = ln.val;
+            		curr_min = new ListNode(min);
+            	}
+            	ln = ln.next;
+            }
+            if(isHead){
+            	res = curr_min;
+            	curr = curr_min;
+            	prev = curr_min;
+            	isHead = false;
+            }else{
+            	curr = curr_min;
+            	prev.next = curr;
+            	prev = curr;
+            }
+            // System.out.println(head.val);
+            head = this.deleteNode(min, head);
+            ln = head;
+        }
+        return res;
+        
+    }
+    
+    public ListNode deleteNode(int value, ListNode head) {  
+        ListNode current = head;  
+        ListNode previous = head;  
+        while( current.val != value) {    
+            previous = current;
+            current = current.next;  
+        }  
+        if(current == head) {  
+        	head = head.next;  
+        }else{  
+            previous.next = current.next;  
+        }  
+        return head;  
+    } 
+}
