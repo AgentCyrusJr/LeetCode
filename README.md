@@ -14,6 +14,8 @@ exercises for leetcode turn 1, without checking on discussion for a better solut
 
 6th update to current version on 2016/11/14, 187 AC. You can't tell the feelings.
 
+7th update to current version on 2016/11/21, 200 AC. Final exam is coming and so is the winter.
+
 code written in Java
 
 IDE: eclipse
