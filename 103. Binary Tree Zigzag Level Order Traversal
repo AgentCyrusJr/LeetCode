@@ -1,0 +1,43 @@
+Given a binary tree, return the zigzag level order traversal of its nodes' values. (ie, from left to right, then right to left for the next level and alternate between).
+
+For example:
+Given binary tree [3,9,20,null,null,15,7],
+    3
+   / \
+  9  20
+    /  \
+   15   7
+return its zigzag level order traversal as:
+[
+  [3],
+  [20,9],
+  [15,7]
+]
+================codes==============
+//by biolearning 
+public class Solution {
+    public List<List<Integer>> zigzagLevelOrder(TreeNode root) {
+        List<List<Integer>> res = new LinkedList<List<Integer>>();
+        int level = 0;
+        Queue<TreeNode> queue = new LinkedList<TreeNode>();
+        if (root != null) queue.offer(root);
+        
+        while (!queue.isEmpty()) {
+            int size = queue.size();
+            LinkedList<Integer> l = new LinkedList<Integer>();
+            for (int i = 0; i < size; i++) {
+                TreeNode t = queue.poll();
+                if (t.left != null) queue.offer(t.left);
+                if (t.right != null) queue.offer(t.right);
+                if (level%2 == 1) {
+                    l.addFirst(new Integer(t.val));
+                }else {
+                    l.offer(new Integer(t.val));
+                }
+            }
+            level++;
+            res.add(l);
+        }
+        return res;
+    }
+}
