@@ -1,0 +1,27 @@
+Given a string, determine if a permutation of the string could form a palindrome.
+
+For example,
+"code" -> False, "aab" -> True, "carerac" -> True.
+
+Hint:
+
+Consider the palindromes of odd vs even length. What difference do you notice?
+Count the frequency of each character.
+If each character occurs even number of times, then it must be a palindrome. How about character which occurs odd number of times?
+=============codes===========
+public class Solution {
+    public boolean canPermutePalindrome(String s) {
+        int count_odd = 0;
+        HashMap<Character, Integer> map = new HashMap<Character, Integer>();
+        for(char cc : s.toCharArray()){
+        	int i = map.getOrDefault(cc, 0)+1;
+        	map.put(cc, i);
+        }
+        for(int i : map.values()){
+        	if(i%2 == 1){
+        		count_odd++;
+        	}
+        }
+        return count_odd<=1;
+    }
+}
