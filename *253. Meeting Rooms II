@@ -4,6 +4,7 @@ For example,
 Given [[0, 30],[5, 10],[15, 20]],
 return 2.
 ===============codes==============
+//by pinkfloyda 
 public class Solution {
     public int minMeetingRooms(Interval[] intervals) {
         int[] starts = new int[intervals.length];
