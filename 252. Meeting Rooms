@@ -25,7 +25,7 @@ public class Solution {
         for(int i = 1 ; i < intervals.length; i++){
             if(intervals[i-1].end <= intervals[i].start){
                 continue;
-            }else;
+            }else
                 return false;
         }
         return true;
