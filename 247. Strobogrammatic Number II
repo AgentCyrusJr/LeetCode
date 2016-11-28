@@ -1,0 +1,66 @@
+A strobogrammatic number is a number that looks the same when rotated 180 degrees (looked at upside down).
+
+Find all strobogrammatic numbers that are of length = n.
+
+For example,
+Given n = 2, return ["11","69","88","96"].
+
+Hint:
+
+Try to use recursion and notice that it should recurse with n - 2 instead of n - 1.
+==============codes============
+public class Solution {
+    
+    char[] c1 = {'0','1','6','8','9'};
+    char[] c2 = {'0','1','9','8','6'};
+    List<String> list = new ArrayList<String>();
+    public List<String> findStrobogrammatic(int n) {
+        if(n == 0) return list;
+        int k = 0;
+        if(n%2 ==0) 
+        	k = 2;
+        else        
+        	k = 1;
+        while(k<=n){
+            list = find(k);
+            k += 2;
+        }
+        return list;
+    }
+    
+    public List<String> find(int k){
+       
+        if(k == 1){
+            list.add("0"); list.add("1"); list.add("8");
+            return list;
+        } 
+        if(k == 2){
+            list.add("11"); list.add("88"); list.add("69"); list.add("96");
+            return list;
+        }
+        
+        List<String> ll = new ArrayList<String>();
+        if(k == 3){
+            ll.add("101"); ll.add("111"); ll.add("181"); ll.add("609");
+            ll.add("619"); ll.add("689"); ll.add("808"); ll.add("818");
+            ll.add("888"); ll.add("906"); ll.add("916"); ll.add("986");
+            return ll;
+        }
+        if(k%2 == 0){
+            for(String s : list){
+                for(int i = 0 ; i < c1.length; i++){
+                    String res = s.substring(0, k/2-1) + c1[i] + c2[i] + s.substring(k/2-1, k-2);
+                    ll.add(res);
+                }
+            }
+        }else{
+            for(String s : list){
+                for(int i = 0 ; i < c1.length; i++){
+                    String res = s.substring(0, k/2-1) + c1[i] + s.charAt(k/2-1) + c2[i] + s.substring(k/2, k-2);
+                    ll.add(res);
+                }
+            }
+        }
+        return ll;
+    }
+}
