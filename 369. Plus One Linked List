@@ -1,0 +1,57 @@
+Given a non-negative number represented as a singly linked list of digits, plus one to the number.
+
+The digits are stored such that the most significant digit is at the head of the list.
+
+Example:
+Input:
+1->2->3
+
+Output:
+1->2->4
+==========codes===========
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode(int x) { val = x; }
+ * }
+ */
+public class Solution {
+    public ListNode plusOne(ListNode head) {
+        if(head == null) return null;
+        int digit = 0, length = 0;
+        ListNode n = head;
+        while(n.next != null){ // get the length of the ListNode
+            length++;
+            n = n.next;
+        }
+        if(n.val != 9){
+            n.val++;
+        }else{
+            n.val = 0;
+            digit = 1;
+        }
+        int count = length-1;
+        while(digit==1 && count>=0 ){
+            ListNode nn = head;
+            while(count>0){
+                nn = nn.next;
+                count--;
+            }
+            if(nn.val != 9){
+                nn.val++;
+                digit = 0;
+            }else{
+                nn.val = 0;
+            }
+            count = --length -1;
+        }
+        if(digit == 1){
+            ListNode newHead = new ListNode(1);
+            newHead.next = head;
+            return newHead;
+        }
+        return head;
+    }
+}
