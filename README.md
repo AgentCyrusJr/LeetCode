@@ -16,6 +16,8 @@ exercises for leetcode turn 1, without checking on discussion for a better solut
 
 7th update to current version on 2016/11/21, 200 AC. Final exam is coming and so is the winter.
 
+8th update to current version on 2016/12/2, with 236 accepted. First update after unlocking the Premium. 
+
 code written in Java
 
 IDE: eclipse
