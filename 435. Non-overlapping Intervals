@@ -46,7 +46,6 @@ public class Solution {
         int count = 1;
         for(Interval i: intervals)
         {
-        // if the point starts after currentEnd, it means this balloons not been bursted. Then we shot the balloon in its end point. Otherwise, means this balloon has been bursted, then ignore it.
             if(i.start>=currentEnd) {        
                 count++;
                 currentEnd = i.end;
