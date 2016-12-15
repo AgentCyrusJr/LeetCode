@@ -1,0 +1,94 @@
+Convert a non-negative integer to its english words representation. Given input is guaranteed to be less than 231 - 1.
+
+For example,
+123 -> "One Hundred Twenty Three"
+12345 -> "Twelve Thousand Three Hundred Forty Five"
+1234567 -> "One Million Two Hundred Thirty Four Thousand Five Hundred Sixty Seven"
+Hint:
+
+Did you see a pattern in dividing the number into chunk of words? For example, 123 and 123000.
+Group the number by thousands (3 digits). You can write a helper function that takes a number less than 1000 and convert just that chunk to words.
+There are many edge cases. What are some good test cases? Does your code work with input such as 0? Or 1000010? (middle chunk is zero and should not be printed out)
+===============codes==================
+public class Solution {
+    
+    public String numberToWords(int num) {
+        String res = "";
+	    HashMap<Integer, String> map = new HashMap<Integer, String>();
+    	if(num == 0) return "Zero";
+        map.put(1, "One"); map.put(2, "Two"); map.put(3, "Three"); map.put(4, "Four"); map.put(5, "Five");
+        map.put(6, "Six"); map.put(7, "Seven"); map.put(8, "Eight"); map.put(9, "Nine"); map.put(10, "Ten");
+        map.put(11, "Eleven"); map.put(12, "Twelve"); map.put(13, "Thirteen"); map.put(14, "Fourteen"); map.put(15, "Fifteen");
+        map.put(16, "Sixteen"); map.put(17, "Seventeen"); map.put(18, "Eighteen"); map.put(19, "Nineteen"); 
+        map.put(20, "Twenty"); map.put(30, "Thirty"); map.put(40, "Forty"); map.put(50, "Fifty"); 
+        map.put(60, "Sixty"); map.put(70, "Seventy"); map.put(80, "Eighty"); map.put(90, "Ninety"); 
+        map.put(100, "Hundred"); map.put(1000, "Thousand");     
+        int k = 0, n = num;
+        while(n>=1000){
+        	k ++;
+        	n = n/1000;
+        }
+        if(k==0){
+        	res += this.turn(num);
+        }else if(k==1){
+        	res += this.turn(num/1000)+" Thousand"+this.turn(num%1000);
+        }else if(k==2){
+        	String s1 = this.turn((num-(num/1000000*1000000))/1000);
+        	if(s1==""){
+        		res += this.turn(num/1000000)+" Million"+this.turn(num%1000);
+        	}else{
+        		res += this.turn(num/1000000)+" Million"+s1+" Thousand"+this.turn(num%1000);
+        	}	
+        }else if(k==3){
+        	String s2,s3;
+        	s2 = this.turn((num-num/1000000000*1000000000)/1000000);
+        	s3 = this.turn((num-num/1000000*1000000)/1000);
+        	if(s2==""&&s3==""){
+        		res += this.turn(num/1000000000)+" Billion"+this.turn(num%1000);
+        	}else if(s2!=""&&s3==""){
+        		res += this.turn(num/1000000000)+" Billion"+s2+" Million"+this.turn(num%1000);
+        	}else if(s3!=""&&s2==""){
+        		res += this.turn(num/1000000000)+" Billion"+s3+" Thousand"+this.turn(num%1000);
+        	}else if(s2!=""&&s3!=""){
+        		res += this.turn(num/1000000000)+" Billion"+s2+" Million"+s3+" Thousand"+this.turn(num%1000);
+        	}
+        }
+        // System.out.println(res.trim());
+        return res.trim();
+    }
+//      
+    //turn the number less than or equal to 1000
+	public String turn(int num){
+		String s = "";
+		if(num==0) return s;
+		if(map.containsKey(num)){
+			if(num == 100) return " One Hundred";
+			if(num == 1000) return " One Thousand";
+			return " "+map.get(num);
+		}else{
+			if(num/100>0){
+				int hundred = num/100;
+				s = " "+map.get(hundred)+" "+"Hundred";
+				if(num == hundred*100){
+					return s;
+				}
+			}
+			int remain_hundred = num%100;
+			if(remain_hundred/10>0){
+				if(map.containsKey(remain_hundred)){
+					s+= " "+map.get(remain_hundred);
+				}else{
+					int ten = remain_hundred/10*10;
+					s+= " "+map.get(ten);
+					if(ten != remain_hundred){
+						s+= " "+map.get(remain_hundred%10);
+					}
+				}
+				
+			}else{
+				s+= " "+map.get(remain_hundred);
+			}
+		}
+		return s;
+	}
+}
