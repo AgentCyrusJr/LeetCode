@@ -1,0 +1,66 @@
+Given a binary search tree and a node in it, find the in-order successor of that node in the BST.
+
+Note: If the given node has no in-order successor in the tree, return null.
+=============codes==============
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+public class Solution {
+    public TreeNode inorderSuccessor(TreeNode root, TreeNode p) {	 
+    	TreeNode res = new TreeNode(0);
+    	ArrayList<TreeNode> list = new ArrayList<TreeNode>();
+    	this.inorder(list, root);
+    	for(int i = 0; i < list.size(); i++){
+    		if(list.get(i)==p){
+    			if(i==list.size()-1){
+    				return null;
+    			}else{
+    				res = list.get(i+1);
+    				break;
+    			}
+    		}
+    	}
+    	return res;
+        
+    }
+
+    public void inorder(ArrayList<TreeNode> al, TreeNode root){
+    	if(root != null){
+    		this.inorder(al, root.left);
+    		al.add(root);
+    		this.inorder(al, root.right);
+    	}
+    }
+}
+
+================follow ups=============
+//by jeantimex
+public TreeNode successor(TreeNode root, TreeNode p) {
+  if (root == null)
+    return null;
+
+  if (root.val <= p.val) {
+    return successor(root.right, p);
+  } else {
+    TreeNode left = successor(root.left, p);
+    return (left != null) ? left : root;
+  }
+}
+
+public TreeNode predecessor(TreeNode root, TreeNode p) {
+  if (root == null)
+    return null;
+
+  if (root.val >= p.val) {
+    return predecessor(root.left, p);
+  } else {
+    TreeNode right = predecessor(root.right, p);
+    return (right != null) ? right : root;
+  }
+}
