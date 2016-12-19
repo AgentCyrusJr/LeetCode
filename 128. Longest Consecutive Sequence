@@ -1,0 +1,79 @@
+Given an unsorted array of integers, find the length of the longest consecutive elements sequence.
+
+For example,
+Given [100, 4, 200, 1, 3, 2],
+The longest consecutive elements sequence is [1, 2, 3, 4]. Return its length: 4.
+
+Your algorithm should run in O(n) complexity.
+=============StackOverflow==============
+public class Solution {
+    List<Integer> list;
+	boolean[] isVisit;
+	public int longestConsecutive(int[] nums) {
+		list = new ArrayList<Integer>();
+		
+		for(int i : nums){
+			list.add(i);
+		}
+		isVisit = new boolean[list.size()];
+		int max = Integer.MIN_VALUE;
+		for(int i: list){
+			if(isVisit[list.indexOf(i)]==false){
+				isVisit[list.indexOf(i)]=true;
+				int length = 1;
+				length+=this.findlarger(i+1, length);
+				length+=this.findsmaller(i-1, length);
+				if(max<length){
+					max = length;
+				}
+			}
+			
+		}
+		return max;
+    }
+	
+	public int findlarger(int i , int length){
+		if(list.contains(i)&& isVisit[list.indexOf(i)]==false){
+			isVisit[list.indexOf(i)]=true;
+			return this.findlarger(i+1, length)+1;
+		}else{
+			return 0;
+		}
+	}
+	
+	public int findsmaller(int i , int length){
+		if(list.contains(i)&& isVisit[list.indexOf(i)]==false){
+			isVisit[list.indexOf(i)]=true;
+			return this.findsmaller(i-1, length)+1;
+		}else{
+			return 0;
+		}
+	}
+}
+===========================
+//by Tracy123
+public class Solution {
+public int longestConsecutive(int[] nums) {
+    if(nums == null || nums.length == 0) return 0;
+    
+    Set<Integer> set = new HashSet<Integer>();
+    
+    for(int num: nums) set.add(num);
+    int max = 1;
+    for(int num: nums) {
+        if(set.remove(num)) {//num hasn't been visited
+            int val = num;
+            int sum = 1;
+            while(set.remove(val-1)) val--;
+            sum += num - val;
+            
+            val = num;
+            while(set.remove(val+1)) val++;
+            sum += val - num;
+            
+            max = Math.max(max, sum);
+        }
+    }
+    return max;
+}
+}
