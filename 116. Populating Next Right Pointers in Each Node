@@ -1,0 +1,49 @@
+Given a binary tree
+
+    struct TreeLinkNode {
+      TreeLinkNode *left;
+      TreeLinkNode *right;
+      TreeLinkNode *next;
+    }
+Populate each next pointer to point to its next right node. If there is no next right node, the next pointer should be set to NULL.
+
+Initially, all next pointers are set to NULL.
+
+Note:
+
+You may only use constant extra space.
+You may assume that it is a perfect binary tree (ie, all leaves are at the same level, and every parent has two children).
+For example,
+Given the following perfect binary tree,
+         1
+       /  \
+      2    3
+     / \  / \
+    4  5  6  7
+After calling your function, the tree should look like:
+         1 -> NULL
+       /  \
+      2 -> 3 -> NULL
+     / \  / \
+    4->5->6->7 -> NULL
+==============codes=============
+public void connect(TreeLinkNode root) {
+		if(root == null) return;
+		Deque<TreeLinkNode> q = new LinkedList<TreeLinkNode>();
+        q.add(root);
+        while(!q.isEmpty()){
+        	Deque<TreeLinkNode> q1 = new LinkedList<TreeLinkNode>();
+        	while(!q.isEmpty()){
+        	    TreeLinkNode n = q.poll();
+            	if(q.isEmpty()){
+            		n.next =null;
+            	}else{
+            		TreeLinkNode next = q.peek();
+            		n.next = next;
+            	}
+            	if(n.left!=null) q1.offer(n.left);
+            	if(n.right!=null)q1.offer(n.right);
+        	}
+        	q = q1;
+        }
+    }
