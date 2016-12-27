@@ -14,6 +14,7 @@ public class Solution {
             return a[1] - b[1];  
         }  
     });  
+    //Always put the maximal in the front
     Queue<Integer> pq = new PriorityQueue<>(new Comparator<Integer>(){  
         public int compare(Integer a, Integer b) {  
             return b - a;  
@@ -22,7 +23,7 @@ public class Solution {
     pq.offer(0);  
     int prev = 0;  
     for(int[] h:height) {  
-        if(h[1] < 0) {  
+        if(h[1] < 0) { //negative value represents input a building  
             pq.offer(-h[1]);  
         } else {  
             pq.remove(h[1]);  
