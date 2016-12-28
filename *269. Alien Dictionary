@@ -48,6 +48,7 @@ public String alienOrder(String[] words) {
             }
         }
     }
+    //below is the Karn's aglorithm for Topological sort
     Queue<Character> q=new LinkedList<Character>();
     for(char c: degree.keySet()){
         if(degree.get(c)==0) q.add(c);
