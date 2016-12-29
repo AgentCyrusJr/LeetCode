@@ -30,8 +30,11 @@ public class Solution {
         
         int index = 0;
         while (index < words.length) {
+            //count represents the total length of the words which can be stored in a line 
             int count = words[index].length();
+            //last stores the value of the last index of word in words in certain line
             int last = index + 1;
+            //loop checks the contain whether the next word in words can fit in the same line
             while (last < words.length) {
                 if (words[last].length() + count + 1 > L) break;
                 count += words[last].length() + 1;
@@ -39,6 +42,7 @@ public class Solution {
             }
             
             StringBuilder builder = new StringBuilder();
+            //how many words in one line, if there is only one, return 0
             int diff = last - index - 1;
             // if last line or number of words in the line is 1, left-justified
             if (last == words.length || diff == 0) {
