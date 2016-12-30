@@ -40,16 +40,6 @@ public class Codec {
         }
         return res.toString();
     }
-    
-    public boolean isNull(Queue<TreeNode> q1){
-    	int countNull=0;
-    	for(TreeNode n : q1){
-    		if(n == null){
-    			countNull++;
-    		}
-    	}
-    	return countNull == q1.size();
-    }
 
     // Decodes your encoded data to tree.
     public TreeNode deserialize(String data) {
