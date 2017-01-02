@@ -27,7 +27,10 @@ public int ladderLength(String beginWord, String endWord, Set<String> wordList) 
                 for(char ch = 'a'; ch < 'z'; ch++){
                     word[j] = ch;
                     String check = new String(word);
-                    if(!check.equals(cur) && wordList.contains(check)){
+                    //check whether the wordList contains the modified word
+                    //if so, we push the modified word in the queue and also remove it from the wordList
+                    //There exists the possibility that there are multiple choices after single word(more like LFS)
+                    if(!check.equals(cur) && wordList.contains(check)){
                         queue.add(check);
                         wordList.remove(check);
                     }
