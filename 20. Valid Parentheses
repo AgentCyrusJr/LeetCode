@@ -60,12 +60,14 @@ public class Solution {
 public boolean isValid(String s) {
 	Stack<Character> stack = new Stack<Character>();
 	for (char c : s.toCharArray()) {
+	//always push the second part of the parentheses if it is the first part of the parentheses
 		if (c == '(')
 			stack.push(')');
 		else if (c == '{')
 			stack.push('}');
 		else if (c == '[')
 			stack.push(']');
+			//if it is the second part, it should hold the following condition
 		else if (stack.isEmpty() || stack.pop() != c)
 			return false;
 	}
