@@ -30,6 +30,7 @@ public class Solution {
     public int[] maxSlidingWindow(int[] nums, int k) {
         if(nums.length == 0) return nums;
         int[] res = new int[nums.length-k+1];
+        //Construct a queue with the largest value at the head
         PriorityQueue<Integer> pq = new PriorityQueue<Integer>(nums.length,new Comparator<Integer>(){
             @Override
             public int compare(Integer o1,Integer o2){
@@ -45,14 +46,14 @@ public class Solution {
         while(i<nums.length){
         	if(pq.size() < k){
         		pq.add(nums[i]);
-        	}else if(pq.size() == k){
-        		res[j++] = pq.peek();
-        		pq.remove(nums[i-k]);
-        		pq.add(nums[i]);
+        	}else if(pq.size() == k){ //if the size is k
+        		res[j++] = pq.peek();    //we first add the head of the queue, which is the largest in this slot, and put it in the array 
+        		pq.remove(nums[i-k]);    //then we remove the head of the slot from the queue
+        		pq.add(nums[i]);         //again we push the next element right behind the slot into the queue
         	}
         	i++;
         }
-        res[j] = pq.peek();
+        res[j] = pq.peek();    //when i equals nums.length, it jump out of the loop and we should add the last greatest element in the                                //queue into the array
         return res;
     }
 }
