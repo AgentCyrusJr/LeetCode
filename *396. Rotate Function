@@ -41,6 +41,8 @@ k = 2; B[0] = A[len-2];
 ...
 ==========================codes=======================
 //by oreomilkshake
+//math trick problem on serials, hard to come up with my mind
+//O(n)
 public class Solution {
     public int maxRotateFunction(int[] A) {
 		int allSum = 0;
