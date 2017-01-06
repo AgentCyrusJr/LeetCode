@@ -23,9 +23,9 @@ public class Solution {
         for(int i = 1; i<=len/2; i++){
         	String check = str.substring(0, i);
         	for(int j =i; j< len && j+i<=len; j = j+i){
-        		
+        	    //each time I construct a string with i length starting from j
         		String c = str.substring(j, j+i);
-        		
+        		//check if the string equals to the original string
         		if(check.equals(c)){
         			if(j+i == len) return true;
         			continue;
