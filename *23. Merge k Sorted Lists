@@ -9,6 +9,9 @@ Merge k sorted linked lists and return it as one sorted list. Analyze and descri
  *     ListNode(int x) { val = x; }
  * }
  */
+ //because it is sorted in every list, so the main idea is to push each head node of the list into the pq
+ //then we always poll the first node in the pq, and push the node next to it into the pq.
+ //Also, we introduce two node(dummy and tail to help construct the required list)
 public class Solution {
     public ListNode mergeKLists(ListNode[] lists) {
         if (lists==null||lists.length==0) return null;
