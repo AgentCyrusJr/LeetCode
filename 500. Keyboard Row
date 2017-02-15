@@ -1,0 +1,44 @@
+Given a List of words, return the words that can be typed using letters of alphabet on only one row's of American keyboard like the image below.
+==========code========
+public class Solution {
+    public String[] findWords(String[] words) {
+        char[] arr0 = {'q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p'};
+        char[] arr1 = {'a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l'};
+        char[] arr2 = {'z', 'x', 'c', 'v', 'b', 'n', 'm'};
+        
+        HashMap<Character, Integer> map = new HashMap<Character, Integer>();
+        for(char c0 : arr0){
+        	map.put(c0, 0);
+        }
+        for(char c1 : arr1){
+        	map.put(c1, 1);
+        }
+        for(char c2 : arr2){
+        	map.put(c2, 2);
+        }
+        
+        ArrayList<String> set = new ArrayList<String>();
+        for(String s: words){
+        	if(s.length() <= 1){
+        		set.add(s);
+        	}
+        	else{
+        		String s_lower = s.toLowerCase();
+        		int flag = map.get(s_lower.charAt(0));
+        		boolean f = true;
+        		for(char c : s_lower.toCharArray()){
+        			int i = map.get(c);
+        			if(i != flag){
+        				f = false;
+        				break;
+        			}
+        		}
+        		if(f){
+        			set.add(s);
+        		}
+        	}
+        }
+        
+        return set.toArray(new String[0]);
+    }
+}
