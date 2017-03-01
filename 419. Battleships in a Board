@@ -35,3 +35,29 @@ public class Solution {
         return count;
     }
 }
+=================Python=================
+class Solution(object):
+    def countBattleships(self, board):
+        count = 0
+        
+        l = len(board)
+        if l == 0:
+            return 0
+        c = len(board[0])
+        
+        for i in range(0, l):
+            for j in range(0,c):
+                if board[i][j] == 'X':
+                    if i-1<0 and j-1<0 :
+                        count = count +1
+                    elif j-1<0 and board[i-1][j] == '.':
+                        count = count+1
+                    elif i-1<0 and board[i][j-1] == '.':
+                        count = count+1
+                    elif board[i-1][j] == '.' and board[i][j-1] == '.':
+                        count = count +1
+        return count
+        """
+        :type board: List[List[str]]
+        :rtype: int
+   
