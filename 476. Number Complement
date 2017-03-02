@@ -11,9 +11,18 @@ Example 2:
 Input: 1
 Output: 0
 Explanation: The binary representation of 1 is 1 (no leading zero bits), and its complement is 0. So you need to output 0.
-==================codes================
+=============codes=============
 public class Solution {
     public int findComplement(int num) {
         return (int)((long)Math.pow(2,Integer.toBinaryString(num).length())-1-num);
     }
 }
+============python=============
+class Solution(object):
+    def findComplement(self, num):
+        return pow(2, len(bin(num)[2:]))-1-num
+        """
+        :type num: int
+        :rtype: int
+        """
+        
