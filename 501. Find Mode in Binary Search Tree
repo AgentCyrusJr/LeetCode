@@ -1,0 +1,64 @@
+Given a binary search tree (BST) with duplicates, find all the mode(s) (the most frequently occurred element) in the given BST.
+
+Assume a BST is defined as follows:
+
+The left subtree of a node contains only nodes with keys less than or equal to the node's key.
+The right subtree of a node contains only nodes with keys greater than or equal to the node's key.
+Both the left and right subtrees must also be binary search trees.
+For example:
+Given BST [1,null,2,2],
+   1
+    \
+     2
+    /
+   2
+return [2].
+
+Note: If a tree has more than one mode, you can return them in any order.
+
+Follow up: Could you do that without using any extra space? (Assume that the implicit stack space incurred due to recursion does not count).
+================codes================
+//Modification should be made on the follow-up
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+public class Solution {
+    HashMap<Integer, Integer> map = new HashMap<Integer, Integer>();
+    public int[] findMode(TreeNode root) {
+        int max_count = 0;
+        find(root);
+        for(int k : map.keySet()){
+            if(map.get(k)>max_count){
+                max_count = map.get(k);
+            }
+        }
+        ArrayList<Integer> list = new ArrayList<Integer>();
+        for(int k : map.keySet()){
+            if(map.get(k)==max_count){
+                list.add(k);
+            }
+        }
+        int[] res = new int[list.size()];
+        for(int i = 0 ; i < list.size(); i++){
+            res[i] = list.get(i);
+        }
+        return res;
+    }
+    
+    public void find(TreeNode root){
+        if(root == null) return; 
+        if(!map.containsKey(root.val)){
+            map.put(root.val, 1);
+        }else{
+            map.put(root.val, map.get(root.val)+1);
+        }
+        find(root.left);
+        find(root.right);
+    }
+}
