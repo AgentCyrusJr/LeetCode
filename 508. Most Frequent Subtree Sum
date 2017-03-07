@@ -1,0 +1,78 @@
+Given the root of a tree, you are asked to find the most frequent subtree sum. The subtree sum of a node is defined as the sum of all the node values formed by the subtree rooted at that node (including the node itself). So what is the most frequent subtree sum value? If there is a tie, return all the values with the highest frequency in any order.
+
+Examples 1
+Input:
+
+  5
+ /  \
+2   -3
+return [2, -3, 4], since all the values happen only once, return all of them in any order.
+Examples 2
+Input:
+
+  5
+ /  \
+2   -5
+return [2], since 2 happens twice, however -5 only occur once.
+Note: You may assume the sum of values in any subtree is in the range of 32-bit signed integer.
+===============codes==================
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+public class Solution {
+    HashMap<Integer, Integer> map = new HashMap<Integer, Integer>();
+    public int[] findFrequentTreeSum(TreeNode root) {
+        if(root == null) return new int[0];
+        traverse(root);
+        List<Integer> max_index = new ArrayList<Integer>();
+        int max_count = 0;
+        for(int i: map.keySet()){
+            if(map.get(i)>max_count){
+                max_count = map.get(i);
+                max_index = new ArrayList<Integer>();
+                max_index.add(i);
+            }else if(map.get(i) == max_count){
+                max_index.add(i);
+            }
+        }
+        int[] res = new int[max_index.size()];
+        int j = 0 ;
+        for(int i : max_index){
+            res[j++] = i;
+        }
+        return res;
+        
+    }
+    
+    public void traverse(TreeNode root){
+        int value = 0;
+        if(root.left==null && root.right==null){
+            
+        }else if(root.left==null){
+            traverse(root.right);
+            root.val += root.right.val;
+        }else if(root.right==null){
+            traverse(root.left);
+            root.val+=root.left.val;
+        }else{
+            traverse(root.left);
+            traverse(root.right);
+            root.val += root.left.val+root.right.val;
+        }
+        
+        value = root.val;
+        if(map.containsKey(value)){
+            map.put(value, map.get(value)+1);
+        }else{
+            map.put(value, 1);
+        }
+        return;
+        
+    }
+}
