@@ -26,3 +26,17 @@ public class Solution {
         return new ArrayList(res);
     }
 }
+==============python==============
+from sets import Set
+class Solution(object):
+    def findRepeatedDnaSequences(self, s):
+        set = Set()
+        list = []
+        for i in range(0, len(s)-9):
+            ss = s[i:i+10]
+            if ss in set and ss not in list:
+                list.append(ss)
+            else:
+                set.add(ss)
+        return list
+                    
