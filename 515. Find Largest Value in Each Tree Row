@@ -1,0 +1,58 @@
+You need to find the largest value in each row of a binary tree.
+
+Example:
+Input: 
+
+          1
+         / \
+        3   2
+       / \   \  
+      5   3   9 
+
+Output: [1, 3, 9]
+Show Company Tags
+Show Tags
+
+=====codes=======
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+public class Solution {
+    public List<Integer> largestValues(TreeNode root) {
+        List<Integer> result = new ArrayList<Integer>();
+        if(root == null) return result;
+        Queue<TreeNode> list1  = new LinkedList<TreeNode>();
+        Queue<TreeNode> list2  = new LinkedList<TreeNode>();
+        
+        list1.offer(root);
+        result.add(root.val);
+        int max = Integer.MIN_VALUE;
+        while(list1.size() != 0){
+            TreeNode n = list1.poll();
+            if(n.left != null){
+                int lvalue = n.left.val;
+                list2.offer(n.left);
+                if(lvalue > max) max = lvalue;
+            }
+            if(n.right != null){
+                int rvalue = n.right.val;
+                list2.offer(n.right);
+                if(rvalue > max) max = rvalue;
+            }
+            if(list1.size() == 0){
+                result.add(max);
+                max = Integer.MIN_VALUE;
+                list1 = list2;
+                list2 = new LinkedList<TreeNode>();
+            }
+        }
+        result.remove(result.size()-1);
+        return result;
+    }
+}
