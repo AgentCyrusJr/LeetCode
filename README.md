@@ -20,6 +20,8 @@ exercises for leetcode turn 1, without checking on discussion for a better solut
 
 9th update to current version on 2016/12/28, celebrating on all 87/88 facebook problem ac.(There is one currently with '?' mark which can not be accepted successfully). Hit 299 ac in total. Keep on.
 
+10th update to current version on 2017/04/10, 500 commits on this repository, unluckily, no internship until now.
+
 code written in Java
 
 IDE: eclipse
