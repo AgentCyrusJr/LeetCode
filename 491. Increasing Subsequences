@@ -1,0 +1,43 @@
+Given an integer array, your task is to find all the different possible increasing subsequences of the given array, and the length of an increasing subsequence should be at least 2 .
+
+Example:
+Input: [4, 6, 7, 7]
+Output: [[4, 6], [4, 7], [4, 6, 7], [4, 6, 7, 7], [6, 7], [6, 7, 7], [7,7], [4,7,7]]
+Note:
+The length of the given array will not exceed 15.
+The range of integer in the given array is [-100,100].
+The given array may contain duplicates, and two equal integers should also be considered as a special case of increasing sequence.
+================codes==================
+public class Solution {
+    List<Integer> list;
+    Set<List<Integer>> result = new HashSet<List<Integer>>();
+    public List<List<Integer>> findSubsequences(int[] nums) {
+        boolean[] isVisit = new boolean[nums.length];
+        for(int i = 0; i < nums.length; i++){
+            list = new ArrayList<Integer>();
+            list.add(nums[i]);
+            isVisit[i] = true;
+            dfs(list, nums,  isVisit, i+1);
+        }
+        return new ArrayList<List<Integer>>(result);
+    }
+    
+    public void dfs(List<Integer> list, int[] nums,  boolean[] isVisit, int start){
+        if(list.size() >= 2){
+            result.add(new ArrayList<Integer>(list));
+            
+        }
+        for(int i = start; i < isVisit.length; i++){
+            if(isVisit[i] != true){
+                isVisit[i] = true;
+                if( nums[i] >= list.get(list.size() - 1)){
+                    list.add(nums[i]);
+                    dfs(list, nums, isVisit, i+1);
+                    list.remove(list.size() - 1);
+                }
+                
+                isVisit[i] = false;
+            }
+        }
+    }
+}
