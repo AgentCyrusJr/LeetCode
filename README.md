@@ -22,6 +22,9 @@ exercises for leetcode turn 1, without checking on discussion for a better solut
 
 10th update to current version on 2017/04/10, 500 commits on this repository, unluckily, no internship until now.
 
-code written in Java
+11th update to current version on 2017/07/18, 400 problems solved. I am writing this post in Shanghai, and I started my internship @PingAn Technology three weeks ago. May the force and luck be with me.
 
-IDE: eclipse
+code written in Java and Python
+
+IDE: eclipse, not any more
+
