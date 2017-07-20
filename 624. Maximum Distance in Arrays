@@ -1,0 +1,58 @@
+Given m arrays, and each array is sorted in ascending order. Now you can pick up two integers from two different arrays (each array picks one) and calculate the distance. We define the distance between two integers a and b to be their absolute difference |a-b|. Your task is to find the maximum distance.
+
+Example 1:
+Input: 
+[[1,2,3],
+ [4,5],
+ [1,2,3]]
+Output: 4
+Explanation: 
+One way to reach the maximum distance 4 is to pick 1 in the first or third array and pick 5 in the second array.
+Note:
+Each given array will have at least 1 number. There will be at least two non-empty arrays.
+The total number of the integers in all the m arrays will be in the range of [2, 10000].
+The integers in the m arrays will be in the range of [-10000, 10000].
+================codes===================
+public class Solution {
+    public int maxDistance(List<List<Integer>> arrays) {
+        
+        
+        Map<Integer, int[]> map = new HashMap<Integer, int[]>();
+        for(int i = 0; i<arrays.size(); i++){
+            
+            int[] arr = new int[2];
+            arr[0] = arrays.get(i).get(0);
+            arr[1] = arrays.get(i).get(arrays.get(i).size()-1);
+            map.put(i, arr);
+        }
+        int max_index= 0, min_index = 0;
+        int max = Integer.MIN_VALUE, min = Integer.MAX_VALUE;
+        for(int index : map.keySet()){
+            
+            int v1 = map.get(index)[0];
+            int v2 = map.get(index)[1];
+            if(v1 < min){
+                min = v1; min_index = index;
+            }
+            if(v2 > max){
+                max = v2; max_index = index;
+            }
+        }
+        if(min_index != max_index) return max-min;
+        else{
+            int max2 = Integer.MIN_VALUE, min2 = Integer.MAX_VALUE;
+            for(int index : map.keySet()){
+                int v1 = map.get(index)[0];
+                int v2 = map.get(index)[1];
+
+                if(v1 < min2 && index != min_index){
+                    min2 = v1;
+                }
+                if(v2 > max2 && index != max_index){
+                    max2 = v2;
+                }
+            }
+            return Math.max(max-min2, max2-min);
+        }
+    }
+}
