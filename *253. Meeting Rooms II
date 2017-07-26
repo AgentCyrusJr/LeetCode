@@ -26,3 +26,36 @@ public class Solution {
         return rooms;
     }
 }
+=================Python code================
+Explanation:
+First we have a list of intervals, we then divide that list into two, start and end list respectively. Then sort the start and end list. We consider one meeting room strategy is to have one start and one end continuously, and not allowing two consecutive starts or ends, which is the key point in this algorithm. Then we iterate through the list. If the target start is greater then the source end, room = room + 1, else we update the source start.
+
+# Definition for an interval.
+# class Interval(object):
+#     def __init__(self, s=0, e=0):
+#         self.start = s
+#         self.end = e
+
+class Solution(object):
+    def minMeetingRooms(self, intervals):
+        """
+        :type intervals: List[Interval]
+        :rtype: int
+        """
+        if len(intervals) == 0: 
+            return 0
+        start = []
+        end = []
+        for interval in intervals:
+            start.append(interval.start)
+            end.append(interval.end)
+        start.sort()
+        end.sort()
+        source = 0
+        count = 1
+        for i in range(1, len(start)):
+            if start[i] < end[source]:
+                count = count + 1
+            else:
+                source = source + 1
+        return count
