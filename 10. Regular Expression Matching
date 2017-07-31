@@ -17,6 +17,7 @@ isMatch("aa", ".*") → true
 isMatch("ab", ".*") → true
 isMatch("aab", "c*a*b") → true
 ==============codes==============
+//This java code might not be valid after the updates on corner cases!
 Solution link: https://www.youtube.com/watch?v=ZLH8Gp2_d8g
 public class Solution {
     public boolean isMatch(String s, String p) {
