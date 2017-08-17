@@ -17,3 +17,15 @@ public class Solution {
 		return max_profit[nums.length-1];
     }
 }
+=================2017/08/17===============
+public class Solution {
+    public int rob(int[] nums) {
+        int num1 = 0, num2 = 0, num_temp = 0;
+        for (int money: nums){
+            num_temp = num1;
+            num1 = Math.max(num1, num2+money);
+            num2 = num_temp;
+        }
+        return Math.max(num1, num2);
+    }
+}
