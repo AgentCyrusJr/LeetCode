@@ -29,3 +29,22 @@ public class Solution {
         return maxArea;
     }
 }
+=====================2017/08/22====================
+class Solution {
+    public int largestRectangleArea(int[] heights) {
+        Stack<Integer> stack = new Stack<Integer>();
+        int i = 0, h = 0;
+        int max = 0;
+        while(i<=heights.length){
+            h = (i == heights.length)?0:heights[i];
+            if(stack.isEmpty() || heights[stack.peek()] <= h){
+                stack.push(i++);
+            }else{
+                int index = stack.pop();
+                // System.out.println(heights[index]+","+i+","+index);
+                max = Math.max(max, stack.isEmpty()?heights[index]*i: heights[index]*(i-stack.peek()-1));
+            }
+        }
+        return max;
+    }
+}
