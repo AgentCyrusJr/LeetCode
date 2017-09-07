@@ -1,0 +1,44 @@
+Given a string S, you are allowed to convert it to a palindrome by adding characters in front of it. Find and return the shortest palindrome you can find by performing this transformation.
+
+For example:
+
+Given "aacecaaa", return "aaacecaaa".
+
+Given "abcd", return "dcbabcd".
+===========codes==============
+//TLE
+class Solution {
+    public String shortestPalindrome(String s) {
+        if(s.length() <= 1) return s;
+        for(int i = s.length()/2 ; i > 0; i--){
+            String target = s.substring(0,i);
+            String str1 = new StringBuffer(s.substring(i, i+i)).reverse().toString();
+            String str2 = (i+i+1)<=s.length()?new StringBuffer(s.substring(i+1, i+i+1)).reverse().toString():"";
+            
+            System.out.println(i);
+            if(str2.equals(target)){
+                return new StringBuffer(s.substring(i+i+1,s.length())).reverse().toString() + s;
+            }else if(str1.equals(target)){
+                return new StringBuffer(s.substring(i+i,s.length())).reverse().toString() + s;
+            }
+        }
+        return new StringBuffer(s.substring(1,s.length())).reverse().toString() + s;
+        
+    }
+
+}
+==============================
+AC solution
+//by xcv58
+class Solution {
+    public String shortestPalindrome(String s) {
+         int j = 0;
+        for (int i = s.length() - 1; i >= 0; i--) {
+            if (s.charAt(i) == s.charAt(j)) { j += 1; }
+        }
+        if (j == s.length()) { return s; }
+        String suffix = s.substring(j);
+        return new StringBuffer(suffix).reverse().toString() + shortestPalindrome(s.substring(0, j)) + suffix;
+    }
+
+}
