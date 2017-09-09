@@ -39,6 +39,7 @@ Explanation: The conditional expressions group right-to-left. Using parenthesis,
           
 ==============codes============
 //by NathanNi
+//This solution is based on Stack
 public String parseTernary(String expression) {
     if (expression == null || expression.length() == 0) return "";
     Deque<Character> stack = new LinkedList<>();
@@ -62,6 +63,7 @@ public String parseTernary(String expression) {
     return String.valueOf(stack.peek());
 }
 ==============2017/9/9===========
+Explanation: firstly, we first the last index of '?', if the first char before '?' is 'T', then we pick the part between ':' and '?', otherwise, we pick the part right after ':'. We combine the expression with three parts, the first part is the substring of expression before '?', the part we picked and the part right after the char we picked(2nd part).
 class Solution {
     public String parseTernary(String expression) {
         while(expression.length()!=1){
