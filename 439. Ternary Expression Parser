@@ -61,3 +61,19 @@ public String parseTernary(String expression) {
 
     return String.valueOf(stack.peek());
 }
+==============2017/9/9===========
+class Solution {
+    public String parseTernary(String expression) {
+        while(expression.length()!=1){
+            int i = expression.lastIndexOf("?");
+            char temp;
+            if(expression.charAt(i-1)=='T'){
+                temp = expression.charAt(i+1);
+            }else{
+                temp = expression.charAt(i+3);
+            }
+            expression = expression.substring(0,i-1) + temp + expression.substring(i+4);
+        }
+        return expression;
+    }
+}
