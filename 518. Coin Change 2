@@ -50,3 +50,26 @@ public int change(int amount, int[] coins) {
         }
         return dp[coins.length-1][amount];
     }
+====================2017/9/29===============
+class Solution {
+    public int change(int amount, int[] coins) {
+        
+        int[][] result = new int[coins.length+1][amount+1];
+        for(int i = 0; i<coins.length+1; i++){
+            result[i][0] = 1;
+        }
+        for(int i = 1; i<coins.length+1; i++){
+            for(int j = 1; j<amount+1; j++){
+                if(coins[i-1] > j) result[i][j] = result[i-1][j];
+                else if(coins[i-1] == j){
+                    result[i][j] = result[i-1][j] + 1;
+                }else{
+                    result[i][j] = result[i-1][j] + result[i][j-coins[i-1]];
+                }
+            }
+        }
+        return result[coins.length][amount];
+    }
+    
+    
+}
