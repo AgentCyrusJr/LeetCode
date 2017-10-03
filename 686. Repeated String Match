@@ -1,0 +1,52 @@
+Given two strings A and B, find the minimum number of times A has to be repeated such that B is a substring of it. If no such solution, return -1.
+
+For example, with A = "abcd" and B = "cdabcdab".
+
+Return 3, because by repeating A three times (“abcdabcdabcd”), B is a substring of it; and B is not a substring of A repeated two times ("abcdabcd").
+
+Note:
+The length of A and B will be between 1 and 10000.
+===================codes==================
+//Explanation:
+The solution considers three cases:
+1. A >= B
+1). whether B is a substring of A
+2). whether B is a substring of A+A
+2. A < B
+construct a new string str with repeated As, iterate str to check whether B is a substring of str
+
+class Solution {
+    public int repeatedStringMatch(String A, String B) {
+        int count = 1;
+        String str = A;
+        
+        if(B.length()<=A.length()){
+            for(int i = 0 ; i < A.length()-B.length()+1; i++){
+                if(A.substring(i, i+B.length()).equals(B)){
+                    return 1;
+                }
+            }
+            A = A+A;
+            for(int i = 0 ; i < A.length()-B.length(); i++){
+                if(A.substring(i, i+B.length()).equals(B)){
+                    return 2;
+                }
+            }
+            return -1;
+        }else{
+            while(B.length() >= str.length()){
+                str += A; 
+                count++;
+            }
+            for(int i = 0 ; i < str.length()-B.length(); i++){
+                if(str.substring(i, i+B.length()).equals(B)){
+                    if(i == 0 && str.length()-A.length() == B.length()) return count-1;
+                    else
+                        return count;
+                }
+            }
+            return -1;
+        }
+        
+    }
+}
