@@ -1,0 +1,73 @@
+Given a non-empty string s, you may delete at most one character. Judge whether you can make it a palindrome.
+
+Example 1:
+Input: "aba"
+Output: True
+Example 2:
+Input: "abca"
+Output: True
+Explanation: You could delete the character 'c'.
+Note:
+The string will only contain lowercase characters a-z. The maximum length of the string is 50000.
+===============================================
+//Explanation:
+two pointers, check the string s at the index of i and j, if s[i] == s[j], i++, j--
+Once, s[i] != s[j], we consider two plausible cases
+1. s[i+1] == s[j]
+2. s[i] == s[j-1]
+For both cases, we check if either s[i+1:j] or s[i:j-1] is Palindrome.
+otherwise, return False
+
+//TLE
+class Solution {
+    public boolean validPalindrome(String s) {
+        StringBuilder sb = new StringBuilder(s);
+        String reverse = sb.reverse().toString();
+        if(reverse.equals(s)){
+            return true;
+        }
+        for(int i =0; i < s.length(); i++){
+            String s1 = s.substring(0,i)+s.substring(i+1);
+            int index = s.length()-1 - i;
+            String s2 = reverse.substring(0,index)+reverse.substring(index+1);
+            if(s1.equals(s2)){
+                return true;
+            }
+        }
+        return false;
+    }
+}
+======AC code======
+class Solution {
+    
+    public boolean validPalindrome(String s) {
+        boolean flag = true;
+        int i = 0, j = s.length()-1;
+        while(i<j){
+            if(s.charAt(i) == s.charAt(j)){
+                i++; j--;
+            }else{
+                boolean f1 = false, f2 = false;
+                if(s.charAt(i+1) == s.charAt(j)){
+                    
+                    f1 = isPa(s, i+1, j); 
+                }
+                if(s.charAt(i) == s.charAt(j-1)){
+                  
+                    f2 = isPa(s, i, j-1); 
+                }
+                return f1||f2;
+            }
+        }
+        return true;
+    }
+    
+    public boolean isPa(String s, int i, int j){
+        while(i<j){
+            if(s.charAt(i++) != s.charAt(j--)){
+                return false;
+            }
+        }
+        return true;
+    }
+}
