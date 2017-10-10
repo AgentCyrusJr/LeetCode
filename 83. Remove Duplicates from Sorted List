@@ -41,3 +41,30 @@ public class Solution {
         return head;
     }
 }
+=====================2017/10/10======================
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode(int x) { val = x; }
+ * }
+ */
+class Solution {
+    public ListNode deleteDuplicates(ListNode head) {
+        if(head == null) return null;
+        ListNode newHead = head;
+        ListNode node = head.next;
+        while(node != null){
+            if(node.val == newHead.val){
+                
+                node = node.next;
+                newHead.next = node;
+            }else{
+                newHead = node;
+                node = node.next;
+            }
+        }
+        return head;
+    }
+}
