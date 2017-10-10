@@ -16,3 +16,26 @@ public class Solution {
     return i;
 }
 }
+===============2017/10/10=================
+class Solution {
+    public int removeDuplicates(int[] nums) {
+        if(nums.length == 0) return 0;
+        HashMap<Integer, Integer> map = new HashMap<Integer, Integer>();
+        map.put(nums[0], 1);
+        int count = 1, index = 1;
+        for(int i = 1; i<nums.length; i++){
+            if(nums[i] == nums[i-1]){
+                if(map.get(nums[i]) == 1){
+                    map.put(nums[i], 2);
+                    nums[index++] = nums[i]; 
+                    count++;
+                }
+            }else{
+                nums[index++] = nums[i];
+                map.put(nums[i], 1);
+                count++;
+            }
+        }
+        return count;
+    }
+}
