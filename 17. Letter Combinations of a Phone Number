@@ -24,26 +24,27 @@ public List<String> letterCombinations(String digits) {
             answer = answer.substring(0, answer.length()-1);
         }
     }
-
-//more understandable
-//by lei31 
-public class Solution {
-    	private static final String[] KEYS = { "", "", "abc", "def", "ghi", "jkl", "mno", "pqrs", "tuv", "wxyz" };
-    
-    	public List<String> letterCombinations(String digits) {
-    		List<String> ret = new LinkedList<String>();
-    		combination("", digits, 0, ret);
-    		return ret;
-    	}
-    
-    	private void combination(String prefix, String digits, int offset, List<String> ret) {
-    		if (offset >= digits.length()) {
-    			ret.add(prefix);
-    			return;
-    		}
-    		String letters = KEYS[(digits.charAt(offset) - '0')];
-    		for (int i = 0; i < letters.length(); i++) {
-    			combination(prefix + letters.charAt(i), digits, offset + 1, ret);
-    		}
-    	}
+====================2017/10/13========================
+class Solution {
+    List<String> list = new ArrayList<String>();
+    public List<String> letterCombinations(String digits) {
+        if(digits.length() == 0) return list;
+        String[] str = new String[10];
+        str[2] = "abc"; str[3] = "def"; str[4] = "ghi"; str[5] = "jkl"; str[6] = "mno"; str[7] = "pqrs"; str[8] = "tuv"; str[9] = "wxyz"; 
+        helper(str, digits, 0, "");
+        return list;
     }
+    
+    public void helper(String[] str, String digits, int start, String current){
+        if(start == digits.length()){
+            list.add(current);
+            return;
+        }
+        String target = str[digits.charAt(start)-'0'];
+        for(int i = 0; i<target.length(); i++){
+            current+=target.charAt(i);
+            helper(str, digits, start+1, current);
+            current = current.substring(0, current.length()-1);
+        }
+    }
+}
