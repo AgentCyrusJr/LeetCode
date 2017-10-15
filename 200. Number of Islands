@@ -39,3 +39,39 @@ private void dfsFill(char[][] grid,int i, int j){
         dfsFill(grid, i, j - 1);
     }
 }
+===================2017/10/15===================
+class Solution {
+    int count = 0;
+    public List<Integer> numIslands2(int m, int n, int[][] positions) {
+        int[][] grid = new int[m][n];
+        
+        for(int[] island : positions){
+            grid[island[0]][island[1]] = 1;
+        }
+        int[][] isVisit = new int[m][n];
+        
+        for(int i = 0 ; i < m ; i ++){
+            for(int j = 0; j < n ; j ++){
+                numIsland(grid, isVisit, i, j);
+            }
+        }
+        
+        
+    }
+    
+    public void numIsland(int[][] grid, int[][] isVist, int i, int j){
+        if(i<0 || j<0 || i>=grid.length || j>=grid.length || grid[i][j] == 0 || isVisit[i][j] == 1){
+            return;
+        }
+        
+        isVisit[i][j] = 1;
+        count ++;
+        numIsland(grid, isVisit, i-1, j);
+        numIsland(grid, isVisit, i, j-1);
+        numIsland(grid, isVisit, i+1, j);
+        numIsland(grid, isVisit, i, j+1);
+        return;
+      
+        
+    }
+}
