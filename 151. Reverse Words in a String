@@ -62,3 +62,17 @@ public class Solution {
 	    }
 	}
 }
+================================2017/10/23==============================
+public class Solution {
+    public static String reverseWords(String s) {
+        String[] str = s.split(" ");
+        String res = "";
+        for(int i = str.length-1; i>=0; i--){
+            if(!str[i].equals(""))
+            {
+                res += " " + str[i].trim();
+            }
+        }
+        return res.trim();
+    }
+}
