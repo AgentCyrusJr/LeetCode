@@ -2,39 +2,6 @@
 
 #If you were only permitted to complete at most one transaction (ie, buy one and sell one share of the stock), design an algorithm to find
 #the maximum profit.
-======================================================codes start from here==============================================================
-public class Solution {
-    public int maxProfit(int[] prices) {
-        int maxProfit=0;
-        int maxVal=0, minVal=0, length;
-        boolean validPurchase = true;
-        length = prices.length;
-        if(length == 0 || length == 1){
-            return maxProfit;
-        }
-        minVal = prices[0];
-//        maxProfit = maxVal - minVal;
-        for(int i = 1; i < length; i++){
-        	if(prices[i]<minVal){
-        		minVal = prices[i];
-        		maxVal = 0;
-        		validPurchase = false;
-        	}
-        	else if(prices[i]>=maxVal){
-        		maxVal = prices[i];
-        		validPurchase = true;
-        	}
-        	if(validPurchase == true){
-        	    int tempProfit = maxVal - minVal;
-        		if(tempProfit>maxProfit){
-        		    maxProfit = tempProfit;
-        		}
-        	}
-        }
-        return maxProfit;
-    }
-}
-
 ===============
 //by scott 
 public int maxProfit(int[] prices) {
@@ -52,3 +19,17 @@ public int maxProfit(int[] prices) {
 	     }	     
 	    return  max ;
 	 }
+===================2017/10/24===============
+class Solution {
+    public int maxProfit(int[] prices) {
+        int maxCurrent = 0;
+        int maxSofar = 0;
+        for(int i = 1 ; i<prices.length; i++){
+            maxCurrent = Math.max(0, maxCurrent - prices[i-1] + prices[i]);
+            maxSofar = Math.max(maxCurrent, maxSofar);
+        
+        }
+        return maxSofar;
+        
+    }
+}
