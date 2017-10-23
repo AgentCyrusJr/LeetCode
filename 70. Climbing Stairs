@@ -8,23 +8,17 @@ public int climbStairs(int n) {
         return (int)(1/Math.sqrt(5)*(Math.pow((1+Math.sqrt(5))/2,n+1)-Math.pow((1-Math.sqrt(5))/2,n+1)));
     }
     
-=======================================
-//by tony.mu101999
-public class Solution {
-    public int climb(int[] results, int n) {
-        if(n == 0) return 1;
-        if(n > 0) {
-            if(results[n] != 0) {
-                return results[n];
-            }
-            results[n] = climb(results, n-1) + climb(results, n-2);
-            return results[n];
-        }
-        return 0;
-
-    }
+=============2017/10/24==============
+class Solution {
     public int climbStairs(int n) {
-        int[] results = new int[n+1];
-        return climb(results, n);
+        if(n <= 3) return n;
+        int[] dp = new int[n+1];
+        dp[1] = 1;
+        dp[2] = 2;
+        for(int i = 3; i<n+1; i++){
+            dp[i] = dp[i-1] + dp[i-2];
+        }
+        return dp[n];
+        
     }
 }
