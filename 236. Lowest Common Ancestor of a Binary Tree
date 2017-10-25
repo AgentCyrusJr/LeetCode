@@ -39,7 +39,7 @@ public class Solution {
 	    return false;
 	}
 }
-==========================
+=====================================
 // https://www.hrwhisper.me/algorithm-lowest-common-ancestor-of-a-binary-tree/
 // by IlievskiV 
 public static TreeNode lowestCommonAncestor(TreeNode root, TreeNode node1, TreeNode node2) {
@@ -61,7 +61,7 @@ public static TreeNode lowestCommonAncestor(TreeNode root, TreeNode node1, TreeN
 	}
 
 }
-
+======================================
 // by lotuseater 
 public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
     LinkedList<TreeNode> pl = new LinkedList<TreeNode>();
@@ -91,4 +91,13 @@ public boolean findPath(TreeNode root, TreeNode n, LinkedList<TreeNode> list) {
         return true;
     }
     return false;
+}
+=================2017/10/25============
+class Solution {
+    public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
+        if(root == p || root == q || root == null) return root;
+        TreeNode left = lowestCommonAncestor(root.left, p, q);
+        TreeNode right = lowestCommonAncestor(root.right, p, q);
+        return (right == null? left:left == null ? right: root);
+    }
 }
