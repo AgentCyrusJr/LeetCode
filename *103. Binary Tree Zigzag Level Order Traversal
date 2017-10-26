@@ -41,3 +41,53 @@ public class Solution {
         return res;
     }
 }
+==================2017/10/25==================
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+class Solution {
+    List<List<Integer>> res = new ArrayList<List<Integer>>();
+    public List<List<Integer>> zigzagLevelOrder(TreeNode root) {
+        if(root == null) return res;
+        LinkedList<TreeNode> list1 = new LinkedList<TreeNode>();
+        LinkedList<TreeNode> list2 = new LinkedList<TreeNode>();
+        List<Integer> result = new ArrayList<Integer>();
+        list1.add(root); result.add(root.val);
+        res.add(result);
+        int level = 2;
+        result = new ArrayList<Integer>();
+        while(list1.size() != 0){
+            TreeNode tn = list1.poll();
+            if(tn.left != null){
+                list2.add(tn.left);
+                result.add(tn.left.val);
+            }
+            if(tn.right != null ){
+                list2.add(tn.right);
+                result.add(tn.right.val);
+            }
+                
+            if(list1.size() == 0){
+                if(list2.size() == 0) break;
+                list1 = list2;
+                
+                if(level%2 == 0){
+                    Collections.reverse(result);
+                    res.add(result);
+                }else{
+                    res.add(result);
+                }
+                result = new ArrayList<Integer>();
+                list2 = new LinkedList<TreeNode>();
+                level ++;
+            }
+        }
+        return res;
+    }
+}
