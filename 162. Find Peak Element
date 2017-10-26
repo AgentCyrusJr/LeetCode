@@ -23,3 +23,26 @@ public class Solution {
         return high;
     }
 }
+=============2017/10/27=============
+// Since nums[-1]=-Infinity, we have only to check the condition: nums[mid]<nums[mid+1]
+//Previous solution is concise!
+class Solution {
+    public int findPeakElement(int[] nums) {
+        if(nums.length == 2){
+            return nums[0]>nums[1]?0:1;
+        }
+        int low = 0, high = nums.length-1;
+        while(low < high){
+            int mid = (high - low)/2 + low;
+            if(mid == 0 || (nums[mid]>nums[mid-1] && nums[mid]>nums[mid+1])) return mid;
+            else{
+                if(nums[mid] < nums[mid-1]){
+                    high = mid;
+                }else{
+                    low = mid+1;
+                }
+            }
+        }
+        return low;
+    }
+}
