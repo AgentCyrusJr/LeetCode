@@ -19,3 +19,26 @@ public class Solution {
         return Math.max(include, exclude);
     }
 }
+=================2017/10/26===============
+class Solution {
+    public int rob(int[] nums) {
+        if(nums.length == 1) return nums[0];
+        int nums1 = 0, nums2 = 0, max1 = 0, max2 = 0;
+		for(int i = 0; i < nums.length-1; i ++){
+            int nums_temp = nums1;
+			nums1 = Math.max(nums1, nums2+nums[i]);
+            nums2 = Math.max(nums2, nums_temp);
+		}
+		max1 = Math.max(nums1, nums2);
+        
+        nums1 = 0; nums2 = 0;
+        for(int i = 1; i < nums.length; i ++){
+            int nums_temp = nums1;
+			nums1 = Math.max(nums1, nums2+nums[i]);
+            nums2 = Math.max(nums2, nums_temp);
+		}
+		max2 = Math.max(nums1, nums2);
+        
+        return Math.max(max1, max2);
+    }
+}
