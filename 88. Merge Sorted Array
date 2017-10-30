@@ -55,3 +55,28 @@ public class Solution {
       Arrays.sort(nums1);
   }
 }
+=====================2017/10/30==================
+class Solution {
+    public void merge(int[] nums1, int m, int[] nums2, int n) {
+        for(int i = m+n-1; i>=n; i--){
+            nums1[i] = nums1[i-n];
+        }
+        int pointer1 = 0, pointer2 = 0;
+        int i = 0;
+        while(i<m+n){
+            if(pointer1 == m){
+                nums1[i++] = nums2[pointer2++];
+            }else if(pointer2 == n){
+                nums1[i++] = nums1[pointer1+n];
+                pointer1++;
+            }else{
+                if(nums1[pointer1+n]<nums2[pointer2]){
+                    nums1[i++] = nums1[pointer1+n];
+                    pointer1++;
+                }else{
+                    nums1[i++] = nums2[pointer2++];
+                }
+            }
+        }
+    }
+}
