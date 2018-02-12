@@ -32,6 +32,8 @@ Note:
 2 <= N <= 50.
 grid[i][j] is a permutation of [0, ..., N*N - 1].
 ===================codes=================
+//Explanation:
+The main idea is to select each value between 0 - N*N -1 by binary-search, then using DFS to see if that value can return true,  
 class Solution {
     public int swimInWater(int[][] grid) {
         int len = grid.length;
