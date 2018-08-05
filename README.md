@@ -1,4 +1,6 @@
-# Leetcode Turn One
+# Leetcode 
+
+## Turn One
 
 exercises for leetcode turn 1, without checking on discussion for a better solution at most of cases.
 
@@ -27,4 +29,7 @@ exercises for leetcode turn 1, without checking on discussion for a better solut
 code written in Java and Python
 
 IDE: eclipse, not any more
+
+## Turn Two
+1st Restart leetcode practice from 2018/08/04.
 
