@@ -30,4 +30,23 @@ class Solution {
     }
 }
 
-//Will update iterative solution soon
+//Iterative Solution
+class Solution {
+    public List<Integer> postorder(Node root) {
+        List<Integer> list = new ArrayList<Integer>();
+        if(root == null){
+            return list;
+        }
+        List<Node> temp_list = new ArrayList<Node>();
+        temp_list.add(root);
+        while(temp_list.size() != 0){
+            Node node = temp_list.remove(temp_list.size()-1);
+            list.add(node.val);
+            if(node.children != null){
+                temp_list.addAll(node.children);
+            }
+        }
+        Collections.reverse(list);
+        return list;
+    }
+}
