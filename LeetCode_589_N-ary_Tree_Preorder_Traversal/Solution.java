@@ -30,4 +30,22 @@ class Solution {
     }
 }
 
-//Will update iterative solution soon
+//iterative Solution
+class Solution {
+    public List<Integer> preorder(Node root) {
+        List<Integer> list = new ArrayList<Integer>();
+        if(root == null){
+            return list;
+        }
+        List<Node> temp_list = new ArrayList<Node>();
+        temp_list.add(root);
+        while(temp_list.size() != 0){
+            Node node = temp_list.remove(0);
+            list.add(node.val);
+            if(node.children != null){
+                temp_list.addAll(0, node.children);
+            }
+        }
+        return list;
+    }
+}
