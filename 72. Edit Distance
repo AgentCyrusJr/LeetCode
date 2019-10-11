@@ -5,6 +5,18 @@ You have the following 3 operations permitted on a word:
 a) Insert a character
 b) Delete a character
 c) Replace a character
+==============================
+this is a dp question, dp[i][j] represents the minimum number of steps we need to convert word1[0-i] to word2[0-j] inclusively
+if word1[i] is equal to word2[j], no steps needed, dp[i][j] = dp[i-1][j-1]
+else, we can either
+1. delete word1[i] from dp[i-1][j]
+2. delete word2[j] from dp[i][j-1]
+3. replace word1[i] with word2[j] vice versa
+find the min among these three cases
+
+M = word1.length(), N = word2.length()
+Time Complexity: O(MN)
+Space Complexity: O(MN)
 =============codes=============
 class Solution {
     public int minDistance(String word1, String word2) {
