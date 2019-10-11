@@ -1,0 +1,92 @@
+Median is the middle value in an ordered integer list. If the size of the list is even, there is no middle value. So the median is the mean of the two middle value.
+
+Examples: 
+[2,3,4] , the median is 3
+
+[2,3], the median is (2 + 3) / 2 = 2.5
+
+Design a data structure that supports the following two operations:
+
+void addNum(int num) - Add a integer number from the data stream to the data structure.
+double findMedian() - Return the median of all elements so far.
+For example:
+
+add(1)
+add(2)
+findMedian() -> 1.5
+add(3) 
+findMedian() -> 2'
+=================================
+We would like to maintain two heaps,
+one min heap to store half of the larger number in the stream
+another max heap to store half of the smaller number in the stream
+
+everytime, we add a number, we check if the difference is greater than 2,
+if so, we balance two heaps by extracting one from the larger size heap
+to smaller size heap
+
+everytime we call find median, all we need to compare is the min_heap.peek()
+and max_heap.peek() based on whether the total size of two heaps is odd 
+or even
+
+for addNUm
+Time Complexity: O(lgN)
+
+for findMedian
+Time Complexity: O(1)
+
+Total Space Complexity: O(N)
+=================codes============
+class MedianFinder {
+
+    /** initialize your data structure here. */
+    PriorityQueue<Integer> max_heap;
+    PriorityQueue<Integer> min_heap;
+    
+    public MedianFinder() {
+        max_heap = new PriorityQueue<>(Collections.reverseOrder());
+        min_heap = new PriorityQueue<>();
+    }
+    
+    public void addNum(int num) {
+        if(min_heap.isEmpty()){
+            min_heap.add(num);
+        }else{
+            if(num > min_heap.peek()){
+                min_heap.add(num);
+            }else{
+                max_heap.add(num);
+            }
+        }
+        
+        if(min_heap.size() - max_heap.size() >= 2){
+            max_heap.add(min_heap.poll());
+        }
+        
+        if(max_heap.size() - min_heap.size() >= 2){
+            min_heap.add(max_heap.poll());
+        }
+    }
+    
+    public double findMedian() {
+        int max_heap_size = max_heap.size();
+        int min_heap_size = min_heap.size();
+        
+        if((max_heap_size + min_heap_size) % 2 == 0){
+            return (double)(max_heap.peek() + min_heap.peek())/2;
+        }else{
+            if(max_heap_size > min_heap_size){
+                return max_heap.peek();
+            }else{
+                return min_heap.peek();
+            }
+        }
+    }
+}
+
+/**
+ * Your MedianFinder object will be instantiated and called as such:
+ * MedianFinder obj = new MedianFinder();
+ * obj.addNum(num);
+ * double param_2 = obj.findMedian();
+ */
