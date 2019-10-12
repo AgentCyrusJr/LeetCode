@@ -33,3 +33,5 @@ IDE: eclipse, not any more
 ## Turn Two
 1st Restart leetcode practice from 2018/08/04.
 
+## Turn Three
+Update the solutions on unsolved problems and revisit the solved solutions with my thoughts starting 2019/10/11
