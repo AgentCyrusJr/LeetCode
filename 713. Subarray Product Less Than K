@@ -1,0 +1,49 @@
+Your are given an array of positive integers nums.
+
+Count and print the number of (contiguous) subarrays where the product of all the elements in the subarray is less than k.
+
+Example 1:
+Input: nums = [10, 5, 2, 6], k = 100
+Output: 8
+Explanation: The 8 subarrays that have product less than 100 are: [10], [5], [2], [6], [10, 5], [5, 2], [2, 6], [5, 2, 6].
+Note that [10, 5, 2] is not included as the product of 100 is not strictly less than k.
+========================================================
+The KEY observation here is that the length of the window equals the number of subarrays which meet the condition
+Example 1, 
+[10, 5, 2, 6]              => by moving the end to index 3, we add [6], [2,6], [5,2,6] to the result, which is end - start + 1
+     ^     ^
+    start  end
+
+Example 2, 
+[10, 5, 2, 12]              
+     ^     ^
+    start  end             => by moving the end to index 3, the product of 5*2*12 > k, so we increace the start by 1
+    
+[10, 5, 2,    12]          => by moving the start to index 2, we add [2], [2, 12] to the result, which is also end - start + 1    
+        ^     ^
+      start   end
+      
+Time Complexity: O(N)
+Space: O(1)
+=======================code=============================
+class Solution {
+    public int numSubarrayProductLessThanK(int[] nums, int k) {
+        int product = 1, start = 0, res = 0;
+        
+        for(int end = 0; end < nums.length; end++){
+            product *= nums[end];
+            
+            while(product >= k && start < end){
+                product /= nums[start];
+                start++;
+            }
+            
+            if(product < k){
+                int len = end - start + 1;
+                res += len;
+            }
+        }
+        
+        return res;
+    }
+}
