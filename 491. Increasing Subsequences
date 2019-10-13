@@ -7,36 +7,32 @@ Note:
 The length of the given array will not exceed 15.
 The range of integer in the given array is [-100,100].
 The given array may contain duplicates, and two equal integers should also be considered as a special case of increasing sequence.
+=======================================
+Backtracking:
+if nums[i] is greater than or equal to the last element in the temp_list, we add nums[i] to the temp_list
+and move to the next index in the array.
+Each time check if the list size is greater or equal to 2, use set to store the result to avoid the dups
+
+Time: O(2^N)
+Space: O(N)
 ================codes==================
-public class Solution {
-    List<Integer> list;
-    Set<List<Integer>> result = new HashSet<List<Integer>>();
+class Solution {
     public List<List<Integer>> findSubsequences(int[] nums) {
-        boolean[] isVisit = new boolean[nums.length];
-        for(int i = 0; i < nums.length; i++){
-            list = new ArrayList<Integer>();
-            list.add(nums[i]);
-            isVisit[i] = true;
-            dfs(list, nums,  isVisit, i+1);
-        }
-        return new ArrayList<List<Integer>>(result);
+        HashSet<List<Integer>> set = new HashSet<>();
+        helper(set, nums, new ArrayList<Integer>(), 0);
+        return new ArrayList<>(set);
     }
     
-    public void dfs(List<Integer> list, int[] nums,  boolean[] isVisit, int start){
-        if(list.size() >= 2){
-            result.add(new ArrayList<Integer>(list));
-            
+    public void helper(HashSet<List<Integer>> set, int[] nums, List<Integer> temp_list, int index){
+        if(temp_list.size() > 1){
+            set.add(new ArrayList<Integer>(temp_list));
         }
-        for(int i = start; i < isVisit.length; i++){
-            if(isVisit[i] != true){
-                isVisit[i] = true;
-                if( nums[i] >= list.get(list.size() - 1)){
-                    list.add(nums[i]);
-                    dfs(list, nums, isVisit, i+1);
-                    list.remove(list.size() - 1);
-                }
-                
-                isVisit[i] = false;
+        
+        for(int i = index ; i < nums.length; i++){
+            if(temp_list.size() == 0 || temp_list.get(temp_list.size() - 1) <= nums[i]){
+                temp_list.add(nums[i]);
+                helper(set, nums, temp_list, i + 1);
+                temp_list.remove(temp_list.size()-1);
             }
         }
     }
