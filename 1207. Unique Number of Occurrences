@@ -25,6 +25,9 @@ HashMap keeps recording { number -> counts of number }
 Set adds up all the values of the key
 
 Finally, we check if the number of values equals the size of the set
+
+Time: O(N)
+Space: O(N)
 ==========================code================
 class Solution {
     public boolean uniqueOccurrences(int[] arr) {
