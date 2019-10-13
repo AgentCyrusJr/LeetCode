@@ -7,39 +7,37 @@ The longest increasing subsequence is [2, 3, 7, 101], therefore the length is 4.
 Your algorithm should run in O(n2) complexity.
 
 Follow up: Could you improve it to O(n log n) time complexity?
+=========================================
+This is O(N^2) question using dp
+
+dp[i] stores the length of LIS until nums[i] inclusively
+Inner loop j goes from 0 to i-1,
+if nums[j] < nums[i]
+we update the dp[i] as the max of either: 
+1. dp[i]              
+2. dp[j]+1
+
+Time: O(N^2)
+Space: O(N)
 ===================codes=================
-//by dietpepsi
-tails is an array storing the smallest tail of all increasing subsequences with length i+1 in tails[i].
-For example, say we have nums = [4,5,6,3], then all the available increasing subsequences are:
-
-len = 1   :      [4], [5], [6], [3]   => tails[0] = 3
-len = 2   :      [4, 5], [5, 6]       => tails[1] = 5
-len = 3   :      [4, 5, 6]            => tails[2] = 6
-We can easily prove that tails is a increasing array. Therefore it is possible to do a binary search in tails array to find the one needs update.
-
-Each time we only do one of the two:
-
-(1) if x is larger than all tails, append it, increase the size by 1
-(2) if tails[i-1] < x <= tails[i], update tails[i]
-Doing so will maintain the tails invariant. The the final answer is just the size.
-
-Java
-
-public int lengthOfLIS(int[] nums) {
-    int[] tails = new int[nums.length];
-    int size = 0;
-    for (int x : nums) {
-        int i = 0, j = size;
-        while (i != j) {
-            int m = (i + j) / 2;
-            if (tails[m] < x)
-                i = m + 1;
-            else
-                j = m;
+class Solution {
+    public int lengthOfLIS(int[] nums) {
+        if(nums == null || nums.length == 0) return 0;
+        
+        int[] dp = new int[nums.length];
+        
+        Arrays.fill(dp,1);
+        
+        int max = 1;
+        for(int i = 0 ; i < nums.length; i++){
+            for(int j = 0; j < i; j++){
+                if(nums[j] < nums[i]){
+                    dp[i] = Math.max(dp[i], dp[j]+1);
+                }
+                max = Math.max(dp[i], max);
+            }
         }
-        tails[i] = x;
-        if (i == size) ++size;
-    }
-    return size;
+        
+        return max; 
+    } 
 }
-// Runtime: 2 ms
