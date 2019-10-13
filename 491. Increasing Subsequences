@@ -13,6 +13,8 @@ if nums[i] is greater than or equal to the last element in the temp_list, we add
 and move to the next index in the array.
 Each time check if the list size is greater or equal to 2, use set to store the result to avoid the dups
 
+Similar problem: https://github.com/AgentCyrusJr/LeetCode/blob/master/77.%20Combinations
+
 Time: O(2^N)
 Space: O(N)
 ================codes==================
