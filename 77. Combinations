@@ -14,7 +14,7 @@ If n = 4 and k = 2, a solution is:
 =======================================
 Backtracking
 
-similar problem: https://github.com/AgentCyrusJr/LeetCode/blob/master/77.%20Combinations
+similar problem: https://github.com/AgentCyrusJr/LeetCode/blob/master/491.%20Increasing%20Subsequences
 
 Time: O(2^N)
 Space: O(N)
