@@ -1,0 +1,80 @@
+There are a total of n courses you have to take, labeled from 0 to n-1.
+
+Some courses may have prerequisites, for example to take course 0 you have to first take course 1, which is expressed as a pair: [0,1]
+
+Given the total number of courses and a list of prerequisite pairs, is it possible for you to finish all courses?
+
+Example 1:
+
+Input: 2, [[1,0]] 
+Output: true
+Explanation: There are a total of 2 courses to take. 
+             To take course 1 you should have finished course 0. So it is possible.
+Example 2:
+
+Input: 2, [[1,0],[0,1]]
+Output: false
+Explanation: There are a total of 2 courses to take. 
+             To take course 1 you should have finished course 0, and to take course 0 you should
+             also have finished course 1. So it is impossible.
+Note:
+
+The input prerequisites is a graph represented by a list of edges, not adjacency matrices. Read more about how a graph is represented.
+You may assume that there are no duplicate edges in the input prerequisites.
+================================================================
+Graph Problem + BFS
+
+setup:
+indegrees array counts how many courses I need to take before I can take courses[i]
+map tracks { courses[i] -> list of courses which can be unblocked by taking course[i] }
+
+If true, we can remove all the courses by bfs checking indegree of each course is 0
+
+Time: O(N) TP sort
+Space: O(N)
+==============================code==============================
+class Solution {
+    public boolean canFinish(int numCourses, int[][] prerequisites) {
+        int[] indegrees = new int[numCourses];
+        HashMap<Integer, List<Integer>> map = new HashMap<>();
+        
+        for(int[] prerequisite: prerequisites){
+            if(map.containsKey(prerequisite[1])){
+                map.get(prerequisite[1]).add(prerequisite[0]);
+            }else{
+                List<Integer> list = new ArrayList<>();
+                list.add(prerequisite[0]);
+                map.put(prerequisite[1], list);
+            }
+            
+            indegrees[prerequisite[0]]++;
+        }
+        
+        Queue<Integer> queue = new LinkedList<>();
+        for(int i = 0 ; i < numCourses; i++){
+            if(indegrees[i] == 0){
+                queue.add(i);
+            }
+        }
+        
+        int count = 0;
+        while(!queue.isEmpty()){
+            int course = queue.poll();
+            count++;
+            List<Integer> l = map.get(course);
+            if(l != null){
+                int size = map.get(course).size();
+                for(int i = 0 ; i < size; i++){
+                    int curr = map.get(course).get(i);
+                    indegrees[curr]--;
+                    if(indegrees[curr] == 0){
+                        queue.add(curr);
+                    }
+                }
+            }
+            
+        }
+        
+        return count == numCourses;
+    }
+}
