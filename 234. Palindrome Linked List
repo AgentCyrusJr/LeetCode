@@ -2,9 +2,15 @@ Given a singly linked list, determine if it is a palindrome.
 
 Follow up:
 Could you do it in O(n) time and O(1) space?
+===============================================
+Use slow and fast node to find the mid node.
 
+reverse the second half of the nodes starting from mid node, return reversed node
+compare the head with reversed node one by one
+
+Time: O(n)
+Space: O(1)
 =====================codes======================
-//ArrayList instead of LinkedList
 /**
  * Definition for singly-linked list.
  * public class ListNode {
@@ -13,143 +19,41 @@ Could you do it in O(n) time and O(1) space?
  *     ListNode(int x) { val = x; }
  * }
  */
-public class Solution {
+class Solution {
     public boolean isPalindrome(ListNode head) {
-    	boolean flag = false;
-        ArrayList<Integer> ll = new ArrayList<Integer>();
-        if(head == null) flag = true;
-    	while(head != null){
-        	ll.add(head.val);
-        	head = head.next;
+        if(head == null || head.next == null) return true;
+        ListNode slow = head, fast = head;
+        
+        while(fast.next != null && fast.next.next != null){
+            slow = slow.next;
+            fast = fast.next.next;
         }
-    	for(int i = 0; i < ll.size() ; i++){
-    		if((int)ll.get(i) == (int)ll.get(ll.size()-1-i)){
-    			if(i == (ll.size()-1)/2){
-    				flag = true;
-    			}
-    		}
-    		else break;
-    	}
-    	return flag;
-    }
-}
-
-==================Others===================
-//Two solutions 
-
-//by zwangbo
-/**
- * Definition for singly-linked list.
- * public class ListNode {
- *     int val;
- *     ListNode next;
- *     ListNode(int x) { val = x; }
- * }
- */
-public class Solution {
-    public boolean isPalindrome(ListNode head) {
-        if(head == null) {
-            return true;
-        }
-        ListNode p1 = head;
-        ListNode p2 = head;
-        ListNode p3 = p1.next;
-        ListNode pre = p1;
-        //find mid pointer, and reverse head half part
-        while(p2.next != null && p2.next.next != null) {
-            p2 = p2.next.next;
-            pre = p1;
-            p1 = p3;
-            p3 = p3.next;
-            p1.next = pre;
-        }
-
-        //odd number of elements, need left move p1 one step
-        if(p2.next == null) {
-            p1 = p1.next;
-        }
-        else {   //even number of elements, do nothing
-            
-        }
-        //compare from mid to head/tail
-        while(p3 != null) {
-            if(p1.val != p3.val) {
-                return false;
-            }
-            p1 = p1.next;
-            p3 = p3.next;
+        
+        ListNode mid = slow.next;
+        slow.next = null;
+        
+        ListNode reversed = reverse(mid);
+        
+        while(head != null && reversed != null){
+           if(reversed.val != head.val){
+               return false;
+           }
+            head = head.next;
+            reversed = reversed.next;
         }
         return true;
         
     }
-}
-
-=========================
-//by journey0408
-public class Solution {
-    public boolean isPalindrome(ListNode head) {
-        ListNode dummy = new ListNode(10);
-        dummy.next = head;
-        if(head == null) return true;
-        ListNode slow = head;         
-        ListNode fast = head.next;
-        //Find the middle node
-        while(fast != null && fast.next != null){
-            slow = slow.next;
-            fast = fast.next.next;
-        }
-        //Reverse the last half of the linked list
-        ListNode pre = null;
-        slow = slow.next;
-        while(slow != null){
-            ListNode temp = slow.next;
-            slow.next = pre;
-            pre = slow;
-            slow = temp;
-        }
-        //Compare two linked lists
-        head = dummy.next;
-        while(head != null && pre != null){
-            if(head.val != pre.val) return false;
-            head = head.next;
-            pre = pre.next;
-        }
-        return true;
-    }
-}
-=============better solution=============
-//by yavinci
-1.first reverse the LinkedList 
-2.compare two lists and check node by node
-public boolean isPalindrome(ListNode head) {
-    ListNode fast = head, slow = head;
-    while (fast != null && fast.next != null) {
-        fast = fast.next.next;
-        slow = slow.next;
-    }
-    if (fast != null) { // odd nodes: let right half smaller
-        slow = slow.next;
-    }
-    slow = reverse(slow);
-    fast = head;
     
-    while (slow != null) {
-        if (fast.val != slow.val) {
-            return false;
+    public ListNode reverse(ListNode node){
+        ListNode prev = null;
+        while(node != null){
+            ListNode next = node.next;
+            node.next = prev;
+            prev = node;
+            node = next;
         }
-        fast = fast.next;
-        slow = slow.next;
+        
+        return prev;
     }
-    return true;
-}
-
-public ListNode reverse(ListNode head) {
-    ListNode prev = null;
-    while (head != null) {
-        ListNode next = head.next;
-        head.next = prev;
-        prev = head;
-        head = next;
-    }
-    return prev;
 }
