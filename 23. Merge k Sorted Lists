@@ -1,0 +1,44 @@
+Merge k sorted linked lists and return it as one sorted list. Analyze and describe its complexity.
+========================================
+1. maintain a pq to sort all the elements
+2. construct a list of node from the pq
+
+N: total number of nodes
+Time: O(N)
+Space: O(N)
+==================codes=================
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode(int x) { val = x; }
+ * }
+ */
+class Solution {
+    public ListNode mergeKLists(ListNode[] lists) {
+        if(lists.length == 0) return null;
+        PriorityQueue<Integer> pq = new PriorityQueue<>();
+        for(ListNode list: lists){
+            while(list != null){
+                pq.add(list.val);
+                list = list.next;
+            }
+        }
+        
+        if(pq.size() == 0) return null;
+        
+        ListNode dummy = new ListNode(0);
+        ListNode head = new ListNode(pq.poll());
+        dummy.next = head;
+        
+        ListNode next = null;
+        while(!pq.isEmpty()){
+            next = new ListNode(pq.poll());
+            head.next = next;
+            head = next;
+        }
+        
+        return dummy.next;
+    }
+}
