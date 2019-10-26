@@ -10,18 +10,28 @@ return -1.
 
 Note:
 You may assume that you have an infinite number of each kind of coin.
+==========================================
+dp[i] represents the number of coins needed to reach the amount of i
+
+Time: O(N * amount)
+Space: O(amount)
 ===================codes==================
 class Solution {
     public int coinChange(int[] coins, int amount) {
+        Arrays.sort(coins);
         int[] dp = new int[amount+1];
         Arrays.fill(dp, amount+1);
         dp[0] = 0;
-        for(int i = 1; i<= amount; i++){
-            for(int k = 0; k< coins.length; k++){
-                if(coins[k]<=i)
-                    dp[i] = Math.min(1 + dp[i-coins[k]], dp[i]);
+        
+        for(int i = 1; i <= amount ; i++){
+            for(int j = coins.length - 1; j >= 0 ; j--){
+                if(coins[j] <= i){
+                    dp[i] = Math.min(dp[i], 1 + dp[i - coins[j]]);
+                }
             }
         }
-        return dp[amount] == amount+1?-1: dp[amount];
+        
+        return dp[amount] == amount + 1 ? -1 : dp[amount];
+        
     }
 }
