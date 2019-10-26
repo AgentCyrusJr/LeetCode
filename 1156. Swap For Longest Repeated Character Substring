@@ -1,0 +1,85 @@
+Given a string text, we are allowed to swap two of the characters in the string. Find the length of the longest substring with repeated characters.
+
+ 
+
+Example 1:
+
+Input: text = "ababa"
+Output: 3
+Explanation: We can swap the first 'b' with the last 'a', or the last 'b' with the first 'a'. Then, the longest repeated character substring is "aaa", which its length is 3.
+Example 2:
+
+Input: text = "aaabaaa"
+Output: 6
+Explanation: Swap 'b' with the last 'a' (or the first 'a'), and we get longest repeated character substring "aaaaaa", which its length is 6.
+Example 3:
+
+Input: text = "aaabbaaa"
+Output: 4
+Example 4:
+
+Input: text = "aaaaa"
+Output: 5
+Explanation: No need to swap, longest repeated character substring is "aaaaa", length is 5.
+Example 5:
+
+Input: text = "abcdef"
+Output: 1
+ 
+
+Constraints:
+
+1 <= text.length <= 20000
+text consist of lowercase English characters only.
+==================================================
+Use a map to record the groups for each char, 
+group the same char together, if the two groups is one 
+distance away from each other, then we can preform a swap, 
+otherwise, we can't
+
+Time: O(N)
+Space: O(N)
+======================code========================
+class Solution {
+    public int maxRepOpt1(String text) {
+        HashMap<Character, List<Integer>> map = new HashMap<>();
+        List<Integer> list;
+        
+        for(int i = 0 ; i < text.length(); i++){
+            char c = text.charAt(i);
+            if(map.containsKey(c)){
+                list = map.get(c);
+            }else{
+                list = new ArrayList<Integer>();
+            }
+            list.add(i);
+            map.put(c, list);
+        }
+        
+        int res = 0;
+        for(Character c: map.keySet()){
+            list = map.get(c);
+            int cur = 1, pre = 0, sum = 0;
+            for(int i = 1 ; i < list.size(); i++){
+                if(list.get(i) == list.get(i-1)+1){
+                    cur++;
+                }else{
+                    if(list.get(i) == list.get(i-1)+2){
+                        pre = cur;
+                        cur = 1;
+                    }else{
+                        pre = 0;
+                        cur = 1;
+                    }
+                }
+                sum = Math.max(sum, pre + cur);
+            }
+            if(sum != list.size()){
+                sum++;
+            }
+            res = Math.max(res, sum);
+        }
+        
+        return res;
+    }
+}
