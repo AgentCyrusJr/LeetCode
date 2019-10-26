@@ -1,0 +1,68 @@
+Return the lexicographically smallest subsequence of text that contains all the distinct characters of text exactly once.
+
+ 
+
+Example 1:
+
+Input: "cdadabcc"
+Output: "adbc"
+Example 2:
+
+Input: "abcd"
+Output: "abcd"
+Example 3:
+
+Input: "ecbacba"
+Output: "eacb"
+Example 4:
+
+Input: "leetcode"
+Output: "letcod"
+ 
+
+Note:
+
+1 <= text.length <= 1000
+text consists of lowercase English letters.
+=================================================
+Use a stack to keep the chars in a desired order.
+
+if the char exists only once, simply push it into the queue,
+else, we push all the chars which still has a copy in the remaining
+string out of the stack until we find a char which has no copy left
+in the rest of the string.
+
+Time: O(N)
+Space: O(N)
+======================code=======================
+class Solution {
+    public String smallestSubsequence(String text) {
+        int[] count = new int[26];
+        Stack<Character> stack = new Stack<>();
+        
+        for(char c : text.toCharArray()){
+            count[c - 'a']++;
+        }
+        
+        for(int i = 0 ; i < text.length(); i++){
+            char c = text.charAt(i);
+            count[c - 'a']--;
+            
+            if(stack.contains(c)){
+                continue;
+            }else{
+                while(!stack.isEmpty() && stack.peek() > c && count[stack.peek()-'a'] > 0){
+                    stack.pop();
+                }
+                stack.push(c);
+            }
+        }
+        
+        StringBuilder sb = new StringBuilder();
+        while(!stack.isEmpty()){
+            sb.append(stack.pop());
+        }
+        
+        return sb.reverse().toString();
+    }
+}
