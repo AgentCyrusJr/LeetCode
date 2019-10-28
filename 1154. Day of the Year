@@ -1,0 +1,62 @@
+class Solution {
+    public int dayOfYear(String date) {
+        String[] date_arr = date.split("-");
+        int[] months = {31,28,31,30,31,30,31,31,30,31,30,31};
+        
+        int year = Integer.parseInt(date_arr[0]);
+        int month = Integer.parseInt(date_arr[1]);
+        
+        int days = 0;
+        if(isLeapYear(year)){
+            months[1]++;
+        }
+        
+        for(int m = 0 ; m < month-1; m++){
+            days += months[m];
+        }
+        
+        return days+Integer.parseInt(date_arr[2]);
+        
+    }
+    
+    public boolean isLeapYear(int year){
+        if(year % 400 == 0) return true;
+        if(year % 100 == 0) return false;
+        if(year % 4 == 0) return true;
+        return false;
+    }
+}
+=====================================================
+First check if the year is leap year, if yes, Feb has 29 days
+
+Time: O(1)
+Space: O(1)
+=======================code==========================
+class Solution {
+    public int dayOfYear(String date) {
+        String[] date_arr = date.split("-");
+        int[] months = {31,28,31,30,31,30,31,31,30,31,30,31};
+        
+        int year = Integer.parseInt(date_arr[0]);
+        int month = Integer.parseInt(date_arr[1]);
+        
+        int days = 0;
+        if(isLeapYear(year)){
+            months[1]++;
+        }
+        
+        for(int m = 0 ; m < month-1; m++){
+            days += months[m];
+        }
+        
+        return days+Integer.parseInt(date_arr[2]);
+        
+    }
+    
+    public boolean isLeapYear(int year){
+        if(year % 400 == 0) return true;
+        if(year % 100 == 0) return false;
+        if(year % 4 == 0) return true;
+        return false;
+    }
+}
