@@ -1,0 +1,66 @@
+Given a date, return the corresponding day of the week for that date.
+
+The input is given as three integers representing the day, month and year respectively.
+
+Return the answer as one of the following values {"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"}.
+
+ 
+
+Example 1:
+
+Input: day = 31, month = 8, year = 2019
+Output: "Saturday"
+Example 2:
+
+Input: day = 18, month = 7, year = 1999
+Output: "Sunday"
+Example 3:
+
+Input: day = 15, month = 8, year = 1993
+Output: "Sunday"
+ 
+
+Constraints:
+
+The given dates are valid dates between the years 1971 and 2100.
+==============================================
+Given 1971-1-1 is Friday
+
+counting the days since 1971-1-1, and mod 7 to find the day of the week of that day
+
+Time: O(1)
+Space: O(1)
+===================code=======================
+class Solution {
+    
+    public String dayOfTheWeek(int day, int month, int year) {
+        int[] months = {31,28,31,30,31,30,31,31,30,31,30,31};
+        String[] days = {"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday","Saturday"};
+        
+        int remains = day;
+        for(int yr = 1971; yr < year; yr++){
+            if(isLeapYear(yr)){
+                remains += 366;
+            }else{
+                remains += 365;
+            }
+        }
+        
+        if(isLeapYear(year)){
+            months[1]++;
+        }
+        for(int m = 0 ; m < month-1; m++){
+            remains += months[m];
+        }
+        
+        
+        return days[(4+remains)%7];
+    }
+    
+    public boolean isLeapYear(int year){
+        if(year % 400 == 0) return true;
+        if(year % 100 == 0) return false;
+        if(year % 4 == 0) return true;
+        return false;
+    }
+}
