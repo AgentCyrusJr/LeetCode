@@ -44,7 +44,8 @@ class Solution {
     }
 }
 ===========================================
- // by 2guotou 
+Better solution on dp
+// by 2guotou 
  public boolean wordBreak(String s, Set<String> wordDict) {
         int len = s.length();
         boolean[] f = new boolean[len+1];
