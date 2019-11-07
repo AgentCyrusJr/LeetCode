@@ -5,7 +5,45 @@ s = "leetcode",
 dict = ["leet", "code"].
 
 Return true because "leetcode" can be segmented as "leet code".
+======================================
+DP
+
+dp[i][j] represents whether we could construct the s[i,j] exclusively using the words in dict
+
+Time: O(L*L*L)
+Space: O(L*L)
 ==================codes===============
+class Solution {
+    public boolean wordBreak(String s, List<String> wordDict) {
+        int len = s.length();
+        if(len == 0) return false;
+        Set<String> set = new HashSet<String>();
+        set.addAll(wordDict);
+        int[][] dp = new int[len][len];
+        
+        for(int l = 1; l<= len; l++){
+            for(int i = 0 ; i+l <= len; i++){
+                String ss = s.substring(i, i+l);
+                
+                if(set.contains(ss)){
+                    dp[i][i+l-1] = 1;
+                }else{
+                    int j = i+1;
+                    while(j < i+l){
+                        if(dp[i][j-1] == 1 && dp[j][i+l-1] == 1){
+                            dp[i][i+l-1] = 1;
+                            break;
+                        }
+                        j++;
+                    }
+                }
+            }
+        }
+        
+        return dp[0][len-1] == 1;
+    }
+}
+===========================================
  // by 2guotou 
  public boolean wordBreak(String s, Set<String> wordDict) {
         int len = s.length();
