@@ -1,0 +1,57 @@
+Given a non-empty string s and a dictionary wordDict containing a list of non-empty words, add spaces in s to construct a sentence where each word is a valid dictionary word. You may assume the dictionary does not contain duplicate words.
+
+Return all such possible sentences.
+
+For example, given
+s = "catsanddog",
+dict = ["cat", "cats", "and", "sand", "dog"].
+
+A solution is ["cats and dog", "cat sand dog"].
+
+UPDATE (2017/1/4):
+The wordDict parameter had been changed to a list of strings (instead of a set of strings). Please reload the code definition to get the latest changes.
+=======================================================
+DFS
+
+use a set to store all the words,
+use a map to record (key, value) -> (string, all the possbile combinations to form the string)
+==========================codes========================
+class Solution {
+    public List<String> wordBreak(String s, List<String> wordDict) {
+       List<String> res = new ArrayList<>();
+        if(s.length() == 0) return res;
+        
+        Set<String> set = new HashSet<>();
+        set.addAll(wordDict);
+         
+        HashMap<String, List<String>> map = new HashMap<>();
+        
+        helper(s, map, set);
+        return map.get(s);
+    }
+    
+    public void helper(String ss, HashMap<String, List<String>> map, Set<String> set){
+        if(ss.length() == 0 || map.containsKey(ss)){
+            return;
+        }
+        
+        List<String> list = new ArrayList<>();
+        
+        for(int i = 1; i <= ss.length(); i++){
+            String sub = ss.substring(0,i);
+            if(set.contains(sub)){
+                helper(ss.substring(i), map, set);
+                List<String> partial = map.get(ss.substring(i));
+                if(partial == null){
+                    list.add(sub);
+                }else{
+                    for(String str: partial){
+                        list.add(sub+" "+str);
+                    }
+                }
+            }
+        }
+
+        map.put(ss, list);
+    }
+}
