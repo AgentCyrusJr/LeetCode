@@ -2,7 +2,10 @@ You are given two linked lists representing two non-negative numbers. The digits
 
 Input: (2 -> 4 -> 3) + (5 -> 6 -> 4)
 Output: 7 -> 0 -> 8
-
+================================================
+loop thru each node, take care of the case where sum is greater or equal to 10
+Time: O(N)
+Space: O(N)
 =======================codes====================
 /**
  * Definition for singly-linked list.
@@ -12,66 +15,58 @@ Output: 7 -> 0 -> 8
  *     ListNode(int x) { val = x; }
  * }
  */
-public class Solution {
+class Solution {
     public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
-		int digit = 0, sum = 0;
-		ListNode ln = null;
-    	ListNode current = new ListNode(0);
-        while(l1 != null && l2 != null){
-        	sum = l1.val + l2.val + digit;
-        	if(sum >= 10){
-        		sum = sum % 10;
-        		digit=1;
-        	}
-        	else
-        		digit = 0;
-        	if(ln==null) { 
-    			ln = new ListNode(sum);
-    			current = ln;
-    		}
-    		else{
-    			current.next = new ListNode(sum);
-    			current = current.next;
-    		}
-        	l1 = l1.next;
-        	l2 = l2.next;
-        }
-        if(l1 == null){
-        	while(l2 != null){
-        		sum = l2.val + digit;
-	        	if(sum >= 10){
-	        		sum = sum % 10;
-	        		digit=1;
-	        	}
-	        	else
-	        		digit = 0;
-	        	current.next = new ListNode(sum);
-				current = current.next;
-				l2 = l2.next;
-        	}	
-        }
-        else{
-        	while(l1 != null){
-        		sum = l1.val + digit;
-	        	if(sum >= 10){
-	        		sum = sum % 10;
-	        		digit = 1;
-	        	}
-	        	else
-	        		digit = 0;
-	        	current.next = new ListNode(sum);
-				current = current.next;
-				l1 = l1.next;
-        	}
-        }
-        if(digit == 1){
-        	current.next = new ListNode(digit);
-			current = current.next;
-        }
-    // 	this.show(ln);
-    	return ln;
+        ListNode dummy = new ListNode(-1);
+        ListNode head = dummy;
+        int greater_or_equal_to_ten = 0;
         
-	}
+        while(l1 != null && l2 != null){
+            int sum = l1.val + l2.val + greater_or_equal_to_ten;
+            greater_or_equal_to_ten = sum/10;
+            ListNode curr = new ListNode(sum%10);
+            head.next = curr;
+            head = curr;
+            l1 = l1.next;
+            l2 = l2.next;
+        }
+        
+        while(l1 != null){
+            int sum = l1.val + greater_or_equal_to_ten;
+            if(sum < 10){
+                l1.val+=greater_or_equal_to_ten;
+                head.next = l1;
+                greater_or_equal_to_ten = 0;
+                break;
+            }else{
+                l1.val = 0;
+                head.next = l1;
+                head = l1;
+            }
+            l1 = l1.next;  
+        }
+        
+        while(l2 != null){
+            int sum = l2.val + greater_or_equal_to_ten;
+            if(sum < 10){
+                l2.val+=greater_or_equal_to_ten;
+                head.next = l2;
+                greater_or_equal_to_ten = 0;
+                break;
+            }else{
+                l2.val = 0;
+                head.next = l2;
+                head = l2;
+            }
+            l2 = l2.next;  
+        }
+        
+        if(greater_or_equal_to_ten == 1){
+            head.next = new ListNode(1);
+        }
+        
+        return dummy.next;
+    }
 }
 
 ===================================
