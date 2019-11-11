@@ -10,6 +10,17 @@ endWord = "cog"
 wordList = ["hot","dot","dog","lot","log"]
 As one shortest transformation is "hit" -> "hot" -> "dot" -> "dog" -> "cog",
 return its length 5.
+=====================================
+BFS
+
+use a set to track the words available
+
+using a queue to to level first first, starting from the start word, we check if after changing one char, 
+the changed word is in the set or not, if it exists, we remove it from the set to avoid finding it again 
+in the future. Keep searching until we find the endWord, otherwise return 0;
+
+Time: O(26*l*n)  ->  l is endWord.length(), n is the size of the wordList
+Space: O(n)
 ===============codes=================
 // This problem is basically the same as 433. Minimum Genetic Mutation 
 public int ladderLength(String beginWord, String endWord, Set<String> wordList) {
@@ -40,4 +51,47 @@ public int ladderLength(String beginWord, String endWord, Set<String> wordList) 
         level++;
     }
     return 0;
+}
+=============================2019/11/10=================================
+class Solution {
+    public int ladderLength(String beginWord, String endWord, List<String> wordList) {
+        Set<String> set = new HashSet<>();
+        set.addAll(wordList);
+        
+        int level = 0;
+        if(!set.contains(endWord)){
+            return 0;
+        }
+        
+        Queue<String> q = new LinkedList<>();
+        q.add(beginWord);
+        
+        while(!q.isEmpty()){
+            level++;
+            int size = q.size();
+            for(int k = 0 ; k < size; k++){
+                String s = q.poll();
+                
+                for(int i = 0; i< s.length(); i++){
+                    String dup = new String(s);
+                    for(char j = 'a' ; j <= 'z'; j++){
+                        StringBuilder sb = new StringBuilder(s);
+                        sb.setCharAt(i, j);
+                        s = sb.toString();
+                        if(s.equals(endWord)){
+                            return level+1;
+                        }
+                        
+                        if(!set.contains(s)) continue;
+                        
+                        set.remove(s);
+                        
+                        q.add(s);
+                    }
+                    s = dup;
+                }
+            } 
+        }
+        return 0;
+    }
 }
