@@ -1,0 +1,102 @@
+Design and implement a data structure for Least Recently Used (LRU) cache. It should support the following operations: get and set.
+
+get(key) - Get the value (will always be positive) of the key if the key exists in the cache, otherwise return -1.
+set(key, value) - Set or insert the value if the key is not already present. When the cache reached its capacity, it should invalidate the least recently used item before inserting a new item.
+=================================================
+Define a double linked node, with dummy head and tail
+
+each time there is a get, check if the node exists or not,
+if exists, remove the node from list, since it has been updated,
+so it became recently used, we add this node to the end of the list,
+return the node value
+if not exist, return -1
+
+each time there is a put, check if the node exists or not,
+if exists, remove the node from list, since it has been updated,
+so it became recently used, we add this node to the end of the list
+if no exists, first we check if the map has reached its capacity,
+if so, remove the head of the list, as well as its entry in the map, 
+otherwise, create a new node, and add it to the list as well as in the map
+=======================codes=====================
+class LRUCache {
+    
+    private Node head = new Node(1, -1);
+    private Node tail = new Node(1, -1);
+    private HashMap<Integer,Node> map;
+    private int capacity;
+
+    public LRUCache(int capacity) {
+        map = new HashMap<>(capacity);
+        this.capacity = capacity;
+        head.next = tail;
+        tail.prev = head;
+    }
+    
+    public int get(int key) {
+        Node node = map.get(key);
+        if(node == null){
+            return -1;
+        }else{
+            remove(node);
+            add(node);
+            return node.val;
+        }
+    }
+    
+    public void put(int key, int value) {
+        Node node = map.get(key);
+        
+        if(node != null){
+            remove(node);
+            node.val = value;
+            add(node);
+        }else{
+            if(map.size() == capacity){
+                map.remove(head.next.key);
+                remove(head.next);
+            }
+            
+            Node newNode = new Node(key, value);
+            add(newNode);
+            map.put(key, newNode);
+        }
+    }
+    
+    public void add(Node node){
+        Node last = tail.prev;
+        
+        last.next = node;
+        node.prev = last;
+        
+        node.next = tail;
+        tail.prev = node;
+    }
+    
+    public void remove(Node node){
+        Node prev = node.prev;
+        Node next = node.next;
+        
+        prev.next = next;
+        next.prev = prev;
+    }
+    
+    class Node {
+        int key;
+        int val;
+        
+        Node prev;
+        Node next;
+        
+        public Node(int key, int val){
+            this.key = key;
+            this.val = val;
+        }
+    }
+}
+
+/**
+ * Your LRUCache object will be instantiated and called as such:
+ * LRUCache obj = new LRUCache(capacity);
+ * int param_1 = obj.get(key);
+ * obj.put(key,value);
+ */
