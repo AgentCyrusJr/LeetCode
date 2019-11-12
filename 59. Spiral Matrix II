@@ -9,41 +9,46 @@ You should return the following matrix:
  [ 8, 9, 4 ],
  [ 7, 6, 5 ]
 ]
+===============================================
+Four pointers
+
+Similar to Spiral Matrix I
+
+Time: O(N^2)
+Space: O(1)
 =======================codes===================
-public class Solution {
+class Solution {
     public int[][] generateMatrix(int n) {
-        int row_first = 0, row_last = n, col_first = 0, col_last = n;
-        int[][] m = new int[n][n];
-        int index = 1;
-        while(index <= n*n){
-        	for(int i = col_first ; i < col_last; i++){
-        		m[row_first][i] = index++;
-//        		System.out.println(m[row_first][i] + " " + row_first + " " + i);
-        	}
-        	col_last--;
-//        	System.out.println(col_last);
-        	
-        	for(int j = row_first+1; j<row_last ; j++ ){
-        		m[j][col_last] = index++;
-//        		System.out.println(m[j][col_last] + " " + j + " " + col_last);
-        	}
-        	row_last--;
-//        	System.out.println(row_last);
-        	
-        	for(int k = col_last-1; k>= row_first ; k--){
-        		m[row_last][k] = index++;
-//        		System.out.println(m[row_last][k] + " " + row_last + " " + k);
-        	}
-        	col_first++;
-//        	System.out.println(col_first);
-        	
-        	for(int l = row_last-1; l>row_first; l--){
-        		m[l][row_first] = index++;
-//        		System.out.println(m[l][row_first] + " " + l + " " + row_first);
-        	}
-        	row_first++;
-//        	System.out.println(row_first);
+        int[][] matrix = new int[n][n];
+        
+        int row_start = 0, row_end = n-1, col_start = 0, col_end = n-1;
+        int count = 1;
+        while(row_start <= row_end && col_start <= col_end){
+            for(int i = col_start; i <= col_end; i++){
+                matrix[row_start][i] = count++;
+            }
+            row_start++;
+            
+            for(int i = row_start; i <= row_end; i++){
+                matrix[i][col_end] = count++;
+            }
+            col_end--;
+            
+            if(row_start <= row_end){
+                for(int i = col_end; i>= col_start; i--){
+                    matrix[row_end][i] = count++;
+                }
+            }
+            row_end--;
+            
+            if(col_start <= col_end){
+                for(int i = row_end; i>= row_start; i--){
+                    matrix[i][col_start] = count++;
+                }
+            }
+            col_start++;
         }
-        return m;
+        
+        return matrix;
     }
 }
