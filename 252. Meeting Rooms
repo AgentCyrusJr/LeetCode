@@ -3,6 +3,18 @@ Given an array of meeting time intervals consisting of start and end times [[s1,
 For example,
 Given [[0, 30],[5, 10],[15, 20]],
 return false.
+===================================
+sort the start and end separately
+
+the key observation is that if there exists
+start[i+1], where start[i+1] < end[i], which indicates an overlap on time
+
+for example, start[i+1] = 5, and end[i] = 7
+assuming there is no overlap, then there must be a valid end[j] matches starts[i+1]
+which should also meet the condition ends[j] < ends[i], but it is impossible 
+
+Time: O(NlogN)
+Space: O(N)
 ================codes==============
 /**
  * Definition for an interval.
@@ -15,19 +27,23 @@ return false.
  */
 public class Solution {
     public boolean canAttendMeetings(Interval[] intervals) {
-        if(intervals.length == 0) return true;
-        Arrays.sort(intervals, new Comparator<Interval>(){
-        	public int compare(Interval i1, Interval i2){
-        		return Integer.compare(i1.start,i2.start);
-        	}	
-        });
+        int[] starts = new int[intervals.length];
+        int[] ends = new int[intervals.length];
         
-        for(int i = 1 ; i < intervals.length; i++){
-            if(intervals[i-1].end <= intervals[i].start){
-                continue;
-            }else
-                return false;
+        for(int i = 0 ; i < intervals.length; i++){
+            starts[i] = intervals[i].start;
+            ends[i] = intervals[i].end;
         }
+        
+        Arrays.sort(starts);
+        Arrays.sort(ends);
+        
+        for(int i = 0; i < intervals.length - 1; i++){
+            if(ends[i] > starts[i+1]){
+                return false;
+            }
+        }
+        
         return true;
     }
 }
