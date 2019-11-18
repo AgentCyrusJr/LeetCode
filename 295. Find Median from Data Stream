@@ -15,7 +15,7 @@ add(1)
 add(2)
 findMedian() -> 1.5
 add(3) 
-findMedian() -> 2'
+findMedian() -> 2.0
 =================================
 We would like to maintain two heaps,
 one min heap to store half of the larger number in the stream
