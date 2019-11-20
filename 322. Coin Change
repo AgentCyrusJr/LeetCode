@@ -11,7 +11,7 @@ return -1.
 Note:
 You may assume that you have an infinite number of each kind of coin.
 ==========================================
-dp[i] represents the number of coins needed to reach the amount of i
+dp[i] represents the minimum number of coins needed to reach the amount of i
 
 Time: O(N * amount)
 Space: O(amount)
@@ -24,9 +24,11 @@ class Solution {
         dp[0] = 0;
         
         for(int i = 1; i <= amount ; i++){
-            for(int j = coins.length - 1; j >= 0 ; j--){
-                if(coins[j] <= i){
-                    dp[i] = Math.min(dp[i], 1 + dp[i - coins[j]]);
+            for(int coin: coins){
+                if(i >= coin){
+                    amounts[i] = Math.min(amounts[i], amounts[i - coin] + 1);
+                }else{
+                    break;
                 }
             }
         }
