@@ -16,7 +16,15 @@ If the two linked lists have no intersection at all, return null.
 The linked lists must retain their original structure after the function returns.
 You may assume there are no cycles anywhere in the entire linked structure.
 Your code should preferably run in O(n) time and use only O(1) memory.
+===========================================
+Find the difference between two linked list,
+move the pointer of the longer linked list to have the
+same distance to the tail as the shorter one.
 
+iterate through both linked lists one by one to find the coverged one
+
+Time: O(N)
+Space: O(1)
 ====================codes==================
 /**
  * Definition for singly-linked list.
@@ -31,59 +39,43 @@ Your code should preferably run in O(n) time and use only O(1) memory.
  */
 public class Solution {
     public ListNode getIntersectionNode(ListNode headA, ListNode headB) {
-		ListNode target=null; 
-		int len1=0, len2=0;  
-		ListNode la = headA;
-		ListNode lb = headB;
-        if(headA==null||headB==null) return target; 
-        while(la!=null){  
-            len1++;  
-            la = la.next;  
-        }  
-        while(lb!=null){  
-            len2++;  
-            lb = lb.next;  
+        int len1 = 0, len2 = 0;
+        ListNode dummy1 = new ListNode(0);
+        ListNode dummy2 = new ListNode(0);
+        dummy1.next = headA; dummy2.next = headB;
+        
+        while(headA != null){
+            len1++;
+            headA = headA.next;
         }
-        if(len1>=len2){  
-            for(int i=0;i<len1-len2;i++){  
-                headA=headA.next;  
-            }  
-        }else{  
-            for(int i=0;i<len2-len1;i++){  
-                headB=headB.next;  
-            }  
-        }  
-        while(headA!=null && headB!=null){  
-            if(headA==headB){  
-                target=headA;  
-                break;  
-            }  
-            else{  
-                headA = headA.next;  
-                headB = headB.next;  
-            }  
-        }  
-        return target; 	
+        
+        while(headB != null){
+            len2++;
+            headB = headB.next;
+        }
+        
+        headA = dummy1.next;
+        headB = dummy2.next;
+        
+        if(len1 >= len2){
+            int index= 0;
+            while(index < len1-len2){
+                headA = headA.next;
+                index++;
+            }
+        }else{
+            int index =0;
+            while(index < len2 - len1){
+                headB = headB.next;
+                index++;
+            }
+        }
+        
+        while(headA != headB){
+            headA = headA.next;
+            headB = headB.next;
+        }
+        
+        return headA;
     }
-}
-
-
-=======================
-//by hpplayer 
-//star for the most, but not understandable to me
-public ListNode getIntersectionNode(ListNode headA, ListNode headB) {
-    //boundary check
-    if(headA == null || headB == null) return null;
-    
-    ListNode a = headA;
-    ListNode b = headB;
-    
-    //if a & b have different len, then we will stop the loop after second iteration
-    while( a != b){
-    	//for the end of first iteration, we just reset the pointer to the head of another linkedlist
-        a = a == null? headB : a.next;
-        b = b == null? headA : b.next;    
-    }
-    
-    return a;
 }
