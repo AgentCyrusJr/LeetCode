@@ -6,8 +6,10 @@
 #Note:
 #Each element in the result should appear as many times as it shows in both arrays.
 #The result can be in any order.
-
-=============================================codes start from here=======================================================================
+=======================================================
+Time: O(n)
+Space: O(n)
+=========================code==========================
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -48,5 +50,31 @@ public class Solution {
     	for(int k=0; k<result.length;k++){
     		System.out.print(result[k]+", ");
     	}
+    }
+}
+=====================2019/12/02======================
+class Solution {
+    public int[] intersect(int[] nums1, int[] nums2) {
+        HashMap<Integer, Integer> map = new HashMap<>();
+        ArrayList<Integer> list = new ArrayList<>();
+        
+        for(int num: nums1){
+            map.put(num, map.getOrDefault(num, 0)+1);
+        }
+        
+        for(int num: nums2){
+            if(map.get(num) == null || map.get(num) == 0){
+                continue;
+            }else{
+                list.add(num);
+                map.put(num, map.get(num)-1);
+            }
+        }
+        
+        int[] res = new int[list.size()];
+        for(int i = 0 ; i < res.length; i++){
+            res[i] = list.get(i);
+        }
+        return res;
     }
 }
