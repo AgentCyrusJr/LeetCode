@@ -1,0 +1,66 @@
+Given a set of distinct integers, nums, return all possible subsets.
+
+Note: The solution set must not contain duplicate subsets.
+
+For example,
+If nums = [1,2,3], a solution is:
+
+[
+  [3],
+  [1],
+  [2],
+  [1,2,3],
+  [1,3],
+  [2,3],
+  [1,2],
+  []
+]
+===========================================
+Time: O(2^N)
+Space: O(2^N)
+==================codes====================
+//DFS
+class Solution {
+    public List<List<Integer>> subsets(int[] nums) {
+        List<List<Integer>> subsets = new ArrayList<>();
+        generateSubset(0, nums, new ArrayList<>(), subsets);
+        return subsets;
+    }
+    
+    public void generateSubset(int index, int[] nums, List<Integer> list, List<List<Integer>> subsets){
+        subsets.add(new ArrayList<>(list));
+        for(int i = index; i < nums.length; i++){
+            list.add(nums[i]);
+            generateSubset(i+1, nums, list, subsets);
+            list.remove(list.size()-1);
+        }
+    }
+}
+//BFS
+class Solution {
+    public List<List<Integer>> subsets(int[] nums) {
+        List<List<Integer>> subsets = new LinkedList<>();
+        
+        List<Integer> list = new LinkedList<>();
+        Queue<List<Integer>> queue = new LinkedList<>();
+        queue.add(list);
+        
+        Arrays.sort(nums);
+        
+        while(!queue.isEmpty()){
+            list = queue.poll();
+            subsets.add(list);
+            
+            for(int i = 0 ; i < nums.length; i++){
+                if(list.size() == 0 || list.get(list.size()-1) < nums[i]){
+                    list.add(nums[i]);
+                    queue.add(new ArrayList<>(list));
+                    list.remove(list.size()-1);
+                }
+            }
+        }
+        
+        return subsets;
+    }
+
+}
