@@ -1,0 +1,95 @@
+Given a string s and a non-empty string p, find all the start indices of p's anagrams in s.
+
+Strings consists of lowercase English letters only and the length of both strings s and p will not be larger than 20,100.
+
+The order of output does not matter.
+
+Example 1:
+
+Input:
+s: "cbaebabacd" p: "abc"
+
+Output:
+[0, 6]
+
+Explanation:
+The substring with start index = 0 is "cba", which is an anagram of "abc".
+The substring with start index = 6 is "bac", which is an anagram of "abc".
+Example 2:
+
+Input:
+s: "abab" p: "ab"
+
+Output:
+[0, 1, 2]
+
+Explanation:
+The substring with start index = 0 is "ab", which is an anagram of "ab".
+The substring with start index = 1 is "ba", which is an anagram of "ab".
+The substring with start index = 2 is "ab", which is an anagram of "ab".
+=================================
+record every char in p into an array
+
+at first, compare the first plen( plen = p.length() ) element in s,
+if pattern[ch-'a] >= 0, count--;
+else count++;
+
+if the count = 0, which means the first substring is a match
+after that, remove the head char and add one more char to the tail iteratively
+and compare pattern[add-'a'] and pattern[remove-'a'] with 0 accordingly
+
+Time: O(N)
+Space: O(N)
+==============codes==============
+class Solution {
+    public List<Integer> findAnagrams(String s, String p) {
+        List<Integer> list = new ArrayList<Integer>();
+        if(s.length() < p.length()) return list;
+        int count = p.length();
+        
+        String ss = s.substring(0, count);
+        int[] pattern = new int[26];
+        
+        for(char c: p.toCharArray()){
+            pattern[c-'a']++;
+        }
+        for(char c: ss.toCharArray()){
+            pattern[c-'a']--;
+            if(pattern[c-'a'] >= 0){
+                count--;
+            }else{
+                count++;
+            }
+            
+            if(count == 0){
+                list.add(0);
+            }
+        }
+        
+        int start = 0;
+        while(start + p.length() < s.length()){
+            char c1 = s.charAt(start);
+            char c2 = s.charAt(start + p.length());
+            
+            pattern[c1-'a']++;
+            if(pattern[c1-'a'] <= 0){
+                count--;
+            }else{
+                count++;
+            }
+            
+            pattern[c2-'a']--;
+            if(pattern[c2-'a'] >= 0){
+                count--;
+            }else{
+                count++;
+            }
+            
+            if(count == 0){
+                list.add(start+1);
+            }
+            start++;
+        }
+        return list;
+        
+    }
