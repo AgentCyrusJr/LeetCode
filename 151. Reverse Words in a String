@@ -16,6 +16,9 @@ Could the input string contain leading or trailing spaces?
 Yes. However, your reversed string should not contain leading or trailing spaces.
 How about multiple spaces between two words?
 Reduce them to a single space in the reversed string.
+========================================
+Time: O(N)
+Space: O(N)
 =================codes==================
 public class Solution {
     public String reverseWords(String s) {
@@ -74,5 +77,19 @@ public class Solution {
             }
         }
         return res.trim();
+    }
+}
+=============================2019/12/03==================================
+class Solution {
+    public String reverseWords(String s) {
+        StringBuilder sb = new StringBuilder();
+        String[] str_arr = s.trim().split(" ");
+        
+        for(int i = str_arr.length-1; i >= 0; i--){
+            if(str_arr[i].length() != 0)
+                sb.append(str_arr[i]+" ");
+        }
+        
+        return sb.toString().trim();
     }
 }
