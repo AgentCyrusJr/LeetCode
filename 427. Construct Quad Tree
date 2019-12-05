@@ -1,0 +1,67 @@
+We want to use quad trees to store an N x N boolean grid. Each cell in the grid can only be true or false. The root node represents the whole grid. For each node, it will be subdivided into four children nodes until the values in the region it represents are all the same.
+
+Each node has another two boolean attributes : isLeaf and val. isLeaf is true if and only if the node is a leaf node. The val attribute for a leaf node contains the value of the region it represents.
+==========================================================================
+Analysis: 
+Time: O(N^2)
+Space: O(lgN)
+==============================code========================================
+/*
+// Definition for a QuadTree node.
+class Node {
+    public boolean val;
+    public boolean isLeaf;
+    public Node topLeft;
+    public Node topRight;
+    public Node bottomLeft;
+    public Node bottomRight;
+
+    public Node() {}
+
+    public Node(boolean _val,boolean _isLeaf,Node _topLeft,Node _topRight,Node _bottomLeft,Node _bottomRight) {
+        val = _val;
+        isLeaf = _isLeaf;
+        topLeft = _topLeft;
+        topRight = _topRight;
+        bottomLeft = _bottomLeft;
+        bottomRight = _bottomRight;
+    }
+};
+*/
+class Solution {
+    public Node construct(int[][] grid) {
+        if(grid.length == 0) return null;
+        return helper(0, 0, grid.length, grid[0].length, grid);
+    }
+    
+    public Node helper(int startX, int startY, int endX, int endY, int[][] grid){
+        int value = grid[startX][startY];
+        boolean isSame = true;
+        
+        for(int i = startX; i< endX; i++){
+            for(int j = startY; j < endY; j++){
+                if(value != grid[i][j]){
+                    isSame = false;
+                    break;
+                }
+            }
+            if(!isSame){
+                break;
+            }
+        }
+        
+        if(isSame){
+            Node n = new Node(value == 1, isSame, null, null, null, null);
+            return n;
+        }else{
+            Node topLeft     = helper(startX,          startY,          (startX+endX)/2, (startY+endY)/2, grid);
+            Node topRight    = helper(startX,          (startY+endY)/2, (startX+endX)/2, endY,            grid);
+            Node bottomLeft  = helper((startX+endX)/2, startY,          endX,            (startY+endY)/2, grid);
+            Node bottomRight = helper((startX+endX)/2, (startY+endY)/2, endX,            endY,            grid);
+            Node n = new Node(false, isSame, topLeft, topRight, bottomLeft, bottomRight);
+            return n;
+        }
+        
+        
+    }
+}
