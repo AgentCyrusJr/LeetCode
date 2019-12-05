@@ -3,6 +3,7 @@ We want to use quad trees to store an N x N boolean grid. Each cell in the grid 
 Each node has another two boolean attributes : isLeaf and val. isLeaf is true if and only if the node is a leaf node. The val attribute for a leaf node contains the value of the region it represents.
 ==========================================================================
 Analysis: 
+https://leetcode.com/problems/construct-quad-tree/discuss/305317/Python-Recursive-Divide-and-Conquer-%2B-Time-and-Space-Complexity-Analysis
 Time: O(N^2)
 Space: O(lgN)
 ==============================code========================================
