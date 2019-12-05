@@ -30,6 +30,9 @@ else for x < x+y, we do ty%=tx
 
 since all the points are limited in the first quadrant, if sy == ty,
 or sx = tx, we can speed up the process by %ty or %tx directly onto the difference
+
+Time: O(lgN)
+Time analysis: https://en.wikipedia.org/wiki/Euclidean_algorithm#Algorithmic_efficiency
 ===========================code=============================
 Iteratively
 class Solution {
