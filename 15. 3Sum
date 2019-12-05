@@ -9,12 +9,15 @@ A solution set is:
   [-1, 0, 1],
   [-1, -1, 2]
 ]
+===================================
+Time: O(N^2)
+Space: O(N^2)
 ===============codes===============
 public class Solution {
     public List<List<Integer>> threeSum(int[] nums) {
-		Arrays.sort(nums);
-		int length = nums.length;
-		List<List<Integer>> sum_list = new ArrayList<List<Integer>>();
+	Arrays.sort(nums);
+	int length = nums.length;
+	List<List<Integer>> sum_list = new ArrayList<List<Integer>>();
         if(length < 3)
             return sum_list;
         for(int i=0; i<length - 2; i++){
@@ -41,31 +44,3 @@ public class Solution {
     }
 }
 
-================
-//by StevenCooks  
-public List<List<Integer>> threeSum(int[] num) {
-    Arrays.sort(num);
-    List<List<Integer>> res = new LinkedList<>(); 
-    for (int i = 0; i < num.length-2; i++) {
-        if (i == 0 || (i > 0 && num[i] != num[i-1])) {
-            int lo = i+1, hi = num.length-1, sum = 0 - num[i];
-            while (lo < hi) {
-                if (num[lo] + num[hi] == sum) {
-                    res.add(Arrays.asList(num[i], num[lo], num[hi]));
-                    while (lo < hi && num[lo] == num[lo+1]) lo++;
-                    while (lo < hi && num[hi] == num[hi-1]) hi--;
-                    lo++; hi--;
-                } else if (num[lo] + num[hi] < sum) {
-                    // improve: skip duplicates
-                    while (lo < hi && num[lo] == num[lo+1]) lo++;
-                    lo++;
-                } else {
-                    // improve: skip duplicates
-                    while (lo < hi && num[hi] == num[hi-1]) hi--;
-                    hi--;
-                }
-            }
-        }
-    }
-    return res;
-}
