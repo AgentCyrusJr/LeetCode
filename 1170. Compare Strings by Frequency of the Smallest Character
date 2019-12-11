@@ -25,7 +25,7 @@ queries[i][j], words[i][j] are English lowercase letters.
 =============================================================
 We can perform a bs search at the end to improve the time complexity to O(NlgM)
 
-Time: O(N^M)
+Time: O(N*M)
 Space: O(N+M)
 =============================code============================
 class Solution {
