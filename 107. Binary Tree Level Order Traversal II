@@ -15,7 +15,7 @@ return its bottom-up level order traversal as:
 ]
 ==========================codes=========================
 //by SOY 
-//BFS
+//DFS
 public class Solution {
         public List<List<Integer>> levelOrderBottom(TreeNode root) {
             List<List<Integer>> wrapList = new LinkedList<List<Integer>>();
@@ -34,7 +34,7 @@ public class Solution {
         }
     }
     
-//DFS
+//BFS
 public class Solution {
     public List<List<Integer>> levelOrderBottom(TreeNode root) {
         Queue<TreeNode> queue = new LinkedList<TreeNode>();
